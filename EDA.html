@@ -373,9 +373,21 @@ document.write(`
             </div>
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">EDA</a><ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#descripcion-de-las-variables">Descripción de las variables</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#ivan">Iván</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#weight">Weight</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#jose">José</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#camilo">Camilo</a><ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#modelo-logistico">Modelo Logistico</a></li>
 </ul>
+</li>
+</ul>
+
             </nav>
         </div>
     </div>
@@ -420,9 +432,6 @@ document.write(`
 <li><p><strong>24 variables para medicamentos</strong>: Para los nombres genéricos: metformin, repaglinide, nateglinide, chlorpropamide, glimepiride, acetohexamide, glipizide, glyburide, tolbutamide, pioglitazone, rosiglitazone, acarbose, miglitol, troglitazone, tolazamide, examide, sitagliptin, insulin, glyburide-metformin, glipizide-metformin, glimepiride-pioglitazone, metformin-rosiglitazone y metformin-pioglitazone. La variable indica si el medicamento fue recetado o si hubo un cambio en la dosis. Valores: “up” (aumentó), “down” (disminuyó), “steady” (sin cambio) y “no” (no fue prescrito).</p></li>
 <li><p><strong>Reingreso</strong>: Días hasta el reingreso hospitalario. Valores: “&lt;30” si el paciente fue reingresado en menos de 30 días, “&gt;30” si fue reingresado en más de 30 días y “No” si no hay registro de reingreso.</p></li>
 </ul>
-</section>
-<section id="modelo-logistico">
-<h2>Modelo Logistico<a class="headerlink" href="#modelo-logistico" title="Link to this heading">#</a></h2>
 <div class="cell tag_hide-input docutils container">
 <details class="admonition hide above-input">
 <summary aria-label="Toggle hidden content">
@@ -457,29 +466,534 @@ document.write(`
 </div>
 </details>
 </div>
-<div class="cell tag_hide-input docutils container">
-<details class="admonition hide above-input">
-<summary aria-label="Toggle hidden content">
-<p class="collapsed admonition-title">Show code cell source</p>
-<p class="expanded admonition-title">Hide code cell source</p>
-</summary>
+<div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># --- 2. CARGA Y PREPARACIÓN DE DATOS ---</span>
-
-<span class="c1"># Cargar el dataset desde el archivo CSV</span>
-<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;C:/Users/Jose/Desktop/MachineLearning/jbook/docs/diabetic_data.csv&#39;</span><span class="p">)</span>
-
-<span class="c1"># Crear la variable objetivo &#39;target&#39;.</span>
-<span class="c1"># Será 1 si el paciente fue reingresado (&#39;&lt;30&#39; o &#39;&gt;30&#39; días), y 0 si no (&#39;NO&#39;).</span>
-<span class="n">df</span><span class="p">[</span><span class="s1">&#39;target&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;readmitted&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">isin</span><span class="p">([</span><span class="s1">&#39;&lt;30&#39;</span><span class="p">,</span> <span class="s1">&#39;&gt;30&#39;</span><span class="p">])</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span>
-
-<span class="c1"># Eliminar columnas que no usaremos: IDs únicos y la columna original de reingreso.</span>
-<span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;encounter_id&#39;</span><span class="p">,</span> <span class="s1">&#39;patient_nbr&#39;</span><span class="p">,</span> <span class="s1">&#39;readmitted&#39;</span><span class="p">])</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Cargar el dataset desde el archivo CSV</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;diabetic_data.csv&#39;</span><span class="p">)</span>
+<span class="n">df</span><span class="o">=</span><span class="n">df</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;?&#39;</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span><span class="p">)</span>  <span class="c1"># Reemplazar &#39;?&#39; por NaN</span>
 </pre></div>
 </div>
 </div>
-</details>
 </div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>encounter_id</th>
+      <th>patient_nbr</th>
+      <th>race</th>
+      <th>gender</th>
+      <th>age</th>
+      <th>weight</th>
+      <th>admission_type_id</th>
+      <th>discharge_disposition_id</th>
+      <th>admission_source_id</th>
+      <th>time_in_hospital</th>
+      <th>...</th>
+      <th>citoglipton</th>
+      <th>insulin</th>
+      <th>glyburide-metformin</th>
+      <th>glipizide-metformin</th>
+      <th>glimepiride-pioglitazone</th>
+      <th>metformin-rosiglitazone</th>
+      <th>metformin-pioglitazone</th>
+      <th>change</th>
+      <th>diabetesMed</th>
+      <th>readmitted</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>2278392</td>
+      <td>8222157</td>
+      <td>Caucasian</td>
+      <td>Female</td>
+      <td>[0-10)</td>
+      <td>NaN</td>
+      <td>6</td>
+      <td>25</td>
+      <td>1</td>
+      <td>1</td>
+      <td>...</td>
+      <td>No</td>
+      <td>No</td>
+      <td>No</td>
+      <td>No</td>
+      <td>No</td>
+      <td>No</td>
+      <td>No</td>
+      <td>No</td>
+      <td>No</td>
+      <td>NO</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>149190</td>
+      <td>55629189</td>
+      <td>Caucasian</td>
+      <td>Female</td>
+      <td>[10-20)</td>
+      <td>NaN</td>
+      <td>1</td>
+      <td>1</td>
+      <td>7</td>
+      <td>3</td>
+      <td>...</td>
+      <td>No</td>
+      <td>Up</td>
+      <td>No</td>
+      <td>No</td>
+      <td>No</td>
+      <td>No</td>
+      <td>No</td>
+      <td>Ch</td>
+      <td>Yes</td>
+      <td>&gt;30</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>64410</td>
+      <td>86047875</td>
+      <td>AfricanAmerican</td>
+      <td>Female</td>
+      <td>[20-30)</td>
+      <td>NaN</td>
+      <td>1</td>
+      <td>1</td>
+      <td>7</td>
+      <td>2</td>
+      <td>...</td>
+      <td>No</td>
+      <td>No</td>
+      <td>No</td>
+      <td>No</td>
+      <td>No</td>
+      <td>No</td>
+      <td>No</td>
+      <td>No</td>
+      <td>Yes</td>
+      <td>NO</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>500364</td>
+      <td>82442376</td>
+      <td>Caucasian</td>
+      <td>Male</td>
+      <td>[30-40)</td>
+      <td>NaN</td>
+      <td>1</td>
+      <td>1</td>
+      <td>7</td>
+      <td>2</td>
+      <td>...</td>
+      <td>No</td>
+      <td>Up</td>
+      <td>No</td>
+      <td>No</td>
+      <td>No</td>
+      <td>No</td>
+      <td>No</td>
+      <td>Ch</td>
+      <td>Yes</td>
+      <td>NO</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>16680</td>
+      <td>42519267</td>
+      <td>Caucasian</td>
+      <td>Male</td>
+      <td>[40-50)</td>
+      <td>NaN</td>
+      <td>1</td>
+      <td>1</td>
+      <td>7</td>
+      <td>1</td>
+      <td>...</td>
+      <td>No</td>
+      <td>Steady</td>
+      <td>No</td>
+      <td>No</td>
+      <td>No</td>
+      <td>No</td>
+      <td>No</td>
+      <td>Ch</td>
+      <td>Yes</td>
+      <td>NO</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>101761</th>
+      <td>443847548</td>
+      <td>100162476</td>
+      <td>AfricanAmerican</td>
+      <td>Male</td>
+      <td>[70-80)</td>
+      <td>NaN</td>
+      <td>1</td>
+      <td>3</td>
+      <td>7</td>
+      <td>3</td>
+      <td>...</td>
+      <td>No</td>
+      <td>Down</td>
+      <td>No</td>
+      <td>No</td>
+      <td>No</td>
+      <td>No</td>
+      <td>No</td>
+      <td>Ch</td>
+      <td>Yes</td>
+      <td>&gt;30</td>
+    </tr>
+    <tr>
+      <th>101762</th>
+      <td>443847782</td>
+      <td>74694222</td>
+      <td>AfricanAmerican</td>
+      <td>Female</td>
+      <td>[80-90)</td>
+      <td>NaN</td>
+      <td>1</td>
+      <td>4</td>
+      <td>5</td>
+      <td>5</td>
+      <td>...</td>
+      <td>No</td>
+      <td>Steady</td>
+      <td>No</td>
+      <td>No</td>
+      <td>No</td>
+      <td>No</td>
+      <td>No</td>
+      <td>No</td>
+      <td>Yes</td>
+      <td>NO</td>
+    </tr>
+    <tr>
+      <th>101763</th>
+      <td>443854148</td>
+      <td>41088789</td>
+      <td>Caucasian</td>
+      <td>Male</td>
+      <td>[70-80)</td>
+      <td>NaN</td>
+      <td>1</td>
+      <td>1</td>
+      <td>7</td>
+      <td>1</td>
+      <td>...</td>
+      <td>No</td>
+      <td>Down</td>
+      <td>No</td>
+      <td>No</td>
+      <td>No</td>
+      <td>No</td>
+      <td>No</td>
+      <td>Ch</td>
+      <td>Yes</td>
+      <td>NO</td>
+    </tr>
+    <tr>
+      <th>101764</th>
+      <td>443857166</td>
+      <td>31693671</td>
+      <td>Caucasian</td>
+      <td>Female</td>
+      <td>[80-90)</td>
+      <td>NaN</td>
+      <td>2</td>
+      <td>3</td>
+      <td>7</td>
+      <td>10</td>
+      <td>...</td>
+      <td>No</td>
+      <td>Up</td>
+      <td>No</td>
+      <td>No</td>
+      <td>No</td>
+      <td>No</td>
+      <td>No</td>
+      <td>Ch</td>
+      <td>Yes</td>
+      <td>NO</td>
+    </tr>
+    <tr>
+      <th>101765</th>
+      <td>443867222</td>
+      <td>175429310</td>
+      <td>Caucasian</td>
+      <td>Male</td>
+      <td>[70-80)</td>
+      <td>NaN</td>
+      <td>1</td>
+      <td>1</td>
+      <td>7</td>
+      <td>6</td>
+      <td>...</td>
+      <td>No</td>
+      <td>No</td>
+      <td>No</td>
+      <td>No</td>
+      <td>No</td>
+      <td>No</td>
+      <td>No</td>
+      <td>No</td>
+      <td>No</td>
+      <td>NO</td>
+    </tr>
+  </tbody>
+</table>
+<p>101766 rows × 50 columns</p>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="o">.</span><span class="n">info</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;class &#39;pandas.core.frame.DataFrame&#39;&gt;
+RangeIndex: 101766 entries, 0 to 101765
+Data columns (total 50 columns):
+ #   Column                    Non-Null Count   Dtype 
+---  ------                    --------------   ----- 
+ 0   encounter_id              101766 non-null  int64 
+ 1   patient_nbr               101766 non-null  int64 
+ 2   race                      99493 non-null   object
+ 3   gender                    101766 non-null  object
+ 4   age                       101766 non-null  object
+ 5   weight                    3197 non-null    object
+ 6   admission_type_id         101766 non-null  int64 
+ 7   discharge_disposition_id  101766 non-null  int64 
+ 8   admission_source_id       101766 non-null  int64 
+ 9   time_in_hospital          101766 non-null  int64 
+ 10  payer_code                61510 non-null   object
+ 11  medical_specialty         51817 non-null   object
+ 12  num_lab_procedures        101766 non-null  int64 
+ 13  num_procedures            101766 non-null  int64 
+ 14  num_medications           101766 non-null  int64 
+ 15  number_outpatient         101766 non-null  int64 
+ 16  number_emergency          101766 non-null  int64 
+ 17  number_inpatient          101766 non-null  int64 
+ 18  diag_1                    101745 non-null  object
+ 19  diag_2                    101408 non-null  object
+ 20  diag_3                    100343 non-null  object
+ 21  number_diagnoses          101766 non-null  int64 
+ 22  max_glu_serum             5346 non-null    object
+ 23  A1Cresult                 17018 non-null   object
+ 24  metformin                 101766 non-null  object
+ 25  repaglinide               101766 non-null  object
+ 26  nateglinide               101766 non-null  object
+ 27  chlorpropamide            101766 non-null  object
+ 28  glimepiride               101766 non-null  object
+ 29  acetohexamide             101766 non-null  object
+ 30  glipizide                 101766 non-null  object
+ 31  glyburide                 101766 non-null  object
+ 32  tolbutamide               101766 non-null  object
+ 33  pioglitazone              101766 non-null  object
+ 34  rosiglitazone             101766 non-null  object
+ 35  acarbose                  101766 non-null  object
+ 36  miglitol                  101766 non-null  object
+ 37  troglitazone              101766 non-null  object
+ 38  tolazamide                101766 non-null  object
+ 39  examide                   101766 non-null  object
+ 40  citoglipton               101766 non-null  object
+ 41  insulin                   101766 non-null  object
+ 42  glyburide-metformin       101766 non-null  object
+ 43  glipizide-metformin       101766 non-null  object
+ 44  glimepiride-pioglitazone  101766 non-null  object
+ 45  metformin-rosiglitazone   101766 non-null  object
+ 46  metformin-pioglitazone    101766 non-null  object
+ 47  change                    101766 non-null  object
+ 48  diabetesMed               101766 non-null  object
+ 49  readmitted                101766 non-null  object
+dtypes: int64(13), object(37)
+memory usage: 38.8+ MB
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Crear la variable objetivo &#39;target&#39;.</span>
+<span class="c1"># Será 1 si el paciente fue reingresado (&#39;&lt;30&#39; o &#39;&gt;30&#39; días), y 0 si no (&#39;NO&#39;).</span>
+<span class="n">df</span><span class="p">[</span><span class="s1">&#39;target&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;readmitted&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">isin</span><span class="p">([</span><span class="s1">&#39;&lt;30&#39;</span><span class="p">,</span> <span class="s1">&#39;&gt;30&#39;</span><span class="p">])</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span>
+<span class="n">df</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;readmitted&#39;</span><span class="p">],</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># 2.1. Conteo de valores de la variable objetivo</span>
+<span class="c1"># Esto es útil para verificar que la transformación funcionó.</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Conteo de valores en la columna &#39;target&#39;:&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;target&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">value_counts</span><span class="p">())</span>
+
+<span class="c1"># 2. Gráfico de Barras (countplot)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">7</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
+<span class="n">ax</span> <span class="o">=</span> <span class="n">sns</span><span class="o">.</span><span class="n">countplot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="s1">&#39;target&#39;</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">df</span><span class="p">,</span> <span class="n">palette</span><span class="o">=</span><span class="s1">&#39;viridis&#39;</span><span class="p">,</span> <span class="n">hue</span><span class="o">=</span><span class="s1">&#39;target&#39;</span><span class="p">,</span> <span class="n">legend</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;Distribución de Pacientes Readmitidos&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;Estado de Readmisión&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;Cantidad&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xticks</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">])</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xticklabels</span><span class="p">([</span><span class="s1">&#39;No Readmitido&#39;</span><span class="p">,</span> <span class="s1">&#39;Readmitido&#39;</span><span class="p">])</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+
+
+<span class="c1"># 3. Gráfico de Pastel (pie chart)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">6</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
+<span class="n">df</span><span class="p">[</span><span class="s1">&#39;target&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">pie</span><span class="p">(</span>
+    <span class="n">autopct</span><span class="o">=</span><span class="s1">&#39;</span><span class="si">%.1f%%</span><span class="s1">&#39;</span><span class="p">,</span>
+    <span class="n">labels</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;No Readmitido&#39;</span><span class="p">,</span> <span class="s1">&#39;Readmitido&#39;</span><span class="p">],</span>
+    <span class="n">colors</span><span class="o">=</span><span class="n">sns</span><span class="o">.</span><span class="n">color_palette</span><span class="p">(</span><span class="s1">&#39;rocket&#39;</span><span class="p">,</span> <span class="n">n_colors</span><span class="o">=</span><span class="mi">2</span><span class="p">),</span>
+    <span class="n">startangle</span><span class="o">=</span><span class="mi">90</span>
+<span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Proporción de Pacientes Readmitidos&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">)</span> <span class="c1"># Oculta la etiqueta del eje Y</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Conteo de valores en la columna &#39;target&#39;:
+target
+0    54864
+1    46902
+Name: count, dtype: int64
+</pre></div>
+</div>
+<img alt="_images/151158ce139e9add0c063c1d0a8671cacc3f1668336de6c5c34c6aac06b0f349.png" src="_images/151158ce139e9add0c063c1d0a8671cacc3f1668336de6c5c34c6aac06b0f349.png" />
+<img alt="_images/c1c2a124ae3fa8f11e10f7b8410360c17d2bfd69efcb07f8bc34b409d8db34fd.png" src="_images/c1c2a124ae3fa8f11e10f7b8410360c17d2bfd69efcb07f8bc34b409d8db34fd.png" />
+</div>
+</div>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="ivan">
+<h1>Iván<a class="headerlink" href="#ivan" title="Link to this heading">#</a></h1>
+<section id="weight">
+<h2>Weight<a class="headerlink" href="#weight" title="Link to this heading">#</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;weight&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">dropna</span><span class="p">()</span><span class="o">.</span><span class="n">unique</span><span class="p">())</span>
+<span class="c1"># Mapeo de categorías de peso a valores numéricos</span>
+<span class="c1"># Asignamos un valor promedio a cada rango de peso para facilitar el análisis.</span>
+<span class="c1"># Por ejemplo, &#39;[75-100)&#39; se convierte en 87.5, &#39;[50-75)&#39; en 62.5, etc.</span>
+<span class="c1"># El rango &#39;&gt;200&#39; se asigna a 205 como un valor representativo.</span>
+<span class="c1"># Esto permite un análisis más sencillo al poder analizarse como una variable numérica.</span>
+<span class="n">mapeo</span><span class="o">=</span> <span class="p">{</span>
+    <span class="s1">&#39;[75-100)&#39;</span><span class="p">:(</span><span class="mi">75</span><span class="o">+</span><span class="mi">100</span><span class="p">)</span><span class="o">/</span><span class="mi">2</span><span class="p">,</span> 
+    <span class="s1">&#39;[50-75)&#39;</span><span class="p">:(</span><span class="mi">50</span><span class="o">+</span><span class="mi">75</span><span class="p">)</span><span class="o">/</span><span class="mi">2</span><span class="p">,</span> 
+    <span class="s1">&#39;[0-25)&#39;</span><span class="p">:</span><span class="mi">25</span><span class="o">/</span><span class="mi">2</span><span class="p">,</span> 
+    <span class="s1">&#39;[100-125)&#39;</span><span class="p">:</span> <span class="p">(</span><span class="mi">100</span><span class="o">+</span><span class="mi">125</span><span class="p">)</span><span class="o">/</span><span class="mi">2</span><span class="p">,</span>
+    <span class="s1">&#39;[25-50)&#39;</span><span class="p">:(</span><span class="mi">25</span><span class="o">+</span><span class="mi">50</span><span class="p">)</span><span class="o">/</span><span class="mi">2</span><span class="p">,</span> 
+    <span class="s1">&#39;[125-150)&#39;</span><span class="p">:(</span><span class="mi">125</span><span class="o">+</span><span class="mi">150</span><span class="p">)</span><span class="o">/</span><span class="mi">2</span><span class="p">,</span>
+    <span class="s1">&#39;[150-175)&#39;</span><span class="p">:(</span><span class="mi">150</span><span class="o">+</span><span class="mi">175</span><span class="p">)</span><span class="o">/</span><span class="mi">2</span><span class="p">,</span> 
+    <span class="s1">&#39;[175-200)&#39;</span><span class="p">:(</span><span class="mi">175</span><span class="o">+</span><span class="mi">200</span><span class="p">)</span><span class="o">/</span><span class="mi">2</span><span class="p">,</span> 
+    <span class="s1">&#39;&gt;200&#39;</span><span class="p">:</span> <span class="mi">205</span>
+<span class="p">}</span>
+<span class="n">df</span><span class="p">[</span><span class="s1">&#39;avg_weight&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;weight&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="n">mapeo</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;avg_weight&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">dropna</span><span class="p">()</span><span class="o">.</span><span class="n">unique</span><span class="p">())</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[&#39;[75-100)&#39; &#39;[50-75)&#39; &#39;[0-25)&#39; &#39;[100-125)&#39; &#39;[25-50)&#39; &#39;[125-150)&#39;
+ &#39;[175-200)&#39; &#39;[150-175)&#39; &#39;&gt;200&#39;]
+[ 87.5  62.5  12.5 112.5  37.5 137.5 187.5 162.5 205. ]
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">descripcion</span><span class="o">=</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;avg_weight&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">describe</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sns</span><span class="o">.</span><span class="n">countplot</span><span class="p">(</span><span class="n">x</span> <span class="o">=</span> <span class="s2">&quot;avg_weight&quot;</span><span class="p">,</span> <span class="n">data</span> <span class="o">=</span> <span class="n">df</span><span class="p">,</span>
+            <span class="n">order</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">avg_weight</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()</span><span class="o">.</span><span class="n">index</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Distribución de Pacientes por Peso&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/c9f2de80ca882fe2fca62b35fc15a31ae60a8e4ae0dee6934692935b24415453.png" src="_images/c9f2de80ca882fe2fca62b35fc15a31ae60a8e4ae0dee6934692935b24415453.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">pie</span><span class="p">([</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;weight&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">notnull</span><span class="p">()</span><span class="o">.</span><span class="n">mean</span><span class="p">(),</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;weight&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">isnull</span><span class="p">()</span><span class="o">.</span><span class="n">mean</span><span class="p">()],</span> <span class="n">labels</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;datos tomados&#39;</span><span class="p">,</span><span class="s1">&#39;datos faltanes&#39;</span><span class="p">],</span> <span class="n">autopct</span><span class="o">=</span><span class="s1">&#39;</span><span class="si">%1.1f%%</span><span class="s1">&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Datos presentes vs faltantes en &quot;weight&quot;&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/4110eb5e099fdf3999fd0ae144fd72d9a35130fac5dffc48dca3bda78258f7f6.png" src="_images/4110eb5e099fdf3999fd0ae144fd72d9a35130fac5dffc48dca3bda78258f7f6.png" />
+</div>
+</div>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="jose">
+<h1>José<a class="headerlink" href="#jose" title="Link to this heading">#</a></h1>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="camilo">
+<h1>Camilo<a class="headerlink" href="#camilo" title="Link to this heading">#</a></h1>
+<section id="modelo-logistico">
+<h2>Modelo Logistico<a class="headerlink" href="#modelo-logistico" title="Link to this heading">#</a></h2>
 <div class="cell tag_hide-input docutils container">
 <details class="admonition hide above-input">
 <summary aria-label="Toggle hidden content">
@@ -488,10 +1002,14 @@ document.write(`
 </summary>
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># --- 3. DIVISIÓN DE DATOS ---</span>
+<span class="n">dflog</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;diabetic_data.csv&#39;</span><span class="p">)</span>
+<span class="n">dflog</span><span class="p">[</span><span class="s1">&#39;target&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">dflog</span><span class="p">[</span><span class="s1">&#39;readmitted&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">isin</span><span class="p">([</span><span class="s1">&#39;&lt;30&#39;</span><span class="p">,</span> <span class="s1">&#39;&gt;30&#39;</span><span class="p">])</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span>
 
+<span class="c1"># Eliminar columnas que no usaremos: IDs únicos y la columna original de reingreso.</span>
+<span class="n">dflog</span> <span class="o">=</span> <span class="n">dflog</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;encounter_id&#39;</span><span class="p">,</span> <span class="s1">&#39;patient_nbr&#39;</span><span class="p">,</span> <span class="s1">&#39;readmitted&#39;</span><span class="p">])</span>
 <span class="c1"># Separar las características (X) de la variable objetivo (y).</span>
-<span class="n">X</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="s1">&#39;target&#39;</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
-<span class="n">y</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;target&#39;</span><span class="p">]</span>
+<span class="n">X</span> <span class="o">=</span> <span class="n">dflog</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="s1">&#39;target&#39;</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">y</span> <span class="o">=</span> <span class="n">dflog</span><span class="p">[</span><span class="s1">&#39;target&#39;</span><span class="p">]</span>
 
 <span class="c1"># Dividir los datos: 80% para entrenar el modelo y 20% para probarlo.</span>
 <span class="c1"># &#39;random_state=42&#39; asegura que la división sea siempre la misma para poder reproducir los resultados.</span>
@@ -625,19 +1143,15 @@ Matriz de Confusión:
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># --- 7. GUARDAR EL MODELO ENTRENADO ---</span>
-
-<span class="c1"># Guardar el pipeline completo (preprocesador + modelo) en un archivo.</span>
-<span class="c1"># Así, podemos cargarlo más tarde para hacer nuevas predicciones sin tener que reentrenar.</span>
-<span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s2">&quot;modelo_logistico_diabetes.pkl&quot;</span><span class="p">,</span> <span class="s2">&quot;wb&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">file</span><span class="p">:</span>
-    <span class="n">pickle</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="n">pipeline</span><span class="p">,</span> <span class="n">file</span><span class="p">)</span>
-
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Modelo guardado exitosamente como &#39;modelo_logistico_diabetes.pkl&#39;&quot;</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># 7. Guardar el modelo logistico</span>
+<span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;modelo_logistico_diabetes.pkl&#39;</span><span class="p">,</span> <span class="s1">&#39;wb&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+    <span class="n">pickle</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="n">pipeline</span><span class="p">,</span> <span class="n">f</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Modelo guardado como &#39;modelo_logistico_diabetes.pkl&#39;&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Modelo guardado exitosamente como &#39;modelo_logistico_diabetes.pkl&#39;
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Modelo guardado como &#39;modelo_logistico_diabetes.pkl&#39;
 </pre></div>
 </div>
 </div>
@@ -691,9 +1205,21 @@ Matriz de Confusión:
   </div>
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">EDA</a><ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#descripcion-de-las-variables">Descripción de las variables</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#ivan">Iván</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#weight">Weight</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#jose">José</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#camilo">Camilo</a><ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#modelo-logistico">Modelo Logistico</a></li>
 </ul>
+</li>
+</ul>
+
   </nav></div>
 
 </div></div>
