@@ -1,0 +1,726 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="./" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>EDA &#8212; Readmission Diabetes Prediction</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=fa44fd50" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css?v=eba8b062" />
+    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.8ecb98da25f57f5357bf6f572d296f466b2cfe2517ffebfabe82451661e28f02.css" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-design.min.css?v=95c83b7e" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script src="_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="_static/doctools.js?v=9a2dae69"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="_static/copybutton.js?v=f281be69"></script>
+    <script src="_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="_static/togglebutton.js?v=4a39c7ea"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'EDA';</script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+        
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="#">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="_static/logo.png" class="logo__image only-light" alt="Readmission Diabetes Prediction - Home"/>
+    <script>document.write(`<img src="_static/logo.png" class="logo__image only-dark" alt="Readmission Diabetes Prediction - Home"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1 current active">
+                <a class="reference internal" href="#">
+                    EDA
+                </a>
+            </li>
+        </ul>
+        
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/executablebooks/jupyter-book" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/executablebooks/jupyter-book/issues/new?title=Issue%20on%20page%20%2FEDA.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="_sources/EDA.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>EDA</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#descripcion-de-las-variables">Descripción de las variables</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#modelo-logistico">Modelo Logistico</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="eda">
+<h1>EDA<a class="headerlink" href="#eda" title="Link to this heading">#</a></h1>
+<section id="descripcion-de-las-variables">
+<h2>Descripción de las variables<a class="headerlink" href="#descripcion-de-las-variables" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p><strong>ID de encuentro</strong>: Identificador único de un encuentro.</p></li>
+<li><p><strong>Número de paciente</strong>: Identificador único de un paciente.</p></li>
+<li><p><strong>Raza</strong>: Valores posibles: Caucásico, Asiático, Afroamericano, Hispano y Otro.</p></li>
+<li><p><strong>Género</strong>: Valores posibles: masculino, femenino y desconocido/inválido.</p></li>
+<li><p><strong>Edad</strong>: Agrupada en intervalos de 10 años: (0-10), (10-20), …, (90-100).</p></li>
+<li><p><strong>Peso</strong>: Peso en libras.</p></li>
+<li><p><strong>Tipo de admisión</strong>: Identificador numérico que corresponde a 9 valores distintos, por ejemplo: emergencia, urgente, electiva, recién nacido y no disponible.</p></li>
+<li><p><strong>Disposición al alta</strong>: Identificador numérico que corresponde a 29 valores distintos, por ejemplo: dado de alta a casa, fallecido y no disponible.</p></li>
+<li><p><strong>Fuente de admisión</strong>: Identificador numérico que corresponde a 21 valores distintos, por ejemplo: referencia médica, sala de emergencias y traslado desde otro hospital.</p></li>
+<li><p><strong>Tiempo en el hospital</strong>: Número entero de días entre la admisión y el alta.</p></li>
+<li><p><strong>Código del pagador</strong>: Identificador numérico que corresponde a 23 valores distintos, por ejemplo: Blue Cross/Blue Shield, Medicare y pago propio.</p></li>
+<li><p><strong>Especialidad médica</strong>: Identificador numérico de la especialidad del médico que admitió al paciente. Corresponde a 84 valores distintos, por ejemplo: cardiología, medicina interna, medicina general/familiar y cirugía.</p></li>
+<li><p><strong>Número de pruebas de laboratorio</strong>: Número de exámenes de laboratorio realizados durante el encuentro.</p></li>
+<li><p><strong>Número de procedimientos</strong>: Número de procedimientos (que no sean de laboratorio) realizados durante el encuentro.</p></li>
+<li><p><strong>Número de medicamentos</strong>: Número de nombres genéricos distintos administrados durante el encuentro.</p></li>
+<li><p><strong>Número de visitas ambulatorias</strong>: Número de visitas ambulatorias del paciente en el año anterior al encuentro.</p></li>
+<li><p><strong>Número de visitas de emergencia</strong>: Número de visitas a urgencias del paciente en el año anterior al encuentro.</p></li>
+<li><p><strong>Número de hospitalizaciones previas</strong>: Número de hospitalizaciones del paciente en el año anterior al encuentro.</p></li>
+<li><p><strong>Diagnóstico 1</strong>: Diagnóstico principal (codificado con los primeros tres dígitos de ICD9); 848 valores distintos.</p></li>
+<li><p><strong>Diagnóstico 2</strong>: Diagnóstico secundario (codificado con los primeros tres dígitos de ICD9); 923 valores distintos.</p></li>
+<li><p><strong>Diagnóstico 3</strong>: Diagnóstico secundario adicional (codificado con los primeros tres dígitos de ICD9); 954 valores distintos.</p></li>
+<li><p><strong>Número de diagnósticos</strong>: Número de diagnósticos registrados en el sistema.</p></li>
+<li><p><strong>Resultado del test de glucosa en suero</strong>: Indica el rango del resultado o si no se tomó el examen. Valores: “&gt;200”, “&gt;300”, “normal” y “none” (si no fue medido).</p></li>
+<li><p><strong>Resultado del test A1c</strong>: Indica el rango del resultado o si no se tomó el examen. Valores: “&gt;8”, “&gt;7”, “normal” (si fue menor a 7%) y “none” (si no fue medido).</p></li>
+<li><p><strong>Cambio en medicamentos</strong>: Indica si hubo un cambio en los medicamentos para la diabetes (ya sea en dosis o en el nombre genérico). Valores: “change” y “no change”.</p></li>
+<li><p><strong>Medicamentos para la diabetes</strong>: Indica si se recetó algún medicamento para la diabetes. Valores: “yes” y “no”.</p></li>
+<li><p><strong>24 variables para medicamentos</strong>: Para los nombres genéricos: metformin, repaglinide, nateglinide, chlorpropamide, glimepiride, acetohexamide, glipizide, glyburide, tolbutamide, pioglitazone, rosiglitazone, acarbose, miglitol, troglitazone, tolazamide, examide, sitagliptin, insulin, glyburide-metformin, glipizide-metformin, glimepiride-pioglitazone, metformin-rosiglitazone y metformin-pioglitazone. La variable indica si el medicamento fue recetado o si hubo un cambio en la dosis. Valores: “up” (aumentó), “down” (disminuyó), “steady” (sin cambio) y “no” (no fue prescrito).</p></li>
+<li><p><strong>Reingreso</strong>: Días hasta el reingreso hospitalario. Valores: “&lt;30” si el paciente fue reingresado en menos de 30 días, “&gt;30” si fue reingresado en más de 30 días y “No” si no hay registro de reingreso.</p></li>
+</ul>
+</section>
+<section id="modelo-logistico">
+<h2>Modelo Logistico<a class="headerlink" href="#modelo-logistico" title="Link to this heading">#</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># --- 1. IMPORTAR LIBRERÍAS ---</span>
+<span class="c1"># Librerías para manipulación de datos, modelado y visualización.</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span>
+<span class="kn">import</span> <span class="nn">pickle</span> <span class="c1"># Para guardar nuestro modelo entrenado</span>
+
+<span class="c1"># Clases de Scikit-learn para preprocesamiento, modelado y evaluación</span>
+<span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">train_test_split</span>
+<span class="kn">from</span> <span class="nn">sklearn.preprocessing</span> <span class="kn">import</span> <span class="n">MinMaxScaler</span><span class="p">,</span> <span class="n">OneHotEncoder</span>
+<span class="kn">from</span> <span class="nn">sklearn.compose</span> <span class="kn">import</span> <span class="n">ColumnTransformer</span>
+<span class="kn">from</span> <span class="nn">sklearn.pipeline</span> <span class="kn">import</span> <span class="n">Pipeline</span>
+<span class="kn">from</span> <span class="nn">sklearn.linear_model</span> <span class="kn">import</span> <span class="n">LogisticRegression</span>
+<span class="kn">from</span> <span class="nn">sklearn.metrics</span> <span class="kn">import</span> <span class="p">(</span>
+    <span class="n">accuracy_score</span><span class="p">,</span> 
+    <span class="n">confusion_matrix</span><span class="p">,</span> 
+    <span class="n">ConfusionMatrixDisplay</span><span class="p">,</span> 
+    <span class="n">classification_report</span><span class="p">,</span> 
+    <span class="n">roc_curve</span><span class="p">,</span> 
+    <span class="n">auc</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># --- 2. CARGA Y PREPARACIÓN DE DATOS ---</span>
+
+<span class="c1"># Cargar el dataset desde el archivo CSV</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;C:/Users/Jose/Desktop/MachineLearning/jbook/docs/diabetic_data.csv&#39;</span><span class="p">)</span>
+
+<span class="c1"># Crear la variable objetivo &#39;target&#39;.</span>
+<span class="c1"># Será 1 si el paciente fue reingresado (&#39;&lt;30&#39; o &#39;&gt;30&#39; días), y 0 si no (&#39;NO&#39;).</span>
+<span class="n">df</span><span class="p">[</span><span class="s1">&#39;target&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;readmitted&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">isin</span><span class="p">([</span><span class="s1">&#39;&lt;30&#39;</span><span class="p">,</span> <span class="s1">&#39;&gt;30&#39;</span><span class="p">])</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span>
+
+<span class="c1"># Eliminar columnas que no usaremos: IDs únicos y la columna original de reingreso.</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;encounter_id&#39;</span><span class="p">,</span> <span class="s1">&#39;patient_nbr&#39;</span><span class="p">,</span> <span class="s1">&#39;readmitted&#39;</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># --- 3. DIVISIÓN DE DATOS ---</span>
+
+<span class="c1"># Separar las características (X) de la variable objetivo (y).</span>
+<span class="n">X</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="s1">&#39;target&#39;</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">y</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;target&#39;</span><span class="p">]</span>
+
+<span class="c1"># Dividir los datos: 80% para entrenar el modelo y 20% para probarlo.</span>
+<span class="c1"># &#39;random_state=42&#39; asegura que la división sea siempre la misma para poder reproducir los resultados.</span>
+<span class="n">X_train</span><span class="p">,</span> <span class="n">X_test</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">y_test</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">test_size</span><span class="o">=</span><span class="mf">0.20</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># --- 4. PREPROCESAMIENTO DE CARACTERÍSTICAS ---</span>
+
+<span class="c1"># Identificar qué columnas son numéricas y cuáles son categóricas (texto).</span>
+<span class="n">numeric_features</span> <span class="o">=</span> <span class="n">X</span><span class="o">.</span><span class="n">select_dtypes</span><span class="p">(</span><span class="n">include</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">number</span><span class="p">)</span><span class="o">.</span><span class="n">columns</span>
+<span class="n">categorical_features</span> <span class="o">=</span> <span class="n">X</span><span class="o">.</span><span class="n">select_dtypes</span><span class="p">(</span><span class="n">include</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;object&#39;</span><span class="p">])</span><span class="o">.</span><span class="n">columns</span>
+
+<span class="c1"># Crear un &quot;transformador&quot; que aplicará diferentes reglas a cada tipo de columna.</span>
+<span class="c1"># Es una receta de preprocesamiento.</span>
+<span class="n">preprocessor</span> <span class="o">=</span> <span class="n">ColumnTransformer</span><span class="p">(</span>
+    <span class="n">transformers</span><span class="o">=</span><span class="p">[</span>
+        <span class="c1"># Paso 1: Para las columnas numéricas, escalarlas a un rango entre 0 y 1.</span>
+        <span class="p">(</span><span class="s1">&#39;num&#39;</span><span class="p">,</span> <span class="n">MinMaxScaler</span><span class="p">(),</span> <span class="n">numeric_features</span><span class="p">),</span>
+        
+        <span class="c1"># Paso 2: Para las columnas categóricas, convertirlas a números usando One-Hot Encoding.</span>
+        <span class="c1"># &#39;handle_unknown=&#39;ignore&#39;&#39; evita errores si una categoría aparece en los datos de prueba pero no en los de entrenamiento.</span>
+        <span class="p">(</span><span class="s1">&#39;cat&#39;</span><span class="p">,</span> <span class="n">OneHotEncoder</span><span class="p">(</span><span class="n">handle_unknown</span><span class="o">=</span><span class="s1">&#39;ignore&#39;</span><span class="p">),</span> <span class="n">categorical_features</span><span class="p">)</span>
+    <span class="p">])</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># --- 5. CREACIÓN Y ENTRENAMIENTO DEL MODELO ---</span>
+
+<span class="c1"># Crear un &#39;Pipeline&#39;: una secuencia de pasos que se ejecutan en orden.</span>
+<span class="c1"># 1. &#39;preprocessor&#39;: Aplica la receta de preprocesamiento que definimos antes.</span>
+<span class="c1"># 2. &#39;model&#39;: Después de preprocesar, entrena el modelo de Regresión Logística.</span>
+<span class="n">pipeline</span> <span class="o">=</span> <span class="n">Pipeline</span><span class="p">(</span><span class="n">steps</span><span class="o">=</span><span class="p">[</span>
+    <span class="p">(</span><span class="s1">&#39;preprocessor&#39;</span><span class="p">,</span> <span class="n">preprocessor</span><span class="p">),</span>
+    <span class="p">(</span><span class="s1">&#39;model&#39;</span><span class="p">,</span> <span class="n">LogisticRegression</span><span class="p">(</span><span class="n">max_iter</span><span class="o">=</span><span class="mi">1000</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">))</span>
+<span class="p">])</span>
+
+<span class="c1"># Entrenar todo el pipeline con los datos de entrenamiento.</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Entrenando el modelo...&quot;</span><span class="p">)</span>
+<span class="n">pipeline</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;¡Modelo entrenado exitosamente!&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Entrenando el modelo...
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>¡Modelo entrenado exitosamente!
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># --- 6. EVALUACIÓN DEL MODELO ---</span>
+
+<span class="c1"># Usar el modelo entrenado para hacer predicciones sobre los datos de prueba (que nunca ha visto).</span>
+<span class="n">y_pred</span> <span class="o">=</span> <span class="n">pipeline</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_test</span><span class="p">)</span>
+
+<span class="c1"># a) Exactitud (Accuracy): ¿Qué porcentaje de predicciones fueron correctas?</span>
+<span class="n">accuracy</span> <span class="o">=</span> <span class="n">accuracy_score</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Exactitud del modelo: </span><span class="si">{</span><span class="n">accuracy</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="c1"># b) Reporte de Clasificación: Métricas detalladas como Precisión, Recall y F1-Score.</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Reporte de Clasificación:&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">classification_report</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">,</span> <span class="n">target_names</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;No Reingresado&#39;</span><span class="p">,</span> <span class="s1">&#39;Reingresado&#39;</span><span class="p">]))</span>
+
+<span class="c1"># c) Matriz de Confusión: Muestra visualmente los aciertos y errores.</span>
+<span class="c1"># - Verdaderos Negativos (TN): predijo &#39;No Reingresado&#39; y era correcto.</span>
+<span class="c1"># - Falsos Positivos (FP): predijo &#39;Reingresado&#39; pero era incorrecto.</span>
+<span class="c1"># - Falsos Negativos (FN): predijo &#39;No Reingresado&#39; pero era incorrecto (el error más costoso).</span>
+<span class="c1"># - Verdaderos Positivos (TP): predijo &#39;Reingresado&#39; y era correcto.</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Matriz de Confusión:&quot;</span><span class="p">)</span>
+<span class="n">cm</span> <span class="o">=</span> <span class="n">confusion_matrix</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">)</span>
+<span class="n">disp</span> <span class="o">=</span> <span class="n">ConfusionMatrixDisplay</span><span class="p">(</span><span class="n">confusion_matrix</span><span class="o">=</span><span class="n">cm</span><span class="p">,</span> <span class="n">display_labels</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;No Reingresado&#39;</span><span class="p">,</span> <span class="s1">&#39;Reingresado&#39;</span><span class="p">])</span>
+<span class="n">disp</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">cmap</span><span class="o">=</span><span class="s2">&quot;Blues&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Matriz de Confusión&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+
+<span class="c1"># d) Curva ROC y AUC: Mide la capacidad del modelo para distinguir entre las dos clases.</span>
+<span class="c1"># Un AUC cercano a 1.0 es excelente. Un AUC de 0.5 es un modelo que adivina al azar.</span>
+<span class="n">y_pred_proba</span> <span class="o">=</span> <span class="n">pipeline</span><span class="o">.</span><span class="n">predict_proba</span><span class="p">(</span><span class="n">X_test</span><span class="p">)[:,</span> <span class="mi">1</span><span class="p">]</span> <span class="c1"># Probabilidades para la clase positiva (Reingresado)</span>
+<span class="n">fpr</span><span class="p">,</span> <span class="n">tpr</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">roc_curve</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">y_pred_proba</span><span class="p">)</span>
+<span class="n">roc_auc</span> <span class="o">=</span> <span class="n">auc</span><span class="p">(</span><span class="n">fpr</span><span class="p">,</span> <span class="n">tpr</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">fpr</span><span class="p">,</span> <span class="n">tpr</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;darkorange&#39;</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;Curva ROC (AUC = </span><span class="si">{</span><span class="n">roc_auc</span><span class="si">:</span><span class="s1">.2f</span><span class="si">}</span><span class="s1">)&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;navy&#39;</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;--&#39;</span><span class="p">)</span> <span class="c1"># Línea de referencia (azar)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Tasa de Falsos Positivos (FPR)&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Tasa de Verdaderos Positivos (TPR)&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Curva ROC&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="s2">&quot;lower right&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Exactitud del modelo: 0.6294
+
+Reporte de Clasificación:
+                precision    recall  f1-score   support
+
+No Reingresado       0.63      0.73      0.68     10952
+   Reingresado       0.62      0.51      0.56      9402
+
+      accuracy                           0.63     20354
+     macro avg       0.63      0.62      0.62     20354
+  weighted avg       0.63      0.63      0.62     20354
+
+
+Matriz de Confusión:
+</pre></div>
+</div>
+<img alt="_images/c78a29ef17565db7282818abb0a320cd14f466c0c6f2b53ae87f1bb9faeda80d.png" src="_images/c78a29ef17565db7282818abb0a320cd14f466c0c6f2b53ae87f1bb9faeda80d.png" />
+<img alt="_images/f7fb42f8c48767af674c6e5f683487c3b94a57deace601cf0934ec8db6d85fe2.png" src="_images/f7fb42f8c48767af674c6e5f683487c3b94a57deace601cf0934ec8db6d85fe2.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># --- 7. GUARDAR EL MODELO ENTRENADO ---</span>
+
+<span class="c1"># Guardar el pipeline completo (preprocesador + modelo) en un archivo.</span>
+<span class="c1"># Así, podemos cargarlo más tarde para hacer nuevas predicciones sin tener que reentrenar.</span>
+<span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s2">&quot;modelo_logistico_diabetes.pkl&quot;</span><span class="p">,</span> <span class="s2">&quot;wb&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">file</span><span class="p">:</span>
+    <span class="n">pickle</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="n">pipeline</span><span class="p">,</span> <span class="n">file</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Modelo guardado exitosamente como &#39;modelo_logistico_diabetes.pkl&#39;&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Modelo guardado exitosamente como &#39;modelo_logistico_diabetes.pkl&#39;
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./."
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#descripcion-de-las-variables">Descripción de las variables</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#modelo-logistico">Modelo Logistico</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By José Menco, Camilo Vargas, Iván Ramirez
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2023.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>
