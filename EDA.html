@@ -373,21 +373,23 @@ document.write(`
             </div>
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">EDA</a><ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#descripcion-de-las-variables">Descripción de las variables</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#descripcion-de-las-variables"><strong>Descripción de las variables</strong></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#raza"><strong>Raza</strong></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#genero"><strong>Género</strong></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#edad"><strong>Edad</strong></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#weight"><strong>Weight</strong></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#admission-type"><strong>Admission Type</strong></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#admission-source-id"><strong>Admission Source ID</strong></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#time-in-hospital"><strong>Time in hospital</strong></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#numero-de-procedimientos-de-laboratorio"><strong>Número de procedimientos de laboratorio</strong></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#medicamentos"><strong>Medicamentos</strong></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#insulina"><strong>Insulina</strong></a></li>
 </ul>
 </li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#ivan">Iván</a><ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#weight">Weight</a></li>
 </ul>
 </li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#jose">José</a></li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#camilo">Camilo</a><ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#modelo-logistico">Modelo Logistico</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#modelo-logistico"><strong>Modelo Logistico</strong></a></li>
 </ul>
-</li>
-</ul>
-
             </nav>
         </div>
     </div>
@@ -398,10 +400,11 @@ document.write(`
 <div id="searchbox"></div>
                 <article class="bd-article">
                   
-  <section class="tex2jax_ignore mathjax_ignore" id="eda">
-<h1>EDA<a class="headerlink" href="#eda" title="Link to this heading">#</a></h1>
-<section id="descripcion-de-las-variables">
-<h2>Descripción de las variables<a class="headerlink" href="#descripcion-de-las-variables" title="Link to this heading">#</a></h2>
+  <center>
+<section class="tex2jax_ignore mathjax_ignore" id="eda">
+<h1><strong>EDA</strong><a class="headerlink" href="#eda" title="Link to this heading">#</a></h1>
+</center><section id="descripcion-de-las-variables">
+<h2><strong>Descripción de las variables</strong><a class="headerlink" href="#descripcion-de-las-variables" title="Link to this heading">#</a></h2>
 <ul class="simple">
 <li><p><strong>ID de encuentro</strong>: Identificador único de un encuentro.</p></li>
 <li><p><strong>Número de paciente</strong>: Identificador único de un paciente.</p></li>
@@ -446,8 +449,10 @@ document.write(`
 <span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
 <span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span>
 <span class="kn">import</span> <span class="nn">pickle</span> <span class="c1"># Para guardar nuestro modelo entrenado</span>
+<span class="kn">from</span> <span class="nn">scipy.stats</span> <span class="kn">import</span> <span class="n">pointbiserialr</span><span class="p">,</span> <span class="n">kstest</span><span class="p">,</span> <span class="n">norm</span><span class="p">,</span> <span class="n">chi2_contingency</span>
 
 <span class="c1"># Clases de Scikit-learn para preprocesamiento, modelado y evaluación</span>
+<span class="kn">from</span> <span class="nn">sklearn.preprocessing</span> <span class="kn">import</span> <span class="n">StandardScaler</span>
 <span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">train_test_split</span>
 <span class="kn">from</span> <span class="nn">sklearn.preprocessing</span> <span class="kn">import</span> <span class="n">MinMaxScaler</span><span class="p">,</span> <span class="n">OneHotEncoder</span>
 <span class="kn">from</span> <span class="nn">sklearn.compose</span> <span class="kn">import</span> <span class="n">ColumnTransformer</span>
@@ -873,6 +878,74 @@ memory usage: 38.8+ MB
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="o">.</span><span class="n">info</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;class &#39;pandas.core.frame.DataFrame&#39;&gt;
+RangeIndex: 101766 entries, 0 to 101765
+Data columns (total 50 columns):
+ #   Column                    Non-Null Count   Dtype 
+---  ------                    --------------   ----- 
+ 0   encounter_id              101766 non-null  int64 
+ 1   patient_nbr               101766 non-null  int64 
+ 2   race                      99493 non-null   object
+ 3   gender                    101766 non-null  object
+ 4   age                       101766 non-null  object
+ 5   weight                    3197 non-null    object
+ 6   admission_type_id         101766 non-null  int64 
+ 7   discharge_disposition_id  101766 non-null  int64 
+ 8   admission_source_id       101766 non-null  int64 
+ 9   time_in_hospital          101766 non-null  int64 
+ 10  payer_code                61510 non-null   object
+ 11  medical_specialty         51817 non-null   object
+ 12  num_lab_procedures        101766 non-null  int64 
+ 13  num_procedures            101766 non-null  int64 
+ 14  num_medications           101766 non-null  int64 
+ 15  number_outpatient         101766 non-null  int64 
+ 16  number_emergency          101766 non-null  int64 
+ 17  number_inpatient          101766 non-null  int64 
+ 18  diag_1                    101745 non-null  object
+ 19  diag_2                    101408 non-null  object
+ 20  diag_3                    100343 non-null  object
+ 21  number_diagnoses          101766 non-null  int64 
+ 22  max_glu_serum             5346 non-null    object
+ 23  A1Cresult                 17018 non-null   object
+ 24  metformin                 101766 non-null  object
+ 25  repaglinide               101766 non-null  object
+ 26  nateglinide               101766 non-null  object
+ 27  chlorpropamide            101766 non-null  object
+ 28  glimepiride               101766 non-null  object
+ 29  acetohexamide             101766 non-null  object
+ 30  glipizide                 101766 non-null  object
+ 31  glyburide                 101766 non-null  object
+ 32  tolbutamide               101766 non-null  object
+ 33  pioglitazone              101766 non-null  object
+ 34  rosiglitazone             101766 non-null  object
+ 35  acarbose                  101766 non-null  object
+ 36  miglitol                  101766 non-null  object
+ 37  troglitazone              101766 non-null  object
+ 38  tolazamide                101766 non-null  object
+ 39  examide                   101766 non-null  object
+ 40  citoglipton               101766 non-null  object
+ 41  insulin                   101766 non-null  object
+ 42  glyburide-metformin       101766 non-null  object
+ 43  glipizide-metformin       101766 non-null  object
+ 44  glimepiride-pioglitazone  101766 non-null  object
+ 45  metformin-rosiglitazone   101766 non-null  object
+ 46  metformin-pioglitazone    101766 non-null  object
+ 47  change                    101766 non-null  object
+ 48  diabetesMed               101766 non-null  object
+ 49  target                    101766 non-null  int64 
+dtypes: int64(14), object(36)
+memory usage: 38.8+ MB
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># 2.1. Conteo de valores de la variable objetivo</span>
 <span class="c1"># Esto es útil para verificar que la transformación funcionó.</span>
 <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Conteo de valores en la columna &#39;target&#39;:&quot;</span><span class="p">)</span>
@@ -915,12 +988,185 @@ Name: count, dtype: int64
 <img alt="_images/c1c2a124ae3fa8f11e10f7b8410360c17d2bfd69efcb07f8bc34b409d8db34fd.png" src="_images/c1c2a124ae3fa8f11e10f7b8410360c17d2bfd69efcb07f8bc34b409d8db34fd.png" />
 </div>
 </div>
+<section id="raza">
+<h3><strong>Raza</strong><a class="headerlink" href="#raza" title="Link to this heading">#</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sns</span><span class="o">.</span><span class="n">countplot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">df</span><span class="o">.</span><span class="n">race</span><span class="p">,</span> <span class="n">data</span> <span class="o">=</span> <span class="n">df</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Raza&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;Cantidad&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/d84172d5ee483a6c222b431094f2e1bc93e0b3ac440adc1eb22a58e15a2e860e.png" src="_images/d84172d5ee483a6c222b431094f2e1bc93e0b3ac440adc1eb22a58e15a2e860e.png" />
+</div>
+</div>
+<ul class="simple">
+<li><p>Caucásicos son el grupo mayoritario (al rededor de 750000), seguido por Afroamericanos (al rededor de 20000).</p></li>
+<li><p>Grupos como Asiáticos, Hispanos y Otras razas están subrepresentados (&lt;10,000 cada uno).</p></li>
+<li><p>La muestra desbalanceada podría afectar la generalización de resultados para minorías.</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sns</span><span class="o">.</span><span class="n">countplot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="s2">&quot;race&quot;</span><span class="p">,</span> <span class="n">hue</span><span class="o">=</span> <span class="s2">&quot;target&quot;</span><span class="p">,</span> <span class="n">data</span> <span class="o">=</span> <span class="n">df</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Readmitidos - Raza&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;Raza&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="s2">&quot;Readmisión&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;Cantidad&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/a87afa9f183921ce339eff318d802e690dfdd53a964193be80c1d3edaf0d8199.png" src="_images/a87afa9f183921ce339eff318d802e690dfdd53a964193be80c1d3edaf0d8199.png" />
+</div>
+</div>
+<ul class="simple">
+<li><p>Afroamericanos tienen la mayor proporción de readmisiones , pero también son el segundo grupo más numeroso.</p></li>
+<li><p>Caucásicos muestran una proporción similar de readmisiones en términos absolutos, pero su tamaño de grupo es mayor.</p></li>
+<li><p>Aunque “Otras razas” tienen menos pacientes, casi el 50% fueron readmitidos.</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sns</span><span class="o">.</span><span class="n">catplot</span><span class="p">(</span><span class="n">x</span> <span class="o">=</span> <span class="s2">&quot;race&quot;</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="s2">&quot;target&quot;</span><span class="p">,</span>
+            <span class="n">data</span> <span class="o">=</span> <span class="n">df</span><span class="p">,</span> <span class="n">kind</span> <span class="o">=</span> <span class="s2">&quot;bar&quot;</span><span class="p">,</span> <span class="n">height</span><span class="o">=</span> <span class="mi">5</span><span class="p">,</span> <span class="n">aspect</span> <span class="o">=</span> <span class="mf">1.2</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Probabilidad de readmisión&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;Readmitidos&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/3d2b95abd00a130a64245ebddd54f92f7f6f3917f3aa315f201d9f80ee244c03.png" src="_images/3d2b95abd00a130a64245ebddd54f92f7f6f3917f3aa315f201d9f80ee244c03.png" />
+</div>
+</div>
+<ul class="simple">
+<li><p>Caucasicos tienen la mayor probabilidad de readmisión, seguidos por Afroamericanos, pero tambien son los grupos más numerosos en los datos (posible sesgo)).</p></li>
+<li><p>Asíaticos y “otras razas” muestran las tasas más bajas.</p></li>
+</ul>
 </section>
+<section id="genero">
+<h3><strong>Género</strong><a class="headerlink" href="#genero" title="Link to this heading">#</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sns</span><span class="o">.</span><span class="n">countplot</span><span class="p">(</span><span class="n">x</span> <span class="o">=</span> <span class="s2">&quot;gender&quot;</span><span class="p">,</span> <span class="n">data</span> <span class="o">=</span> <span class="n">df</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Distribución según el género&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;Género&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;Cantidad&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/4bea2180a43d633b2e065d294956217f11af9498552c696275a69c00095a765d.png" src="_images/4bea2180a43d633b2e065d294956217f11af9498552c696275a69c00095a765d.png" />
+</div>
+</div>
+<ul class="simple">
+<li><p>Mujeres: Representan la mayor proporción de pacientes diabéticos en el conjunto de datos.</p></li>
+<li><p>Hombres: Constituyen alrededor del 40%, lo que sugiere una prevalencia menor en esta muestra.</p></li>
+<li><p>Género desconocido/inválido (Unknown/Invalid): La categoría es mínima (cercana a 0%), lo que indica que no afecta significativamente el análisis.</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sns</span><span class="o">.</span><span class="n">countplot</span><span class="p">(</span><span class="n">x</span> <span class="o">=</span> <span class="s2">&quot;gender&quot;</span><span class="p">,</span> <span class="n">hue</span> <span class="o">=</span> <span class="s2">&quot;target&quot;</span><span class="p">,</span> <span class="n">data</span> <span class="o">=</span> <span class="n">df</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Género - Readmitidos&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;Género&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;Cantidad&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">title</span> <span class="o">=</span> <span class="p">(</span><span class="s2">&quot;Readmisión&quot;</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/cc941f9e64be38cf3ad59e800656e9ea98620b790b75f4158b7d39c15302c71d.png" src="_images/cc941f9e64be38cf3ad59e800656e9ea98620b790b75f4158b7d39c15302c71d.png" />
+</div>
+</div>
+<ul class="simple">
+<li><p>Mujeres: Representan la mayor cantidad absoluta de readmisiones, coherente con su predominio en la muestra.</p></li>
+<li><p>Hombres: Aunque son menos numerosos, su tasa de readmisión es similar a la de las mujeres.</p></li>
+<li><p>En terminos de proporción ambos generos tienen menos readmitidos.</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">g</span> <span class="o">=</span> <span class="n">sns</span><span class="o">.</span><span class="n">catplot</span><span class="p">(</span><span class="n">x</span> <span class="o">=</span> <span class="s2">&quot;gender&quot;</span><span class="p">,</span><span class="n">y</span> <span class="o">=</span> <span class="s2">&quot;target&quot;</span><span class="p">,</span> 
+                <span class="n">data</span> <span class="o">=</span> <span class="n">df</span><span class="p">,</span> <span class="n">kind</span> <span class="o">=</span> <span class="s2">&quot;bar&quot;</span><span class="p">,</span> <span class="n">height</span><span class="o">=</span> <span class="mi">5</span><span class="p">)</span>
+<span class="n">g</span><span class="o">.</span><span class="n">set_ylabels</span><span class="p">(</span><span class="s2">&quot;Probabilidad de readmisión&quot;</span><span class="p">)</span>
+<span class="n">g</span><span class="o">.</span><span class="n">set_xlabels</span><span class="p">(</span><span class="s2">&quot;Género&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/a6cac1f9d476b9804b9aad7aae07bb4711980a415c882b7c40310d9da70e38b5.png" src="_images/a6cac1f9d476b9804b9aad7aae07bb4711980a415c882b7c40310d9da70e38b5.png" />
+</div>
+</div>
+<ul class="simple">
+<li><p>Las mujeres diabéticas tienen un ligero mayor riesgo de readmisión hospitalaria que los hombres en esta muestra, aunque no se puede concluir nada aún.</p></li>
+</ul>
 </section>
-<section class="tex2jax_ignore mathjax_ignore" id="ivan">
-<h1>Iván<a class="headerlink" href="#ivan" title="Link to this heading">#</a></h1>
+<section id="edad">
+<h3><strong>Edad</strong><a class="headerlink" href="#edad" title="Link to this heading">#</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">countplot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="s2">&quot;age&quot;</span><span class="p">,</span> <span class="n">data</span> <span class="o">=</span> <span class="n">df</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;edad&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;Cantidad&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/816d3e14f39ceb5fd3569933907801ca81579def1692dd81ebc24f83beddc9e5.png" src="_images/816d3e14f39ceb5fd3569933907801ca81579def1692dd81ebc24f83beddc9e5.png" />
+</div>
+</div>
+<ul class="simple">
+<li><p>La mayor parte del estudio se concentra en persons mayores de 50 años y menores que 90 años</p></li>
+<li><p>El grupo de edades más numeroso dentro del estudio es entre 70 y 80 años con aproximadamente 25000 personas dentro de este rango de edad</p></li>
+<li><p>Prácticamente nula representación en [0-10] años</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">countplot</span><span class="p">(</span><span class="n">x</span> <span class="o">=</span> <span class="s2">&quot;age&quot;</span><span class="p">,</span> <span class="n">hue</span> <span class="o">=</span> <span class="s2">&quot;target&quot;</span><span class="p">,</span> <span class="n">data</span> <span class="o">=</span> <span class="n">df</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Edad - Readmitidos&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;Edad&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="s2">&quot;Readmisión&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;Cantidad&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/6512b4229cb390449ef7712e7b4328227c6b2c7f432fb29c04d3742dbf427567.png" src="_images/6512b4229cb390449ef7712e7b4328227c6b2c7f432fb29c04d3742dbf427567.png" />
+</div>
+</div>
+<ul class="simple">
+<li><p>Aunque con poca representación, en el rango de 20 a 30 años, tienen la proporción más grande de pacientes readmitidos</p></li>
+<li><p>De manera general los pacientes de todas las edades existen menos readmitidos.</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">y</span> <span class="o">=</span> <span class="n">sns</span><span class="o">.</span><span class="n">catplot</span><span class="p">(</span><span class="n">x</span> <span class="o">=</span> <span class="s2">&quot;age&quot;</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="s2">&quot;target&quot;</span><span class="p">,</span> <span class="n">data</span> <span class="o">=</span> <span class="n">df</span><span class="p">,</span> 
+                   <span class="n">kind</span> <span class="o">=</span> <span class="s2">&quot;bar&quot;</span><span class="p">,</span> <span class="n">height</span> <span class="o">=</span> <span class="mi">5</span><span class="p">,</span> <span class="n">aspect</span> <span class="o">=</span> <span class="mf">1.3</span><span class="p">)</span>
+<span class="n">y</span><span class="o">.</span><span class="n">set_ylabels</span><span class="p">(</span><span class="s2">&quot;Probabilidad de readmisión&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/0790b2b688e049ab0dfcc1633590f3f2eb375adcfe4bc3d8a521d9f0771999b6.png" src="_images/0790b2b688e049ab0dfcc1633590f3f2eb375adcfe4bc3d8a521d9f0771999b6.png" />
+</div>
+</div>
+<ul class="simple">
+<li><p>La mayor probabilidad de readmisión la tienen los pacientes del rango de edad de 80 a 90 años con aproximadamente 47% de probabilidad de readmisión.</p></li>
+<li><p>En el estudio a partir de los 20 años se tiene una probabilidad de ser readmitido aproximada al 40%</p></li>
+</ul>
+</section>
 <section id="weight">
-<h2>Weight<a class="headerlink" href="#weight" title="Link to this heading">#</a></h2>
+<h3><strong>Weight</strong><a class="headerlink" href="#weight" title="Link to this heading">#</a></h3>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;weight&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">dropna</span><span class="p">()</span><span class="o">.</span><span class="n">unique</span><span class="p">())</span>
@@ -955,13 +1201,6 @@ Name: count, dtype: int64
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">descripcion</span><span class="o">=</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;avg_weight&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">describe</span><span class="p">()</span>
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sns</span><span class="o">.</span><span class="n">countplot</span><span class="p">(</span><span class="n">x</span> <span class="o">=</span> <span class="s2">&quot;avg_weight&quot;</span><span class="p">,</span> <span class="n">data</span> <span class="o">=</span> <span class="n">df</span><span class="p">,</span>
             <span class="n">order</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">avg_weight</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()</span><span class="o">.</span><span class="n">index</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Distribución de Pacientes por Peso&#39;</span><span class="p">)</span>
@@ -986,22 +1225,673 @@ Name: count, dtype: int64
 </div>
 </div>
 </section>
+<section id="admission-type">
+<h3><strong>Admission Type</strong><a class="headerlink" href="#admission-type" title="Link to this heading">#</a></h3>
+<p>La variable admission_type_id describe cómo fue clasificada la admisión del paciente (por ejemplo, si fue una emergencia, urgente, electiva, etc.). Al igual que la fuente de admisión, contiene varios IDs que podemos simplificar.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sns</span><span class="o">.</span><span class="n">countplot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="s2">&quot;admission_type_id&quot;</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">df</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Distribución Original de Admission Type IDs&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Distribución de IDs de Tipo de Admisión:&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;admission_type_id&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">value_counts</span><span class="p">())</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/f99ac59a64407e0317d3c7cb59c0d94f007d41f6e95ad47e6318f797906bf99a.png" src="_images/f99ac59a64407e0317d3c7cb59c0d94f007d41f6e95ad47e6318f797906bf99a.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Distribución de IDs de Tipo de Admisión:
+admission_type_id
+1    53990
+3    18869
+2    18480
+6     5291
+5     4785
+8      320
+7       21
+4       10
+Name: count, dtype: int64
+</pre></div>
+</div>
+</div>
+</div>
+<p>La estrategia de agrupación es la siguiente:</p>
+<ol class="arabic simple">
+<li><p><strong>Emergency/Urgent</strong>: Se combinan los tipos de admisión <strong>Emergencia (1)</strong>, <strong>Urgente (2)</strong> y <strong>Centro de Trauma (7)</strong>. Todos representan admisiones no planificadas y de alta prioridad.</p></li>
+<li><p><strong>Elective</strong>: El tipo de admisión <strong>Electiva (3)</strong> se mantiene como una categoría separada, ya que representa un ingreso planificado, que es fundamentalmente diferente a una emergencia.</p></li>
+<li><p><strong>Newborn</strong>: El tipo <strong>Recién Nacido (4)</strong> es un caso muy específico y se mantiene separado.</p></li>
+<li><p><strong>Unknown/NA</strong>: Se unifican todos los valores nulos o no disponibles (<strong>5, 6, 8</strong>) en un único valor <code class="docutils literal notranslate"><span class="pre">NaN</span></code> para ser tratado como dato faltante.</p></li>
+</ol>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># --- 1. Crear el mapa de agrupación ---</span>
+<span class="n">admission_type_map</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="c1"># Grupo &#39;Emergency/Urgent&#39;</span>
+    <span class="mi">1</span><span class="p">:</span> <span class="s1">&#39;Emergency/Urgent&#39;</span><span class="p">,</span> <span class="mi">2</span><span class="p">:</span> <span class="s1">&#39;Emergency/Urgent&#39;</span><span class="p">,</span> <span class="mi">7</span><span class="p">:</span> <span class="s1">&#39;Emergency/Urgent&#39;</span><span class="p">,</span>
+    
+    <span class="c1"># Grupo &#39;Elective&#39;</span>
+    <span class="mi">3</span><span class="p">:</span> <span class="s1">&#39;Elective&#39;</span><span class="p">,</span>
+    
+    <span class="c1"># Grupo &#39;Newborn&#39;</span>
+    <span class="mi">4</span><span class="p">:</span> <span class="s1">&#39;Newborn&#39;</span><span class="p">,</span>
+    
+    <span class="c1"># Grupo &#39;Unknown/NA&#39;</span>
+    <span class="mi">5</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span><span class="p">,</span> <span class="mi">6</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span><span class="p">,</span> <span class="mi">8</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span><span class="p">,</span>
+<span class="p">}</span>
+
+<span class="c1"># --- 2. Aplicar el mapeo para crear la nueva columna ---</span>
+<span class="n">df</span><span class="p">[</span><span class="s1">&#39;admission_type_group&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;admission_type_id&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="n">admission_type_map</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">countplot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="s2">&quot;admission_type_group&quot;</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">df</span><span class="p">,</span> <span class="n">order</span><span class="o">=</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;admission_type_group&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()</span><span class="o">.</span><span class="n">index</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Distribución de Grupos de Tipo de Admisión (Después de la Agrupación)&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/1cd92033e71c0c9a40de72f8cea277f4d4e11f81ba0a8753413bd56e4e786432.png" src="_images/1cd92033e71c0c9a40de72f8cea277f4d4e11f81ba0a8753413bd56e4e786432.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Calcular el orden de las barras</span>
+<span class="n">plot_order</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s1">&#39;admission_type_group&#39;</span><span class="p">)[</span><span class="s1">&#39;target&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="n">ascending</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span><span class="o">.</span><span class="n">index</span>
+
+<span class="c1"># Crear el gráfico</span>
+<span class="n">g</span> <span class="o">=</span> <span class="n">sns</span><span class="o">.</span><span class="n">catplot</span><span class="p">(</span>
+    <span class="n">x</span><span class="o">=</span><span class="s1">&#39;admission_type_group&#39;</span><span class="p">,</span> 
+    <span class="n">y</span><span class="o">=</span><span class="s1">&#39;target&#39;</span><span class="p">,</span> 
+    <span class="n">data</span><span class="o">=</span><span class="n">df</span><span class="p">,</span> 
+    <span class="n">kind</span><span class="o">=</span><span class="s1">&#39;bar&#39;</span><span class="p">,</span> 
+    <span class="n">order</span><span class="o">=</span><span class="n">plot_order</span><span class="p">,</span>
+    <span class="n">height</span><span class="o">=</span><span class="mi">6</span><span class="p">,</span> <span class="n">aspect</span><span class="o">=</span><span class="mf">1.2</span>
+<span class="p">)</span>
+<span class="n">g</span><span class="o">.</span><span class="n">set_axis_labels</span><span class="p">(</span><span class="s2">&quot;Grupo de Tipo de Admisión&quot;</span><span class="p">,</span> <span class="s2">&quot;Tasa de Reingreso Promedio&quot;</span><span class="p">)</span>
+<span class="n">g</span><span class="o">.</span><span class="n">fig</span><span class="o">.</span><span class="n">suptitle</span><span class="p">(</span><span class="s2">&quot;Tasa de Reingreso por Tipo de Admisión&quot;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="mf">1.03</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/d035c22b94a7851fef149d5cc7384f2313ce96eb04503509f4034deaf8d732b9.png" src="_images/d035c22b94a7851fef149d5cc7384f2313ce96eb04503509f4034deaf8d732b9.png" />
+</div>
+</div>
+<p>La clase Newborn sería la más problemática en este caso con tan pocas observaciones.</p>
 </section>
-<section class="tex2jax_ignore mathjax_ignore" id="jose">
-<h1>José<a class="headerlink" href="#jose" title="Link to this heading">#</a></h1>
+<section id="admission-source-id">
+<h3><strong>Admission Source ID</strong><a class="headerlink" href="#admission-source-id" title="Link to this heading">#</a></h3>
+<p>La variable admission_source_id describe la fuente de la admisión hospitalaria del paciente. Contiene 26 identificadores numéricos distintos, muchos de los cuales tienen una frecuencia muy baja o representan conceptos similares.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sns</span><span class="o">.</span><span class="n">countplot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="s2">&quot;admission_source_id&quot;</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">df</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Distribución Original de Admission Source ID&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/d6afe407f4aebf61a3cbd721ff5147c4d55da5f4156437846c90ce952363ac66.png" src="_images/d6afe407f4aebf61a3cbd721ff5147c4d55da5f4156437846c90ce952363ac66.png" />
+</div>
+</div>
+<p><strong>Observaciones:</strong></p>
+<ul class="simple">
+<li><p>La distribución está muy desbalanceada. La categoría <strong>7 (Sala de Emergencias)</strong> domina por completo, seguida de la <strong>1 (Referencia Médica)</strong>.</p></li>
+<li><p>Muchas categorías (como 8, 11, 13, 14, 22, 25) tienen un número de registros tan bajo que son estadísticamente insignificantes por sí solas.</p></li>
+<li><p>Existen múltiples IDs para conceptos similares (ej., varios tipos de “Referencia” y “Traslado”).</p></li>
+<li><p>Hay IDs que representan datos nulos o inválidos (ej., 9: ‘Not Available’, 20: ‘Not Mapped’, 17: ‘NULL’).</p></li>
+</ul>
+<p>Para solucionar estos problemas, decidimos agrupar los 26 IDs en un número menor de categorías lógicas y coherentes.</p>
+<p>La estrategia de agrupación fue la siguiente:</p>
+<ol class="arabic simple">
+<li><p><strong>Emergency</strong>: Agrupa los ingresos a través de la sala de emergencias.</p></li>
+<li><p><strong>Referral</strong>: Consolida todas las formas de referencias médicas (de médico, clínica, etc.).</p></li>
+<li><p><strong>Transfer</strong>: Agrupa todos los traslados desde otras instalaciones médicas (hospitales, centros de enfermería, etc.).</p></li>
+<li><p><strong>Birth-Related</strong>: Combina todos los ingresos relacionados con partos.</p></li>
+<li><p><strong>Other</strong>: Categorías raras y distintas como “Orden Judicial”.</p></li>
+<li><p><strong>Unknown/NA</strong>: Unifica todos los valores nulos, desconocidos o no mapeados, que luego serán tratados como datos faltantes (<code class="docutils literal notranslate"><span class="pre">NaN</span></code>).</p></li>
+</ol>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Crear el diccionario de mapeo</span>
+<span class="n">admission_map</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="c1"># Grupo &#39;Emergency&#39;</span>
+    <span class="mi">7</span><span class="p">:</span> <span class="s1">&#39;Emergency&#39;</span><span class="p">,</span>
+    
+    <span class="c1"># Grupo &#39;Referral&#39;</span>
+    <span class="mi">1</span><span class="p">:</span> <span class="s1">&#39;Referral&#39;</span><span class="p">,</span> <span class="mi">2</span><span class="p">:</span> <span class="s1">&#39;Referral&#39;</span><span class="p">,</span> <span class="mi">3</span><span class="p">:</span> <span class="s1">&#39;Referral&#39;</span><span class="p">,</span>
+    
+    <span class="c1"># Grupo &#39;Transfer&#39;</span>
+    <span class="mi">4</span><span class="p">:</span> <span class="s1">&#39;Transfer&#39;</span><span class="p">,</span> <span class="mi">5</span><span class="p">:</span> <span class="s1">&#39;Transfer&#39;</span><span class="p">,</span> <span class="mi">6</span><span class="p">:</span> <span class="s1">&#39;Transfer&#39;</span><span class="p">,</span> <span class="mi">10</span><span class="p">:</span> <span class="s1">&#39;Transfer&#39;</span><span class="p">,</span> 
+    <span class="mi">18</span><span class="p">:</span> <span class="s1">&#39;Transfer&#39;</span><span class="p">,</span> <span class="mi">19</span><span class="p">:</span> <span class="s1">&#39;Transfer&#39;</span><span class="p">,</span> <span class="mi">22</span><span class="p">:</span> <span class="s1">&#39;Transfer&#39;</span><span class="p">,</span> <span class="mi">25</span><span class="p">:</span> <span class="s1">&#39;Transfer&#39;</span><span class="p">,</span> <span class="mi">26</span><span class="p">:</span> <span class="s1">&#39;Transfer&#39;</span><span class="p">,</span>
+    
+    <span class="c1"># Grupo &#39;Birth-Related&#39;</span>
+    <span class="mi">11</span><span class="p">:</span> <span class="s1">&#39;Birth-Related&#39;</span><span class="p">,</span> <span class="mi">12</span><span class="p">:</span> <span class="s1">&#39;Birth-Related&#39;</span><span class="p">,</span> <span class="mi">13</span><span class="p">:</span> <span class="s1">&#39;Birth-Related&#39;</span><span class="p">,</span> <span class="mi">14</span><span class="p">:</span> <span class="s1">&#39;Birth-Related&#39;</span><span class="p">,</span>
+    <span class="mi">23</span><span class="p">:</span> <span class="s1">&#39;Birth-Related&#39;</span><span class="p">,</span> <span class="mi">24</span><span class="p">:</span> <span class="s1">&#39;Birth-Related&#39;</span><span class="p">,</span>
+    
+    <span class="c1"># Grupo &#39;Other&#39;</span>
+    <span class="mi">8</span><span class="p">:</span> <span class="s1">&#39;Other&#39;</span><span class="p">,</span>
+    
+    <span class="c1"># Grupo &#39;Unknown/NA&#39;</span>
+    <span class="mi">9</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span><span class="p">,</span> <span class="mi">15</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span><span class="p">,</span> <span class="mi">17</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span><span class="p">,</span> <span class="mi">20</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span><span class="p">,</span> <span class="mi">21</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span>
+<span class="p">}</span>
+
+<span class="c1"># --- 2. Aplicar el mapeo a la columna ---</span>
+<span class="n">df</span><span class="p">[</span><span class="s1">&#39;admission_source_group&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;admission_source_id&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="n">admission_map</span><span class="p">)</span>
+
+<span class="c1"># --- 3. Analizar los resultados de la nueva agrupación ---</span>
+
+<span class="c1"># a) Ver la distribución de las nuevas categorías</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Distribución de las nuevas categorías de &#39;admission_source&#39;:&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;admission_source_group&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">value_counts</span><span class="p">(</span><span class="n">dropna</span><span class="o">=</span><span class="kc">False</span><span class="p">))</span> <span class="c1"># dropna=False para contar los NaN</span>
+
+<span class="c1"># b) Visualizar la nueva distribución</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">countplot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="s2">&quot;admission_source_group&quot;</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">df</span><span class="p">,</span> <span class="n">order</span><span class="o">=</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;admission_source_group&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()</span><span class="o">.</span><span class="n">index</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Distribución de Grupos de Fuente de Admisión&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Frecuencia&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Grupo de Admisión&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xticks</span><span class="p">(</span><span class="n">rotation</span><span class="o">=</span><span class="mi">45</span><span class="p">)</span> <span class="c1"># Rotar las etiquetas para que no se solapen</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+
+<span class="c1"># c) La pregunta clave: ¿Influye esta nueva categoría en el reingreso?</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">7</span><span class="p">))</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">countplot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="s2">&quot;admission_source_group&quot;</span><span class="p">,</span> <span class="n">hue</span><span class="o">=</span><span class="s2">&quot;target&quot;</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">df</span><span class="p">,</span> <span class="n">order</span><span class="o">=</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;admission_source_group&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()</span><span class="o">.</span><span class="n">index</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Reingreso según el Grupo de Fuente de Admisión&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Frecuencia&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Grupo de Admisión&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xticks</span><span class="p">(</span><span class="n">rotation</span><span class="o">=</span><span class="mi">45</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="s1">&#39;Reingreso&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Distribución de las nuevas categorías de &#39;admission_source&#39;:
+admission_source_group
+Emergency        57494
+Referral         30856
+NaN               7067
+Transfer          6328
+Other               16
+Birth-Related        5
+Name: count, dtype: int64
+</pre></div>
+</div>
+<img alt="_images/3cb8779ffaa65f17a0953307855a11687ecf2a1eb491f8b620f71d35d5021649.png" src="_images/3cb8779ffaa65f17a0953307855a11687ecf2a1eb491f8b620f71d35d5021649.png" />
+<img alt="_images/6a93f8348fadf142195e208edca317d237e9fd95ecb27a2c858bad50412ec929.png" src="_images/6a93f8348fadf142195e208edca317d237e9fd95ecb27a2c858bad50412ec929.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plot_order</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s1">&#39;admission_source_group&#39;</span><span class="p">)[</span><span class="s1">&#39;target&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="n">ascending</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span><span class="o">.</span><span class="n">index</span>
+
+<span class="c1"># Usamos catplot para crear el gráfico de barras.</span>
+<span class="c1"># &#39;y&#39; es nuestra variable objetivo (0 o 1), por lo que el promedio es la tasa de reingreso.</span>
+<span class="n">g</span> <span class="o">=</span> <span class="n">sns</span><span class="o">.</span><span class="n">catplot</span><span class="p">(</span>
+    <span class="n">x</span><span class="o">=</span><span class="s1">&#39;admission_source_group&#39;</span><span class="p">,</span> 
+    <span class="n">y</span><span class="o">=</span><span class="s1">&#39;target&#39;</span><span class="p">,</span> 
+    <span class="n">data</span><span class="o">=</span><span class="n">df</span><span class="p">,</span> 
+    <span class="n">kind</span><span class="o">=</span><span class="s1">&#39;bar&#39;</span><span class="p">,</span> 
+    <span class="n">order</span><span class="o">=</span><span class="n">plot_order</span><span class="p">,</span> <span class="c1"># Aplicamos el orden calculado</span>
+    <span class="n">height</span><span class="o">=</span><span class="mi">6</span><span class="p">,</span>         <span class="c1"># Ajustamos el tamaño para mayor claridad</span>
+    <span class="n">aspect</span><span class="o">=</span><span class="mf">1.5</span>        
+<span class="p">)</span>
+
+<span class="c1"># Mejoramos las etiquetas y el título para una presentación profesional.</span>
+<span class="n">g</span><span class="o">.</span><span class="n">set_axis_labels</span><span class="p">(</span><span class="s2">&quot;Grupo de Fuente de Admisión&quot;</span><span class="p">,</span> <span class="s2">&quot;Tasa de Reingreso Promedio&quot;</span><span class="p">)</span>
+<span class="n">g</span><span class="o">.</span><span class="n">fig</span><span class="o">.</span><span class="n">suptitle</span><span class="p">(</span><span class="s2">&quot;Tasa de Reingreso por Fuente de Admisión&quot;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="mf">1.03</span><span class="p">)</span> <span class="c1"># Título principal</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xticks</span><span class="p">(</span><span class="n">rotation</span><span class="o">=</span><span class="mi">30</span><span class="p">,</span> <span class="n">ha</span><span class="o">=</span><span class="s1">&#39;right&#39;</span><span class="p">)</span> <span class="c1"># Rotamos las etiquetas para que no se superpongan</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/62c0624a78dc82b689ff1209fac9ee4a60ea01110424f037b6cea822f2de5df9.png" src="_images/62c0624a78dc82b689ff1209fac9ee4a60ea01110424f037b6cea822f2de5df9.png" />
+</div>
+</div>
+<p><strong>Qué vemos:</strong> La barra se sitúa en torno al <strong>37%</strong>, pero lo más importante es el <strong>enorme intervalo de confianza</strong>. Este intervalo abarca desde ~0.15 hasta más de 0.60.
+La barra de error tan grande nos dice que hay <strong>muy pocos datos</strong> en esta categoría (<code class="docutils literal notranslate"><span class="pre">Court/Law</span> <span class="pre">Enforcement</span></code>). Debido a esta falta de datos, la estimación del 37% es <strong>muy poco fiable</strong>. No podemos sacar conclusiones sólidas sobre este grupo; Es un punto de datos ruidoso.</p>
 </section>
-<section class="tex2jax_ignore mathjax_ignore" id="camilo">
-<h1>Camilo<a class="headerlink" href="#camilo" title="Link to this heading">#</a></h1>
+<section id="time-in-hospital">
+<h3><strong>Time in hospital</strong><a class="headerlink" href="#time-in-hospital" title="Link to this heading">#</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;time_in_hospital&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">describe</span><span class="p">()</span><span class="o">.</span><span class="n">to_frame</span><span class="p">()</span><span class="o">.</span><span class="n">style</span><span class="o">.</span><span class="n">set_caption</span><span class="p">(</span><span class="s2">&quot;Resumen estadístico de time_in_hospital&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><style type="text/css">
+</style>
+<table id="T_f9e71">
+  <caption>Resumen estadístico de time_in_hospital</caption>
+  <thead>
+    <tr>
+      <th class="blank level0" >&nbsp;</th>
+      <th id="T_f9e71_level0_col0" class="col_heading level0 col0" >time_in_hospital</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th id="T_f9e71_level0_row0" class="row_heading level0 row0" >count</th>
+      <td id="T_f9e71_row0_col0" class="data row0 col0" >101766.000000</td>
+    </tr>
+    <tr>
+      <th id="T_f9e71_level0_row1" class="row_heading level0 row1" >mean</th>
+      <td id="T_f9e71_row1_col0" class="data row1 col0" >4.395987</td>
+    </tr>
+    <tr>
+      <th id="T_f9e71_level0_row2" class="row_heading level0 row2" >std</th>
+      <td id="T_f9e71_row2_col0" class="data row2 col0" >2.985108</td>
+    </tr>
+    <tr>
+      <th id="T_f9e71_level0_row3" class="row_heading level0 row3" >min</th>
+      <td id="T_f9e71_row3_col0" class="data row3 col0" >1.000000</td>
+    </tr>
+    <tr>
+      <th id="T_f9e71_level0_row4" class="row_heading level0 row4" >25%</th>
+      <td id="T_f9e71_row4_col0" class="data row4 col0" >2.000000</td>
+    </tr>
+    <tr>
+      <th id="T_f9e71_level0_row5" class="row_heading level0 row5" >50%</th>
+      <td id="T_f9e71_row5_col0" class="data row5 col0" >4.000000</td>
+    </tr>
+    <tr>
+      <th id="T_f9e71_level0_row6" class="row_heading level0 row6" >75%</th>
+      <td id="T_f9e71_row6_col0" class="data row6 col0" >6.000000</td>
+    </tr>
+    <tr>
+      <th id="T_f9e71_level0_row7" class="row_heading level0 row7" >max</th>
+      <td id="T_f9e71_row7_col0" class="data row7 col0" >14.000000</td>
+    </tr>
+  </tbody>
+</table>
+</div></div>
+</div>
+<ul class="simple">
+<li><p><strong>Promedio:</strong> 4.4 días.</p></li>
+<li><p><strong>Mediana:</strong> 4 días (la mitad de los pacientes se queda 4 días o menos).</p></li>
+<li><p><strong>Std:</strong> La desviación estándar es alta (casi 3 días), lo que significa que las duraciones de las estancias no son consistentes. Varían mucho entre pacientes.</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span><span class="mi">5</span><span class="p">))</span>
+
+<span class="c1"># Histograma</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">histplot</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;time_in_hospital&#39;</span><span class="p">],</span> 
+             <span class="n">bins</span><span class="o">=</span><span class="nb">range</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;time_in_hospital&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">min</span><span class="p">(),</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;time_in_hospital&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">max</span><span class="p">()</span> <span class="o">+</span> <span class="mi">1</span><span class="p">),</span> 
+             <span class="n">kde</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>  
+             <span class="n">color</span><span class="o">=</span><span class="s1">&#39;skyblue&#39;</span><span class="p">,</span> 
+             <span class="n">edgecolor</span><span class="o">=</span><span class="s1">&#39;black&#39;</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Distribución de &#39;time_in_hospital&#39;&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;Días en el hospital&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;Frecuencia&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/697bc8d871acb2ae49f591abe1cd0fecfcf2ec1cdc09e1f212585285b17adc9c.png" src="_images/697bc8d871acb2ae49f591abe1cd0fecfcf2ec1cdc09e1f212585285b17adc9c.png" />
+</div>
+</div>
+</section>
+<section id="numero-de-procedimientos-de-laboratorio">
+<h3><strong>Número de procedimientos de laboratorio</strong><a class="headerlink" href="#numero-de-procedimientos-de-laboratorio" title="Link to this heading">#</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sns</span><span class="o">.</span><span class="n">histplot</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">num_lab_procedures</span><span class="p">,</span> <span class="n">bins</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span> <span class="n">kde</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;Pruebas de laboratorio&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;Cantidad&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/2d960bc4e9ba364cc8412dedc5d9739d8f3d17ebae646fca595ed5469d6c700c.png" src="_images/2d960bc4e9ba364cc8412dedc5d9739d8f3d17ebae646fca595ed5469d6c700c.png" />
+</div>
+</div>
+<ul class="simple">
+<li><p>Los pacientes en su mayoría se hicieron entre 40 y 70 pruebas de laboratorio.</p></li>
+<li><p>Rara vez los pacientes se hacen más de 80 pruebas de laboratorio.</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sns</span><span class="o">.</span><span class="n">boxplot</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">df</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="s1">&#39;target&#39;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s1">&#39;num_lab_procedures&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;Readmisión (0 = No, 1 = Sí)&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;Número de procedimientos de laboratorio&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Procedimientos de laboratorio por estado de readmisión&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/2cad9819fb459b4c0b2781d951cf501af8ff75da2399865468e03be828b40b4b.png" src="_images/2cad9819fb459b4c0b2781d951cf501af8ff75da2399865468e03be828b40b4b.png" />
+</div>
+</div>
+<ul class="simple">
+<li><p>Los pacientes no readmitidos tienen una mediana de procedimientos de laboratorio ligeramente menor que los readmitidos.</p></li>
+<li><p>Hay una tendencia leve a que los pacientes readmitidos hayan pasado por más procedimientos de laboratorio que los no readmitidos.</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Agrupamos por número de procedimientos y calculamos la probabilidad de readmisión</span>
+<span class="n">prob_df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s1">&#39;num_lab_procedures&#39;</span><span class="p">)[</span><span class="s1">&#39;target&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span><span class="o">.</span><span class="n">reset_index</span><span class="p">()</span>
+
+<span class="c1"># Graficamos</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="mi">5</span><span class="p">))</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">lineplot</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">prob_df</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="s1">&#39;num_lab_procedures&#39;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s1">&#39;target&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;Número de procedimientos de laboratorio&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;Probabilidad de readmisión&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Probabilidad de readmisión según procedimientos de laboratorio&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylim</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>  <span class="c1"># La probabilidad siempre está entre 0 y 1</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/e09eb463bd4a12e28633df3809fa8f2c440c92498b614bd2118e665270d841a7.png" src="_images/e09eb463bd4a12e28633df3809fa8f2c440c92498b614bd2118e665270d841a7.png" />
+</div>
+</div>
+<ul class="simple">
+<li><p>En la mayor parte del rango (0 a 90 procedimientos de laboratorio), la probabilidad de readmisión oscila entre 0.4 y 0.5.</p></li>
+<li><p>A partir de ~100 procedimientos, la curva se vuelve muy inestable con picos que alcanzan 1.0 y caídas abruptas, lo que puede ser explicado por la escasez de datos en esta zona.</p></li>
+</ul>
+</section>
+<section id="medicamentos">
+<h3><strong>Medicamentos</strong><a class="headerlink" href="#medicamentos" title="Link to this heading">#</a></h3>
+<p>Nos enfrentamos a 24 variables que describen el estado de la medicación para la diabetes de cada paciente. Cada una puede tener los valores “Up”, “Down”, “Steady” o “No”.</p>
+<p>Revisaremos por separado solo la insulina, y mas abajo se encontraran todos los demás medicamentos.</p>
+<section id="insulina">
+<h4><strong>Insulina</strong><a class="headerlink" href="#insulina" title="Link to this heading">#</a></h4>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">countplot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="s1">&#39;insulin&#39;</span><span class="p">,</span> <span class="n">hue</span><span class="o">=</span><span class="s1">&#39;target&#39;</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">df</span><span class="p">,</span> <span class="n">order</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;No&#39;</span><span class="p">,</span> <span class="s1">&#39;Steady&#39;</span><span class="p">,</span> <span class="s1">&#39;Down&#39;</span><span class="p">,</span> <span class="s1">&#39;Up&#39;</span><span class="p">])</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Distribución del Uso de Insulina&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Estado de la Insulina&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Conteo de Pacientes&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Distribución por categoría de Insulina:&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;insulin&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">value_counts</span><span class="p">())</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/1ad58ed84af5755947074aa59cd56eae7623d4bc69f768b8ac329334a42cab5f.png" src="_images/1ad58ed84af5755947074aa59cd56eae7623d4bc69f768b8ac329334a42cab5f.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Distribución por categoría de Insulina:
+insulin
+No        47383
+Steady    30849
+Down      12218
+Up        11316
+Name: count, dtype: int64
+</pre></div>
+</div>
+</div>
+</div>
+<ol class="arabic simple">
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">Down</span></code> (Dosis Disminuida):</strong></p>
+<ul class="simple">
+<li><p><strong>Qué vemos:</strong> Aquí ocurre un <strong>cambio fundamental</strong>. Por primera vez, la barra de reingresados es <strong>más alta</strong> que la barra azul (<code class="docutils literal notranslate"><span class="pre">target=0</span></code>, no reingresados).</p></li>
+<li><p>En el grupo de pacientes cuya dosis de insulina fue disminuida, <strong>es más probable que sean reingresados a que no lo sean</strong>. Esto es una señal de alerta muy fuerte. Una disminución en la dosis puede indicar problemas como hipoglucemias recurrentes, lo cual es un factor de riesgo significativo para futuras complicaciones y hospitalizaciones.</p></li>
+</ul>
+</li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">Up</span></code> (Dosis Aumentada):</strong></p>
+<ul class="simple">
+<li><p><strong>Qué vemos:</strong> Similar al grupo “Down”, la barra de reingresados es ligeramente más alta que la barra de ‘no reingresados’.</p></li>
+<li><p>Al igual que en el grupo “Down”, los pacientes que necesitaron un aumento de insulina tienen una mayor probabilidad de ser reingresados. Un aumento de la dosis indica un control glucémico deficiente o el empeoramiento de su condición, lo que los pone en un alto riesgo de reingreso.</p></li>
+</ul>
+</li>
+</ol>
+<div class="cell tag_hide-output docutils container">
+<div class="cell_input above-output-prompt docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Lista de todas las columnas de medicamentos</span>
+<span class="n">drug_columns</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;metformin&#39;</span><span class="p">,</span> <span class="s1">&#39;repaglinide&#39;</span><span class="p">,</span> <span class="s1">&#39;nateglinide&#39;</span><span class="p">,</span> <span class="s1">&#39;chlorpropamide&#39;</span><span class="p">,</span> 
+             <span class="s1">&#39;glimepiride&#39;</span><span class="p">,</span> <span class="s1">&#39;acetohexamide&#39;</span><span class="p">,</span> <span class="s1">&#39;glipizide&#39;</span><span class="p">,</span> <span class="s1">&#39;glyburide&#39;</span><span class="p">,</span> <span class="s1">&#39;tolbutamide&#39;</span><span class="p">,</span>
+             <span class="s1">&#39;pioglitazone&#39;</span><span class="p">,</span> <span class="s1">&#39;rosiglitazone&#39;</span><span class="p">,</span> <span class="s1">&#39;acarbose&#39;</span><span class="p">,</span> <span class="s1">&#39;miglitol&#39;</span><span class="p">,</span> <span class="s1">&#39;troglitazone&#39;</span><span class="p">,</span>
+             <span class="s1">&#39;tolazamide&#39;</span><span class="p">,</span> <span class="s1">&#39;examide&#39;</span><span class="p">,</span> <span class="s1">&#39;glyburide-metformin&#39;</span><span class="p">,</span> 
+             <span class="s1">&#39;glipizide-metformin&#39;</span><span class="p">,</span> <span class="s1">&#39;glimepiride-pioglitazone&#39;</span><span class="p">,</span> <span class="s1">&#39;metformin-rosiglitazone&#39;</span><span class="p">,</span> 
+             <span class="s1">&#39;metformin-pioglitazone&#39;</span><span class="p">]</span>
+
+<span class="k">def</span> <span class="nf">explore_drug</span><span class="p">(</span><span class="n">drugs</span><span class="p">):</span>
+
+  <span class="k">for</span> <span class="n">drug</span> <span class="ow">in</span> <span class="n">drugs</span><span class="p">:</span>
+    <span class="n">sns</span><span class="o">.</span><span class="n">countplot</span><span class="p">(</span><span class="n">x</span> <span class="o">=</span> <span class="n">drug</span><span class="p">,</span> 
+                  <span class="n">hue</span> <span class="o">=</span> <span class="s2">&quot;target&quot;</span><span class="p">,</span>
+                  <span class="n">data</span> <span class="o">=</span> <span class="n">df</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">drug</span><span class="o">.</span><span class="n">upper</span><span class="p">())</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">drug</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">value_counts</span><span class="p">())</span>
+
+<span class="n">explore_drug</span><span class="p">(</span><span class="n">drug_columns</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<details class="admonition hide below-input">
+<summary aria-label="Toggle hidden content">
+<p class="collapsed admonition-title">Show code cell output</p>
+<p class="expanded admonition-title">Hide code cell output</p>
+</summary>
+<div class="cell_output docutils container">
+<img alt="_images/aaae87c45641f2ac65124f23688a535908d536473743f4144982e7f47ba3203e.png" src="_images/aaae87c45641f2ac65124f23688a535908d536473743f4144982e7f47ba3203e.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>METFORMIN
+metformin
+No        81778
+Steady    18346
+Up         1067
+Down        575
+Name: count, dtype: int64
+</pre></div>
+</div>
+<img alt="_images/eac21be8e3c03600b6ec557e3db9fc874b7ca122933e3212128ed85f80990dc5.png" src="_images/eac21be8e3c03600b6ec557e3db9fc874b7ca122933e3212128ed85f80990dc5.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>REPAGLINIDE
+repaglinide
+No        100227
+Steady      1384
+Up           110
+Down          45
+Name: count, dtype: int64
+</pre></div>
+</div>
+<img alt="_images/5c405129d184620d78361eb74911f0cdb108ba942842ed883202b4e7f45fc94d.png" src="_images/5c405129d184620d78361eb74911f0cdb108ba942842ed883202b4e7f45fc94d.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>NATEGLINIDE
+nateglinide
+No        101063
+Steady       668
+Up            24
+Down          11
+Name: count, dtype: int64
+</pre></div>
+</div>
+<img alt="_images/07137310e4d58619ed48d6f70b2d78199dcb7c84244225bef2807a09988d3be7.png" src="_images/07137310e4d58619ed48d6f70b2d78199dcb7c84244225bef2807a09988d3be7.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>CHLORPROPAMIDE
+chlorpropamide
+No        101680
+Steady        79
+Up             6
+Down           1
+Name: count, dtype: int64
+</pre></div>
+</div>
+<img alt="_images/e70a2df3faa9ae623d1e1973963f55b29c42cbcf294bec49cd1687c24471ad98.png" src="_images/e70a2df3faa9ae623d1e1973963f55b29c42cbcf294bec49cd1687c24471ad98.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>GLIMEPIRIDE
+glimepiride
+No        96575
+Steady     4670
+Up          327
+Down        194
+Name: count, dtype: int64
+</pre></div>
+</div>
+<img alt="_images/e67b203f0b71c6f616b50c372a79273fb6d17764af711ebfa0ef847edd4684ca.png" src="_images/e67b203f0b71c6f616b50c372a79273fb6d17764af711ebfa0ef847edd4684ca.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>ACETOHEXAMIDE
+acetohexamide
+No        101765
+Steady         1
+Name: count, dtype: int64
+</pre></div>
+</div>
+<img alt="_images/4365aedfdc5a79c3e24accab937ddf5d1c67dd14324f9ca8662bcdccde5c5550.png" src="_images/4365aedfdc5a79c3e24accab937ddf5d1c67dd14324f9ca8662bcdccde5c5550.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>GLIPIZIDE
+glipizide
+No        89080
+Steady    11356
+Up          770
+Down        560
+Name: count, dtype: int64
+</pre></div>
+</div>
+<img alt="_images/111dc9bf00c7c00d09a9b7cb252676fff0964dc1fad4ed24077ed15cf1a1ddc3.png" src="_images/111dc9bf00c7c00d09a9b7cb252676fff0964dc1fad4ed24077ed15cf1a1ddc3.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>GLYBURIDE
+glyburide
+No        91116
+Steady     9274
+Up          812
+Down        564
+Name: count, dtype: int64
+</pre></div>
+</div>
+<img alt="_images/7127ca01595c93ed7b514d2bcd6929b2b9698fb0f1573c22d4711c459944bf91.png" src="_images/7127ca01595c93ed7b514d2bcd6929b2b9698fb0f1573c22d4711c459944bf91.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>TOLBUTAMIDE
+tolbutamide
+No        101743
+Steady        23
+Name: count, dtype: int64
+</pre></div>
+</div>
+<img alt="_images/4a8271b646fc5c02899be302830a155701863769bccc4914e04394ba7337c3a4.png" src="_images/4a8271b646fc5c02899be302830a155701863769bccc4914e04394ba7337c3a4.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>PIOGLITAZONE
+pioglitazone
+No        94438
+Steady     6976
+Up          234
+Down        118
+Name: count, dtype: int64
+</pre></div>
+</div>
+<img alt="_images/a19f3e9113a9c67e124021b957aabf424fd8a9b395b7984d9ef0b67fadf68af5.png" src="_images/a19f3e9113a9c67e124021b957aabf424fd8a9b395b7984d9ef0b67fadf68af5.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>ROSIGLITAZONE
+rosiglitazone
+No        95401
+Steady     6100
+Up          178
+Down         87
+Name: count, dtype: int64
+</pre></div>
+</div>
+<img alt="_images/be26866255b02ee17b3667bf6c95e0cec79138b4f61c8bf5ecc88756230c7a92.png" src="_images/be26866255b02ee17b3667bf6c95e0cec79138b4f61c8bf5ecc88756230c7a92.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>ACARBOSE
+acarbose
+No        101458
+Steady       295
+Up            10
+Down           3
+Name: count, dtype: int64
+</pre></div>
+</div>
+<img alt="_images/8b932ef6a0b1a8cbf0fdb672a423fda8f61c46cb64b57c2204064237eba05380.png" src="_images/8b932ef6a0b1a8cbf0fdb672a423fda8f61c46cb64b57c2204064237eba05380.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>MIGLITOL
+miglitol
+No        101728
+Steady        31
+Down           5
+Up             2
+Name: count, dtype: int64
+</pre></div>
+</div>
+<img alt="_images/d32d6c0b53691130d6f5913ae363517ceba10ee17302ed0ce32d394c8c74c141.png" src="_images/d32d6c0b53691130d6f5913ae363517ceba10ee17302ed0ce32d394c8c74c141.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>TROGLITAZONE
+troglitazone
+No        101763
+Steady         3
+Name: count, dtype: int64
+</pre></div>
+</div>
+<img alt="_images/7cf11ea5cb4584d444d8581aeaa2221abc425c7745fa3dc1844543160b1e9a9b.png" src="_images/7cf11ea5cb4584d444d8581aeaa2221abc425c7745fa3dc1844543160b1e9a9b.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>TOLAZAMIDE
+tolazamide
+No        101727
+Steady        38
+Up             1
+Name: count, dtype: int64
+</pre></div>
+</div>
+<img alt="_images/01823c4611f4f9c0d5f40393c471073b4e427d7631fe3177b05eefc865627466.png" src="_images/01823c4611f4f9c0d5f40393c471073b4e427d7631fe3177b05eefc865627466.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>EXAMIDE
+examide
+No    101766
+Name: count, dtype: int64
+</pre></div>
+</div>
+<img alt="_images/cdce6f77299d60af89e52b8a21d052872756de0ace0ecd0b4d5ef48f34c9f70e.png" src="_images/cdce6f77299d60af89e52b8a21d052872756de0ace0ecd0b4d5ef48f34c9f70e.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>GLYBURIDE-METFORMIN
+glyburide-metformin
+No        101060
+Steady       692
+Up             8
+Down           6
+Name: count, dtype: int64
+</pre></div>
+</div>
+<img alt="_images/8870350aaf371ba3048739224492d062f19715a95452a6f2beb8be6f05123799.png" src="_images/8870350aaf371ba3048739224492d062f19715a95452a6f2beb8be6f05123799.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>GLIPIZIDE-METFORMIN
+glipizide-metformin
+No        101753
+Steady        13
+Name: count, dtype: int64
+</pre></div>
+</div>
+<img alt="_images/12de041d75cdf4aabb53e8ec800d4a597c62a5031c6d777de75bc7088e9d0ab2.png" src="_images/12de041d75cdf4aabb53e8ec800d4a597c62a5031c6d777de75bc7088e9d0ab2.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>GLIMEPIRIDE-PIOGLITAZONE
+glimepiride-pioglitazone
+No        101765
+Steady         1
+Name: count, dtype: int64
+</pre></div>
+</div>
+<img alt="_images/c57efc50d823921444b7eda275dae2179800df84aad0d2a50a23cb1e26c90a1c.png" src="_images/c57efc50d823921444b7eda275dae2179800df84aad0d2a50a23cb1e26c90a1c.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>METFORMIN-ROSIGLITAZONE
+metformin-rosiglitazone
+No        101764
+Steady         2
+Name: count, dtype: int64
+</pre></div>
+</div>
+<img alt="_images/fcf35161631c3fd041f930bb0b8b668f67c380810d0ea8e2d287129907b92c30.png" src="_images/fcf35161631c3fd041f930bb0b8b668f67c380810d0ea8e2d287129907b92c30.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>METFORMIN-PIOGLITAZONE
+metformin-pioglitazone
+No        101765
+Steady         1
+Name: count, dtype: int64
+</pre></div>
+</div>
+</div>
+</details>
+</div>
+<center>
+</section>
+</section>
+</section>
 <section id="modelo-logistico">
-<h2>Modelo Logistico<a class="headerlink" href="#modelo-logistico" title="Link to this heading">#</a></h2>
-<div class="cell tag_hide-input docutils container">
+<h2><strong>Modelo Logistico</strong><a class="headerlink" href="#modelo-logistico" title="Link to this heading">#</a></h2>
+</center><div class="cell tag_hide-input docutils container">
 <details class="admonition hide above-input">
 <summary aria-label="Toggle hidden content">
 <p class="collapsed admonition-title">Show code cell source</p>
 <p class="expanded admonition-title">Hide code cell source</p>
 </summary>
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># --- 3. DIVISIÓN DE DATOS ---</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># --- 1. DIVISIÓN DE DATOS ---</span>
 <span class="n">dflog</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;diabetic_data.csv&#39;</span><span class="p">)</span>
 <span class="n">dflog</span><span class="p">[</span><span class="s1">&#39;target&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">dflog</span><span class="p">[</span><span class="s1">&#39;readmitted&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">isin</span><span class="p">([</span><span class="s1">&#39;&lt;30&#39;</span><span class="p">,</span> <span class="s1">&#39;&gt;30&#39;</span><span class="p">])</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span>
 
@@ -1026,7 +1916,7 @@ Name: count, dtype: int64
 <p class="expanded admonition-title">Hide code cell source</p>
 </summary>
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># --- 4. PREPROCESAMIENTO DE CARACTERÍSTICAS ---</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># --- 2. PREPROCESAMIENTO DE CARACTERÍSTICAS ---</span>
 
 <span class="c1"># Identificar qué columnas son numéricas y cuáles son categóricas (texto).</span>
 <span class="n">numeric_features</span> <span class="o">=</span> <span class="n">X</span><span class="o">.</span><span class="n">select_dtypes</span><span class="p">(</span><span class="n">include</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">number</span><span class="p">)</span><span class="o">.</span><span class="n">columns</span>
@@ -1050,7 +1940,7 @@ Name: count, dtype: int64
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># --- 5. CREACIÓN Y ENTRENAMIENTO DEL MODELO ---</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># --- 3. CREACIÓN Y ENTRENAMIENTO DEL MODELO ---</span>
 
 <span class="c1"># Crear un &#39;Pipeline&#39;: una secuencia de pasos que se ejecutan en orden.</span>
 <span class="c1"># 1. &#39;preprocessor&#39;: Aplica la receta de preprocesamiento que definimos antes.</span>
@@ -1078,7 +1968,7 @@ Name: count, dtype: int64
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># --- 6. EVALUACIÓN DEL MODELO ---</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># --- 4. EVALUACIÓN DEL MODELO ---</span>
 
 <span class="c1"># Usar el modelo entrenado para hacer predicciones sobre los datos de prueba (que nunca ha visto).</span>
 <span class="n">y_pred</span> <span class="o">=</span> <span class="n">pipeline</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_test</span><span class="p">)</span>
@@ -1124,7 +2014,9 @@ Name: count, dtype: int64
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Exactitud del modelo: 0.6294
 
 Reporte de Clasificación:
-                precision    recall  f1-score   support
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>                precision    recall  f1-score   support
 
 No Reingresado       0.63      0.73      0.68     10952
    Reingresado       0.62      0.51      0.56      9402
@@ -1143,7 +2035,7 @@ Matriz de Confusión:
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># 7. Guardar el modelo logistico</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># 5. Guardar el modelo logistico</span>
 <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;modelo_logistico_diabetes.pkl&#39;</span><span class="p">,</span> <span class="s1">&#39;wb&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
     <span class="n">pickle</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="n">pipeline</span><span class="p">,</span> <span class="n">f</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Modelo guardado como &#39;modelo_logistico_diabetes.pkl&#39;&quot;</span><span class="p">)</span>
@@ -1205,21 +2097,23 @@ Matriz de Confusión:
   </div>
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">EDA</a><ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#descripcion-de-las-variables">Descripción de las variables</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#descripcion-de-las-variables"><strong>Descripción de las variables</strong></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#raza"><strong>Raza</strong></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#genero"><strong>Género</strong></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#edad"><strong>Edad</strong></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#weight"><strong>Weight</strong></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#admission-type"><strong>Admission Type</strong></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#admission-source-id"><strong>Admission Source ID</strong></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#time-in-hospital"><strong>Time in hospital</strong></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#numero-de-procedimientos-de-laboratorio"><strong>Número de procedimientos de laboratorio</strong></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#medicamentos"><strong>Medicamentos</strong></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#insulina"><strong>Insulina</strong></a></li>
 </ul>
 </li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#ivan">Iván</a><ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#weight">Weight</a></li>
 </ul>
 </li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#jose">José</a></li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#camilo">Camilo</a><ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#modelo-logistico">Modelo Logistico</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#modelo-logistico"><strong>Modelo Logistico</strong></a></li>
 </ul>
-</li>
-</ul>
-
   </nav></div>
 
 </div></div>
