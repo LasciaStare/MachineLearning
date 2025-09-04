@@ -32,7 +32,7 @@
     <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css?v=eba8b062" />
     <link rel="stylesheet" type="text/css" href="_static/togglebutton.css?v=13237357" />
     <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
-    <link rel="stylesheet" type="text/css" href="_static/mystnb.8ecb98da25f57f5357bf6f572d296f466b2cfe2517ffebfabe82451661e28f02.css" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.8ecb98da25f57f5357bf6f572d296f466b2cfe2517ffebfabe82451661e28f02.css?v=6644e6bb" />
     <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css?v=4fa983c6" />
     <link rel="stylesheet" type="text/css" href="_static/sphinx-design.min.css?v=95c83b7e" />
   
@@ -60,6 +60,7 @@
     <script>DOCUMENTATION_OPTIONS.pagename = 'EDA';</script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Modelos de Clasificación: Logístico, Ridge y Lasso" href="Modelos_Logisticos.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   </head>
@@ -179,7 +180,11 @@
                 </a>
             </li>
         </ul>
-        
+        <ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="Modelos_Logisticos.html">Modelos de Clasificación: Logístico, Ridge y Lasso</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Modelo_Knn.html">Modelo Knn</a></li>
+</ul>
+
     </div>
 </nav></div>
     </div>
@@ -388,7 +393,6 @@ document.write(`
 </li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#modelo-logistico"><strong>Modelo Logistico</strong></a></li>
 </ul>
             </nav>
         </div>
@@ -448,24 +452,6 @@ document.write(`
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
 <span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span>
-<span class="kn">import</span> <span class="nn">pickle</span> <span class="c1"># Para guardar nuestro modelo entrenado</span>
-<span class="kn">from</span> <span class="nn">scipy.stats</span> <span class="kn">import</span> <span class="n">pointbiserialr</span><span class="p">,</span> <span class="n">kstest</span><span class="p">,</span> <span class="n">norm</span><span class="p">,</span> <span class="n">chi2_contingency</span>
-
-<span class="c1"># Clases de Scikit-learn para preprocesamiento, modelado y evaluación</span>
-<span class="kn">from</span> <span class="nn">sklearn.preprocessing</span> <span class="kn">import</span> <span class="n">StandardScaler</span>
-<span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">train_test_split</span>
-<span class="kn">from</span> <span class="nn">sklearn.preprocessing</span> <span class="kn">import</span> <span class="n">MinMaxScaler</span><span class="p">,</span> <span class="n">OneHotEncoder</span>
-<span class="kn">from</span> <span class="nn">sklearn.compose</span> <span class="kn">import</span> <span class="n">ColumnTransformer</span>
-<span class="kn">from</span> <span class="nn">sklearn.pipeline</span> <span class="kn">import</span> <span class="n">Pipeline</span>
-<span class="kn">from</span> <span class="nn">sklearn.linear_model</span> <span class="kn">import</span> <span class="n">LogisticRegression</span>
-<span class="kn">from</span> <span class="nn">sklearn.metrics</span> <span class="kn">import</span> <span class="p">(</span>
-    <span class="n">accuracy_score</span><span class="p">,</span> 
-    <span class="n">confusion_matrix</span><span class="p">,</span> 
-    <span class="n">ConfusionMatrixDisplay</span><span class="p">,</span> 
-    <span class="n">classification_report</span><span class="p">,</span> 
-    <span class="n">roc_curve</span><span class="p">,</span> 
-    <span class="n">auc</span>
-<span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -474,7 +460,7 @@ document.write(`
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Cargar el dataset desde el archivo CSV</span>
-<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;diabetic_data.csv&#39;</span><span class="p">)</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;data/raw/diabetic_data.csv&#39;</span><span class="p">)</span>
 <span class="n">df</span><span class="o">=</span><span class="n">df</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;?&#39;</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span><span class="p">)</span>  <span class="c1"># Reemplazar &#39;?&#39; por NaN</span>
 </pre></div>
 </div>
@@ -984,8 +970,8 @@ target
 Name: count, dtype: int64
 </pre></div>
 </div>
-<img alt="_images/151158ce139e9add0c063c1d0a8671cacc3f1668336de6c5c34c6aac06b0f349.png" src="_images/151158ce139e9add0c063c1d0a8671cacc3f1668336de6c5c34c6aac06b0f349.png" />
-<img alt="_images/c1c2a124ae3fa8f11e10f7b8410360c17d2bfd69efcb07f8bc34b409d8db34fd.png" src="_images/c1c2a124ae3fa8f11e10f7b8410360c17d2bfd69efcb07f8bc34b409d8db34fd.png" />
+<img alt="_images/02d39c813290be110a529b9459f06a516dc4fcee722a4e9f788b85014aaaacee.png" src="_images/02d39c813290be110a529b9459f06a516dc4fcee722a4e9f788b85014aaaacee.png" />
+<img alt="_images/8ed32c5760b0d17bc6c7a2f79b663fdacd79e52704ccc93abe58af3f3f414643.png" src="_images/8ed32c5760b0d17bc6c7a2f79b663fdacd79e52704ccc93abe58af3f3f414643.png" />
 </div>
 </div>
 <section id="raza">
@@ -1000,7 +986,7 @@ Name: count, dtype: int64
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/d84172d5ee483a6c222b431094f2e1bc93e0b3ac440adc1eb22a58e15a2e860e.png" src="_images/d84172d5ee483a6c222b431094f2e1bc93e0b3ac440adc1eb22a58e15a2e860e.png" />
+<img alt="_images/475a995275dbf01e1c169af30b3d48fa1c74da8712d4696059833ce633602998.png" src="_images/475a995275dbf01e1c169af30b3d48fa1c74da8712d4696059833ce633602998.png" />
 </div>
 </div>
 <ul class="simple">
@@ -1020,7 +1006,7 @@ Name: count, dtype: int64
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/a87afa9f183921ce339eff318d802e690dfdd53a964193be80c1d3edaf0d8199.png" src="_images/a87afa9f183921ce339eff318d802e690dfdd53a964193be80c1d3edaf0d8199.png" />
+<img alt="_images/704a4baef4cb7aa2c215358cd74bbb746889aec1e57251c58b0f416ad7c77af9.png" src="_images/704a4baef4cb7aa2c215358cd74bbb746889aec1e57251c58b0f416ad7c77af9.png" />
 </div>
 </div>
 <ul class="simple">
@@ -1039,7 +1025,7 @@ Name: count, dtype: int64
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/3d2b95abd00a130a64245ebddd54f92f7f6f3917f3aa315f201d9f80ee244c03.png" src="_images/3d2b95abd00a130a64245ebddd54f92f7f6f3917f3aa315f201d9f80ee244c03.png" />
+<img alt="_images/a9923a68a3488be1ece048820aa2d12cc80a45dea4f5f7c26a5a3205d6c4e727.png" src="_images/a9923a68a3488be1ece048820aa2d12cc80a45dea4f5f7c26a5a3205d6c4e727.png" />
 </div>
 </div>
 <ul class="simple">
@@ -1060,7 +1046,7 @@ Name: count, dtype: int64
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/4bea2180a43d633b2e065d294956217f11af9498552c696275a69c00095a765d.png" src="_images/4bea2180a43d633b2e065d294956217f11af9498552c696275a69c00095a765d.png" />
+<img alt="_images/5a67a66f314fad310e62d3e5859a2cfef058d7a6972e5bc1ce5549762db3e3dc.png" src="_images/5a67a66f314fad310e62d3e5859a2cfef058d7a6972e5bc1ce5549762db3e3dc.png" />
 </div>
 </div>
 <ul class="simple">
@@ -1080,7 +1066,7 @@ Name: count, dtype: int64
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/cc941f9e64be38cf3ad59e800656e9ea98620b790b75f4158b7d39c15302c71d.png" src="_images/cc941f9e64be38cf3ad59e800656e9ea98620b790b75f4158b7d39c15302c71d.png" />
+<img alt="_images/6d2a9ccbb6316aaa930cd735c5cb3ac5d6381624b72f45b545cbbce16ab7f6ac.png" src="_images/6d2a9ccbb6316aaa930cd735c5cb3ac5d6381624b72f45b545cbbce16ab7f6ac.png" />
 </div>
 </div>
 <ul class="simple">
@@ -1099,7 +1085,7 @@ Name: count, dtype: int64
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/a6cac1f9d476b9804b9aad7aae07bb4711980a415c882b7c40310d9da70e38b5.png" src="_images/a6cac1f9d476b9804b9aad7aae07bb4711980a415c882b7c40310d9da70e38b5.png" />
+<img alt="_images/13394703f1cbc7dd73a4e2171ac9bd5501d848239b022df29a57908ac013df64.png" src="_images/13394703f1cbc7dd73a4e2171ac9bd5501d848239b022df29a57908ac013df64.png" />
 </div>
 </div>
 <ul class="simple">
@@ -1119,7 +1105,7 @@ Name: count, dtype: int64
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/816d3e14f39ceb5fd3569933907801ca81579def1692dd81ebc24f83beddc9e5.png" src="_images/816d3e14f39ceb5fd3569933907801ca81579def1692dd81ebc24f83beddc9e5.png" />
+<img alt="_images/1a667763aae30f189a6f73202c1d01f88f4b2139ec7cfefd603ba9b703cb77f1.png" src="_images/1a667763aae30f189a6f73202c1d01f88f4b2139ec7cfefd603ba9b703cb77f1.png" />
 </div>
 </div>
 <ul class="simple">
@@ -1140,7 +1126,7 @@ Name: count, dtype: int64
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/6512b4229cb390449ef7712e7b4328227c6b2c7f432fb29c04d3742dbf427567.png" src="_images/6512b4229cb390449ef7712e7b4328227c6b2c7f432fb29c04d3742dbf427567.png" />
+<img alt="_images/f58e08b165ce0fde818ce0011e960b5bb15b9f9b57e95fd63125f77fd9f73597.png" src="_images/f58e08b165ce0fde818ce0011e960b5bb15b9f9b57e95fd63125f77fd9f73597.png" />
 </div>
 </div>
 <ul class="simple">
@@ -1157,7 +1143,7 @@ Name: count, dtype: int64
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/0790b2b688e049ab0dfcc1633590f3f2eb375adcfe4bc3d8a521d9f0771999b6.png" src="_images/0790b2b688e049ab0dfcc1633590f3f2eb375adcfe4bc3d8a521d9f0771999b6.png" />
+<img alt="_images/7f3366698241a67eee282c4211753d745e8ee587580a377bcb1079f3a732425a.png" src="_images/7f3366698241a67eee282c4211753d745e8ee587580a377bcb1079f3a732425a.png" />
 </div>
 </div>
 <ul class="simple">
@@ -1209,7 +1195,7 @@ Name: count, dtype: int64
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/c9f2de80ca882fe2fca62b35fc15a31ae60a8e4ae0dee6934692935b24415453.png" src="_images/c9f2de80ca882fe2fca62b35fc15a31ae60a8e4ae0dee6934692935b24415453.png" />
+<img alt="_images/8ce70f8887f35ffe9e861b6dc9b70b97f7a838c110ebe62dd44a70f810a6024f.png" src="_images/8ce70f8887f35ffe9e861b6dc9b70b97f7a838c110ebe62dd44a70f810a6024f.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -1221,7 +1207,7 @@ Name: count, dtype: int64
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/4110eb5e099fdf3999fd0ae144fd72d9a35130fac5dffc48dca3bda78258f7f6.png" src="_images/4110eb5e099fdf3999fd0ae144fd72d9a35130fac5dffc48dca3bda78258f7f6.png" />
+<img alt="_images/1b0f763eafcdb21a6e1d5e31410bc3055a1a8557b12bd338907a00a08142c21b.png" src="_images/1b0f763eafcdb21a6e1d5e31410bc3055a1a8557b12bd338907a00a08142c21b.png" />
 </div>
 </div>
 </section>
@@ -1240,7 +1226,7 @@ Name: count, dtype: int64
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/f99ac59a64407e0317d3c7cb59c0d94f007d41f6e95ad47e6318f797906bf99a.png" src="_images/f99ac59a64407e0317d3c7cb59c0d94f007d41f6e95ad47e6318f797906bf99a.png" />
+<img alt="_images/94e8cf0f87a2421998fbdb21111534ceebf8bec156b0112ba0f179e06c124d6a.png" src="_images/94e8cf0f87a2421998fbdb21111534ceebf8bec156b0112ba0f179e06c124d6a.png" />
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Distribución de IDs de Tipo de Admisión:
 admission_type_id
 1    53990
@@ -1296,7 +1282,7 @@ Name: count, dtype: int64
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/1cd92033e71c0c9a40de72f8cea277f4d4e11f81ba0a8753413bd56e4e786432.png" src="_images/1cd92033e71c0c9a40de72f8cea277f4d4e11f81ba0a8753413bd56e4e786432.png" />
+<img alt="_images/9f27539864d134086396951ff99a9d8023e24a3c87116fca481543d7003febeb.png" src="_images/9f27539864d134086396951ff99a9d8023e24a3c87116fca481543d7003febeb.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -1320,7 +1306,7 @@ Name: count, dtype: int64
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/d035c22b94a7851fef149d5cc7384f2313ce96eb04503509f4034deaf8d732b9.png" src="_images/d035c22b94a7851fef149d5cc7384f2313ce96eb04503509f4034deaf8d732b9.png" />
+<img alt="_images/e12514dbf5e963e7215c6362c8e40be2c8cce15cf9eefb8a7d392fde02ef4a37.png" src="_images/e12514dbf5e963e7215c6362c8e40be2c8cce15cf9eefb8a7d392fde02ef4a37.png" />
 </div>
 </div>
 <p>La clase Newborn sería la más problemática en este caso con tan pocas observaciones.</p>
@@ -1337,7 +1323,7 @@ Name: count, dtype: int64
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/d6afe407f4aebf61a3cbd721ff5147c4d55da5f4156437846c90ce952363ac66.png" src="_images/d6afe407f4aebf61a3cbd721ff5147c4d55da5f4156437846c90ce952363ac66.png" />
+<img alt="_images/cc4d479bbc194e1a9f63aff58b69df53a76052a50e2e2b4e9f206366e76b05b1.png" src="_images/cc4d479bbc194e1a9f63aff58b69df53a76052a50e2e2b4e9f206366e76b05b1.png" />
 </div>
 </div>
 <p><strong>Observaciones:</strong></p>
@@ -1424,8 +1410,8 @@ Birth-Related        5
 Name: count, dtype: int64
 </pre></div>
 </div>
-<img alt="_images/3cb8779ffaa65f17a0953307855a11687ecf2a1eb491f8b620f71d35d5021649.png" src="_images/3cb8779ffaa65f17a0953307855a11687ecf2a1eb491f8b620f71d35d5021649.png" />
-<img alt="_images/6a93f8348fadf142195e208edca317d237e9fd95ecb27a2c858bad50412ec929.png" src="_images/6a93f8348fadf142195e208edca317d237e9fd95ecb27a2c858bad50412ec929.png" />
+<img alt="_images/852ef75c254f7a2301a823384a50ed4ffb5b6e976e822ef392417b4f5d42c3fa.png" src="_images/852ef75c254f7a2301a823384a50ed4ffb5b6e976e822ef392417b4f5d42c3fa.png" />
+<img alt="_images/9a4dc1be895e32e1034099904353194c745417dbaad1598ae4ce9e8c188905db.png" src="_images/9a4dc1be895e32e1034099904353194c745417dbaad1598ae4ce9e8c188905db.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -1453,7 +1439,7 @@ Name: count, dtype: int64
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/62c0624a78dc82b689ff1209fac9ee4a60ea01110424f037b6cea822f2de5df9.png" src="_images/62c0624a78dc82b689ff1209fac9ee4a60ea01110424f037b6cea822f2de5df9.png" />
+<img alt="_images/31c5273226dd677db9ffad64188d0bd1d3702f6d7140b2603c134e0b38af4293.png" src="_images/31c5273226dd677db9ffad64188d0bd1d3702f6d7140b2603c134e0b38af4293.png" />
 </div>
 </div>
 <p><strong>Qué vemos:</strong> La barra se sitúa en torno al <strong>37%</strong>, pero lo más importante es el <strong>enorme intervalo de confianza</strong>. Este intervalo abarca desde ~0.15 hasta más de 0.60.
@@ -1470,46 +1456,46 @@ La barra de error tan grande nos dice que hay <strong>muy pocos datos</strong> e
 <div class="cell_output docutils container">
 <div class="output text_html"><style type="text/css">
 </style>
-<table id="T_f9e71">
+<table id="T_392a8">
   <caption>Resumen estadístico de time_in_hospital</caption>
   <thead>
     <tr>
       <th class="blank level0" >&nbsp;</th>
-      <th id="T_f9e71_level0_col0" class="col_heading level0 col0" >time_in_hospital</th>
+      <th id="T_392a8_level0_col0" class="col_heading level0 col0" >time_in_hospital</th>
     </tr>
   </thead>
   <tbody>
     <tr>
-      <th id="T_f9e71_level0_row0" class="row_heading level0 row0" >count</th>
-      <td id="T_f9e71_row0_col0" class="data row0 col0" >101766.000000</td>
+      <th id="T_392a8_level0_row0" class="row_heading level0 row0" >count</th>
+      <td id="T_392a8_row0_col0" class="data row0 col0" >101766.000000</td>
     </tr>
     <tr>
-      <th id="T_f9e71_level0_row1" class="row_heading level0 row1" >mean</th>
-      <td id="T_f9e71_row1_col0" class="data row1 col0" >4.395987</td>
+      <th id="T_392a8_level0_row1" class="row_heading level0 row1" >mean</th>
+      <td id="T_392a8_row1_col0" class="data row1 col0" >4.395987</td>
     </tr>
     <tr>
-      <th id="T_f9e71_level0_row2" class="row_heading level0 row2" >std</th>
-      <td id="T_f9e71_row2_col0" class="data row2 col0" >2.985108</td>
+      <th id="T_392a8_level0_row2" class="row_heading level0 row2" >std</th>
+      <td id="T_392a8_row2_col0" class="data row2 col0" >2.985108</td>
     </tr>
     <tr>
-      <th id="T_f9e71_level0_row3" class="row_heading level0 row3" >min</th>
-      <td id="T_f9e71_row3_col0" class="data row3 col0" >1.000000</td>
+      <th id="T_392a8_level0_row3" class="row_heading level0 row3" >min</th>
+      <td id="T_392a8_row3_col0" class="data row3 col0" >1.000000</td>
     </tr>
     <tr>
-      <th id="T_f9e71_level0_row4" class="row_heading level0 row4" >25%</th>
-      <td id="T_f9e71_row4_col0" class="data row4 col0" >2.000000</td>
+      <th id="T_392a8_level0_row4" class="row_heading level0 row4" >25%</th>
+      <td id="T_392a8_row4_col0" class="data row4 col0" >2.000000</td>
     </tr>
     <tr>
-      <th id="T_f9e71_level0_row5" class="row_heading level0 row5" >50%</th>
-      <td id="T_f9e71_row5_col0" class="data row5 col0" >4.000000</td>
+      <th id="T_392a8_level0_row5" class="row_heading level0 row5" >50%</th>
+      <td id="T_392a8_row5_col0" class="data row5 col0" >4.000000</td>
     </tr>
     <tr>
-      <th id="T_f9e71_level0_row6" class="row_heading level0 row6" >75%</th>
-      <td id="T_f9e71_row6_col0" class="data row6 col0" >6.000000</td>
+      <th id="T_392a8_level0_row6" class="row_heading level0 row6" >75%</th>
+      <td id="T_392a8_row6_col0" class="data row6 col0" >6.000000</td>
     </tr>
     <tr>
-      <th id="T_f9e71_level0_row7" class="row_heading level0 row7" >max</th>
-      <td id="T_f9e71_row7_col0" class="data row7 col0" >14.000000</td>
+      <th id="T_392a8_level0_row7" class="row_heading level0 row7" >max</th>
+      <td id="T_392a8_row7_col0" class="data row7 col0" >14.000000</td>
     </tr>
   </tbody>
 </table>
@@ -1540,7 +1526,7 @@ La barra de error tan grande nos dice que hay <strong>muy pocos datos</strong> e
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/697bc8d871acb2ae49f591abe1cd0fecfcf2ec1cdc09e1f212585285b17adc9c.png" src="_images/697bc8d871acb2ae49f591abe1cd0fecfcf2ec1cdc09e1f212585285b17adc9c.png" />
+<img alt="_images/795bcff3447420fab135a2677983481ecd0c1af87526d73b350442c7cd66c679.png" src="_images/795bcff3447420fab135a2677983481ecd0c1af87526d73b350442c7cd66c679.png" />
 </div>
 </div>
 </section>
@@ -1556,7 +1542,7 @@ La barra de error tan grande nos dice que hay <strong>muy pocos datos</strong> e
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/2d960bc4e9ba364cc8412dedc5d9739d8f3d17ebae646fca595ed5469d6c700c.png" src="_images/2d960bc4e9ba364cc8412dedc5d9739d8f3d17ebae646fca595ed5469d6c700c.png" />
+<img alt="_images/8c69f4323e7afd7fb94167975cad5456cb86bbbab7154fee14c9c87dc770f321.png" src="_images/8c69f4323e7afd7fb94167975cad5456cb86bbbab7154fee14c9c87dc770f321.png" />
 </div>
 </div>
 <ul class="simple">
@@ -1574,7 +1560,7 @@ La barra de error tan grande nos dice que hay <strong>muy pocos datos</strong> e
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/2cad9819fb459b4c0b2781d951cf501af8ff75da2399865468e03be828b40b4b.png" src="_images/2cad9819fb459b4c0b2781d951cf501af8ff75da2399865468e03be828b40b4b.png" />
+<img alt="_images/47b23683db25496577b5a84a2d63893c7f4a22a30eb6a696c42bcb80b8707c8b.png" src="_images/47b23683db25496577b5a84a2d63893c7f4a22a30eb6a696c42bcb80b8707c8b.png" />
 </div>
 </div>
 <ul class="simple">
@@ -1598,7 +1584,7 @@ La barra de error tan grande nos dice que hay <strong>muy pocos datos</strong> e
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/e09eb463bd4a12e28633df3809fa8f2c440c92498b614bd2118e665270d841a7.png" src="_images/e09eb463bd4a12e28633df3809fa8f2c440c92498b614bd2118e665270d841a7.png" />
+<img alt="_images/88631c289d56ab6d07ccc2a8ce7cdfabf922697143a88d1848038ff594163970.png" src="_images/88631c289d56ab6d07ccc2a8ce7cdfabf922697143a88d1848038ff594163970.png" />
 </div>
 </div>
 <ul class="simple">
@@ -1627,7 +1613,7 @@ La barra de error tan grande nos dice que hay <strong>muy pocos datos</strong> e
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/1ad58ed84af5755947074aa59cd56eae7623d4bc69f768b8ac329334a42cab5f.png" src="_images/1ad58ed84af5755947074aa59cd56eae7623d4bc69f768b8ac329334a42cab5f.png" />
+<img alt="_images/ea2dd2b186fcbf5c6ac43901eb88dec4a6d822620bad6ac842911f63ae68e638.png" src="_images/ea2dd2b186fcbf5c6ac43901eb88dec4a6d822620bad6ac842911f63ae68e638.png" />
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Distribución por categoría de Insulina:
 insulin
 No        47383
@@ -1683,7 +1669,7 @@ Name: count, dtype: int64
 <p class="expanded admonition-title">Hide code cell output</p>
 </summary>
 <div class="cell_output docutils container">
-<img alt="_images/aaae87c45641f2ac65124f23688a535908d536473743f4144982e7f47ba3203e.png" src="_images/aaae87c45641f2ac65124f23688a535908d536473743f4144982e7f47ba3203e.png" />
+<img alt="_images/de58686d03fd4098f3f54c94c015dcbbaa54d7bf16fdfcda2f975d0dfcdd792f.png" src="_images/de58686d03fd4098f3f54c94c015dcbbaa54d7bf16fdfcda2f975d0dfcdd792f.png" />
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>METFORMIN
 metformin
 No        81778
@@ -1693,7 +1679,7 @@ Down        575
 Name: count, dtype: int64
 </pre></div>
 </div>
-<img alt="_images/eac21be8e3c03600b6ec557e3db9fc874b7ca122933e3212128ed85f80990dc5.png" src="_images/eac21be8e3c03600b6ec557e3db9fc874b7ca122933e3212128ed85f80990dc5.png" />
+<img alt="_images/f0e88b027ceb73d4919793ee105bac3f6478e00f20fb064a6d0ee245e31fdbdd.png" src="_images/f0e88b027ceb73d4919793ee105bac3f6478e00f20fb064a6d0ee245e31fdbdd.png" />
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>REPAGLINIDE
 repaglinide
 No        100227
@@ -1703,7 +1689,7 @@ Down          45
 Name: count, dtype: int64
 </pre></div>
 </div>
-<img alt="_images/5c405129d184620d78361eb74911f0cdb108ba942842ed883202b4e7f45fc94d.png" src="_images/5c405129d184620d78361eb74911f0cdb108ba942842ed883202b4e7f45fc94d.png" />
+<img alt="_images/17ff547011f0fcf09970c0011ba95403e1063ae376b4cac1abb555529d0acb3c.png" src="_images/17ff547011f0fcf09970c0011ba95403e1063ae376b4cac1abb555529d0acb3c.png" />
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>NATEGLINIDE
 nateglinide
 No        101063
@@ -1713,7 +1699,7 @@ Down          11
 Name: count, dtype: int64
 </pre></div>
 </div>
-<img alt="_images/07137310e4d58619ed48d6f70b2d78199dcb7c84244225bef2807a09988d3be7.png" src="_images/07137310e4d58619ed48d6f70b2d78199dcb7c84244225bef2807a09988d3be7.png" />
+<img alt="_images/0b1d653426b52d2c9be215340f27e4bd413fcd868fdab8ef5b8543bd107f3362.png" src="_images/0b1d653426b52d2c9be215340f27e4bd413fcd868fdab8ef5b8543bd107f3362.png" />
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>CHLORPROPAMIDE
 chlorpropamide
 No        101680
@@ -1723,7 +1709,7 @@ Down           1
 Name: count, dtype: int64
 </pre></div>
 </div>
-<img alt="_images/e70a2df3faa9ae623d1e1973963f55b29c42cbcf294bec49cd1687c24471ad98.png" src="_images/e70a2df3faa9ae623d1e1973963f55b29c42cbcf294bec49cd1687c24471ad98.png" />
+<img alt="_images/1f7294240e8742d79e0f83e0712840a3ad2cfcb85909d150e808d86bc194bc45.png" src="_images/1f7294240e8742d79e0f83e0712840a3ad2cfcb85909d150e808d86bc194bc45.png" />
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>GLIMEPIRIDE
 glimepiride
 No        96575
@@ -1733,7 +1719,7 @@ Down        194
 Name: count, dtype: int64
 </pre></div>
 </div>
-<img alt="_images/e67b203f0b71c6f616b50c372a79273fb6d17764af711ebfa0ef847edd4684ca.png" src="_images/e67b203f0b71c6f616b50c372a79273fb6d17764af711ebfa0ef847edd4684ca.png" />
+<img alt="_images/df66fab62d101773f055d0c13f01d7336c16dc01a541f8373669a8ff53a50904.png" src="_images/df66fab62d101773f055d0c13f01d7336c16dc01a541f8373669a8ff53a50904.png" />
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>ACETOHEXAMIDE
 acetohexamide
 No        101765
@@ -1741,7 +1727,7 @@ Steady         1
 Name: count, dtype: int64
 </pre></div>
 </div>
-<img alt="_images/4365aedfdc5a79c3e24accab937ddf5d1c67dd14324f9ca8662bcdccde5c5550.png" src="_images/4365aedfdc5a79c3e24accab937ddf5d1c67dd14324f9ca8662bcdccde5c5550.png" />
+<img alt="_images/d653816fa47fd0ed48d738b10cee25f99086f615cf194e69015931e46bccd60b.png" src="_images/d653816fa47fd0ed48d738b10cee25f99086f615cf194e69015931e46bccd60b.png" />
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>GLIPIZIDE
 glipizide
 No        89080
@@ -1751,7 +1737,7 @@ Down        560
 Name: count, dtype: int64
 </pre></div>
 </div>
-<img alt="_images/111dc9bf00c7c00d09a9b7cb252676fff0964dc1fad4ed24077ed15cf1a1ddc3.png" src="_images/111dc9bf00c7c00d09a9b7cb252676fff0964dc1fad4ed24077ed15cf1a1ddc3.png" />
+<img alt="_images/06fd0c6db77900c35a89994a3c2db06e130cef5b98c9aeb8cd330c7598d03e31.png" src="_images/06fd0c6db77900c35a89994a3c2db06e130cef5b98c9aeb8cd330c7598d03e31.png" />
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>GLYBURIDE
 glyburide
 No        91116
@@ -1761,7 +1747,7 @@ Down        564
 Name: count, dtype: int64
 </pre></div>
 </div>
-<img alt="_images/7127ca01595c93ed7b514d2bcd6929b2b9698fb0f1573c22d4711c459944bf91.png" src="_images/7127ca01595c93ed7b514d2bcd6929b2b9698fb0f1573c22d4711c459944bf91.png" />
+<img alt="_images/1fafdc4953f3884bd389f893e9a4b24eec41bf5963682cf521982fad1342deea.png" src="_images/1fafdc4953f3884bd389f893e9a4b24eec41bf5963682cf521982fad1342deea.png" />
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>TOLBUTAMIDE
 tolbutamide
 No        101743
@@ -1769,7 +1755,7 @@ Steady        23
 Name: count, dtype: int64
 </pre></div>
 </div>
-<img alt="_images/4a8271b646fc5c02899be302830a155701863769bccc4914e04394ba7337c3a4.png" src="_images/4a8271b646fc5c02899be302830a155701863769bccc4914e04394ba7337c3a4.png" />
+<img alt="_images/137257353fa990910e6f5ab2e02feacb8d15e538bb198a7fcebbbde6e7fdc9b8.png" src="_images/137257353fa990910e6f5ab2e02feacb8d15e538bb198a7fcebbbde6e7fdc9b8.png" />
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>PIOGLITAZONE
 pioglitazone
 No        94438
@@ -1779,7 +1765,7 @@ Down        118
 Name: count, dtype: int64
 </pre></div>
 </div>
-<img alt="_images/a19f3e9113a9c67e124021b957aabf424fd8a9b395b7984d9ef0b67fadf68af5.png" src="_images/a19f3e9113a9c67e124021b957aabf424fd8a9b395b7984d9ef0b67fadf68af5.png" />
+<img alt="_images/d966eabcf0cc1fc92492c00120af327119732b2ef58e9a2216570c15a2800a2b.png" src="_images/d966eabcf0cc1fc92492c00120af327119732b2ef58e9a2216570c15a2800a2b.png" />
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>ROSIGLITAZONE
 rosiglitazone
 No        95401
@@ -1789,7 +1775,7 @@ Down         87
 Name: count, dtype: int64
 </pre></div>
 </div>
-<img alt="_images/be26866255b02ee17b3667bf6c95e0cec79138b4f61c8bf5ecc88756230c7a92.png" src="_images/be26866255b02ee17b3667bf6c95e0cec79138b4f61c8bf5ecc88756230c7a92.png" />
+<img alt="_images/d1007fd47ca6b9c0588a77cbbff527086d6ed38b410a1c95f94aaa2a1fad9f4e.png" src="_images/d1007fd47ca6b9c0588a77cbbff527086d6ed38b410a1c95f94aaa2a1fad9f4e.png" />
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>ACARBOSE
 acarbose
 No        101458
@@ -1799,7 +1785,7 @@ Down           3
 Name: count, dtype: int64
 </pre></div>
 </div>
-<img alt="_images/8b932ef6a0b1a8cbf0fdb672a423fda8f61c46cb64b57c2204064237eba05380.png" src="_images/8b932ef6a0b1a8cbf0fdb672a423fda8f61c46cb64b57c2204064237eba05380.png" />
+<img alt="_images/52ac68598aac2641d43c91168dd128289a9c6f1fe319181fa31145cf86465e26.png" src="_images/52ac68598aac2641d43c91168dd128289a9c6f1fe319181fa31145cf86465e26.png" />
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>MIGLITOL
 miglitol
 No        101728
@@ -1809,7 +1795,7 @@ Up             2
 Name: count, dtype: int64
 </pre></div>
 </div>
-<img alt="_images/d32d6c0b53691130d6f5913ae363517ceba10ee17302ed0ce32d394c8c74c141.png" src="_images/d32d6c0b53691130d6f5913ae363517ceba10ee17302ed0ce32d394c8c74c141.png" />
+<img alt="_images/aee26022467081eafc3b774ef2d0adba5ba9a6b0965abc8ea2a1e9ed7ef7f9d2.png" src="_images/aee26022467081eafc3b774ef2d0adba5ba9a6b0965abc8ea2a1e9ed7ef7f9d2.png" />
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>TROGLITAZONE
 troglitazone
 No        101763
@@ -1817,7 +1803,7 @@ Steady         3
 Name: count, dtype: int64
 </pre></div>
 </div>
-<img alt="_images/7cf11ea5cb4584d444d8581aeaa2221abc425c7745fa3dc1844543160b1e9a9b.png" src="_images/7cf11ea5cb4584d444d8581aeaa2221abc425c7745fa3dc1844543160b1e9a9b.png" />
+<img alt="_images/93ef19224ed3e0bbfc97dc5d6f353c5513e7a2b8d1b8cbeff20cecfd518f397d.png" src="_images/93ef19224ed3e0bbfc97dc5d6f353c5513e7a2b8d1b8cbeff20cecfd518f397d.png" />
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>TOLAZAMIDE
 tolazamide
 No        101727
@@ -1826,14 +1812,14 @@ Up             1
 Name: count, dtype: int64
 </pre></div>
 </div>
-<img alt="_images/01823c4611f4f9c0d5f40393c471073b4e427d7631fe3177b05eefc865627466.png" src="_images/01823c4611f4f9c0d5f40393c471073b4e427d7631fe3177b05eefc865627466.png" />
+<img alt="_images/a088dcbd4d93371a16278910ee1f6f3a6166936666b19837d8199b6e4af0bef7.png" src="_images/a088dcbd4d93371a16278910ee1f6f3a6166936666b19837d8199b6e4af0bef7.png" />
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>EXAMIDE
 examide
 No    101766
 Name: count, dtype: int64
 </pre></div>
 </div>
-<img alt="_images/cdce6f77299d60af89e52b8a21d052872756de0ace0ecd0b4d5ef48f34c9f70e.png" src="_images/cdce6f77299d60af89e52b8a21d052872756de0ace0ecd0b4d5ef48f34c9f70e.png" />
+<img alt="_images/eae13a3b91c59cfa7e73c3cfa32460549a596ea359f1d4607b710f53ae33edaf.png" src="_images/eae13a3b91c59cfa7e73c3cfa32460549a596ea359f1d4607b710f53ae33edaf.png" />
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>GLYBURIDE-METFORMIN
 glyburide-metformin
 No        101060
@@ -1843,7 +1829,7 @@ Down           6
 Name: count, dtype: int64
 </pre></div>
 </div>
-<img alt="_images/8870350aaf371ba3048739224492d062f19715a95452a6f2beb8be6f05123799.png" src="_images/8870350aaf371ba3048739224492d062f19715a95452a6f2beb8be6f05123799.png" />
+<img alt="_images/01d77abcc57ca3271fafe351f42eb8d4db00652cdb203ab084591c24783b3d2e.png" src="_images/01d77abcc57ca3271fafe351f42eb8d4db00652cdb203ab084591c24783b3d2e.png" />
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>GLIPIZIDE-METFORMIN
 glipizide-metformin
 No        101753
@@ -1851,7 +1837,7 @@ Steady        13
 Name: count, dtype: int64
 </pre></div>
 </div>
-<img alt="_images/12de041d75cdf4aabb53e8ec800d4a597c62a5031c6d777de75bc7088e9d0ab2.png" src="_images/12de041d75cdf4aabb53e8ec800d4a597c62a5031c6d777de75bc7088e9d0ab2.png" />
+<img alt="_images/e4894dfb4481150837a89431dd12983e5e2c1fcca5edf672be930102e984aba0.png" src="_images/e4894dfb4481150837a89431dd12983e5e2c1fcca5edf672be930102e984aba0.png" />
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>GLIMEPIRIDE-PIOGLITAZONE
 glimepiride-pioglitazone
 No        101765
@@ -1859,7 +1845,7 @@ Steady         1
 Name: count, dtype: int64
 </pre></div>
 </div>
-<img alt="_images/c57efc50d823921444b7eda275dae2179800df84aad0d2a50a23cb1e26c90a1c.png" src="_images/c57efc50d823921444b7eda275dae2179800df84aad0d2a50a23cb1e26c90a1c.png" />
+<img alt="_images/829dce3eadddef172ffc025fa8c5f3ed459e908f242f9e2e160f53826d0d3e93.png" src="_images/829dce3eadddef172ffc025fa8c5f3ed459e908f242f9e2e160f53826d0d3e93.png" />
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>METFORMIN-ROSIGLITAZONE
 metformin-rosiglitazone
 No        101764
@@ -1867,7 +1853,7 @@ Steady         2
 Name: count, dtype: int64
 </pre></div>
 </div>
-<img alt="_images/fcf35161631c3fd041f930bb0b8b668f67c380810d0ea8e2d287129907b92c30.png" src="_images/fcf35161631c3fd041f930bb0b8b668f67c380810d0ea8e2d287129907b92c30.png" />
+<img alt="_images/3165d91f30f3fd02ad64dbe4c7974a49b33045ac1fe7445d1b76663aae4fdeaf.png" src="_images/3165d91f30f3fd02ad64dbe4c7974a49b33045ac1fe7445d1b76663aae4fdeaf.png" />
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>METFORMIN-PIOGLITAZONE
 metformin-pioglitazone
 No        101765
@@ -1878,177 +1864,11 @@ Name: count, dtype: int64
 </div>
 </details>
 </div>
-<center>
 </section>
 </section>
 </section>
-<section id="modelo-logistico">
-<h2><strong>Modelo Logistico</strong><a class="headerlink" href="#modelo-logistico" title="Link to this heading">#</a></h2>
-</center><div class="cell tag_hide-input docutils container">
-<details class="admonition hide above-input">
-<summary aria-label="Toggle hidden content">
-<p class="collapsed admonition-title">Show code cell source</p>
-<p class="expanded admonition-title">Hide code cell source</p>
-</summary>
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># --- 1. DIVISIÓN DE DATOS ---</span>
-<span class="n">dflog</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;diabetic_data.csv&#39;</span><span class="p">)</span>
-<span class="n">dflog</span><span class="p">[</span><span class="s1">&#39;target&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">dflog</span><span class="p">[</span><span class="s1">&#39;readmitted&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">isin</span><span class="p">([</span><span class="s1">&#39;&lt;30&#39;</span><span class="p">,</span> <span class="s1">&#39;&gt;30&#39;</span><span class="p">])</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span>
-
-<span class="c1"># Eliminar columnas que no usaremos: IDs únicos y la columna original de reingreso.</span>
-<span class="n">dflog</span> <span class="o">=</span> <span class="n">dflog</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;encounter_id&#39;</span><span class="p">,</span> <span class="s1">&#39;patient_nbr&#39;</span><span class="p">,</span> <span class="s1">&#39;readmitted&#39;</span><span class="p">])</span>
-<span class="c1"># Separar las características (X) de la variable objetivo (y).</span>
-<span class="n">X</span> <span class="o">=</span> <span class="n">dflog</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="s1">&#39;target&#39;</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
-<span class="n">y</span> <span class="o">=</span> <span class="n">dflog</span><span class="p">[</span><span class="s1">&#39;target&#39;</span><span class="p">]</span>
-
-<span class="c1"># Dividir los datos: 80% para entrenar el modelo y 20% para probarlo.</span>
-<span class="c1"># &#39;random_state=42&#39; asegura que la división sea siempre la misma para poder reproducir los resultados.</span>
-<span class="n">X_train</span><span class="p">,</span> <span class="n">X_test</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">y_test</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">test_size</span><span class="o">=</span><span class="mf">0.20</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
-</pre></div>
+<div class="toctree-wrapper compound">
 </div>
-</div>
-</details>
-</div>
-<div class="cell tag_hide-input docutils container">
-<details class="admonition hide above-input">
-<summary aria-label="Toggle hidden content">
-<p class="collapsed admonition-title">Show code cell source</p>
-<p class="expanded admonition-title">Hide code cell source</p>
-</summary>
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># --- 2. PREPROCESAMIENTO DE CARACTERÍSTICAS ---</span>
-
-<span class="c1"># Identificar qué columnas son numéricas y cuáles son categóricas (texto).</span>
-<span class="n">numeric_features</span> <span class="o">=</span> <span class="n">X</span><span class="o">.</span><span class="n">select_dtypes</span><span class="p">(</span><span class="n">include</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">number</span><span class="p">)</span><span class="o">.</span><span class="n">columns</span>
-<span class="n">categorical_features</span> <span class="o">=</span> <span class="n">X</span><span class="o">.</span><span class="n">select_dtypes</span><span class="p">(</span><span class="n">include</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;object&#39;</span><span class="p">])</span><span class="o">.</span><span class="n">columns</span>
-
-<span class="c1"># Crear un &quot;transformador&quot; que aplicará diferentes reglas a cada tipo de columna.</span>
-<span class="c1"># Es una receta de preprocesamiento.</span>
-<span class="n">preprocessor</span> <span class="o">=</span> <span class="n">ColumnTransformer</span><span class="p">(</span>
-    <span class="n">transformers</span><span class="o">=</span><span class="p">[</span>
-        <span class="c1"># Paso 1: Para las columnas numéricas, escalarlas a un rango entre 0 y 1.</span>
-        <span class="p">(</span><span class="s1">&#39;num&#39;</span><span class="p">,</span> <span class="n">MinMaxScaler</span><span class="p">(),</span> <span class="n">numeric_features</span><span class="p">),</span>
-        
-        <span class="c1"># Paso 2: Para las columnas categóricas, convertirlas a números usando One-Hot Encoding.</span>
-        <span class="c1"># &#39;handle_unknown=&#39;ignore&#39;&#39; evita errores si una categoría aparece en los datos de prueba pero no en los de entrenamiento.</span>
-        <span class="p">(</span><span class="s1">&#39;cat&#39;</span><span class="p">,</span> <span class="n">OneHotEncoder</span><span class="p">(</span><span class="n">handle_unknown</span><span class="o">=</span><span class="s1">&#39;ignore&#39;</span><span class="p">),</span> <span class="n">categorical_features</span><span class="p">)</span>
-    <span class="p">])</span>
-</pre></div>
-</div>
-</div>
-</details>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># --- 3. CREACIÓN Y ENTRENAMIENTO DEL MODELO ---</span>
-
-<span class="c1"># Crear un &#39;Pipeline&#39;: una secuencia de pasos que se ejecutan en orden.</span>
-<span class="c1"># 1. &#39;preprocessor&#39;: Aplica la receta de preprocesamiento que definimos antes.</span>
-<span class="c1"># 2. &#39;model&#39;: Después de preprocesar, entrena el modelo de Regresión Logística.</span>
-<span class="n">pipeline</span> <span class="o">=</span> <span class="n">Pipeline</span><span class="p">(</span><span class="n">steps</span><span class="o">=</span><span class="p">[</span>
-    <span class="p">(</span><span class="s1">&#39;preprocessor&#39;</span><span class="p">,</span> <span class="n">preprocessor</span><span class="p">),</span>
-    <span class="p">(</span><span class="s1">&#39;model&#39;</span><span class="p">,</span> <span class="n">LogisticRegression</span><span class="p">(</span><span class="n">max_iter</span><span class="o">=</span><span class="mi">1000</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">))</span>
-<span class="p">])</span>
-
-<span class="c1"># Entrenar todo el pipeline con los datos de entrenamiento.</span>
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Entrenando el modelo...&quot;</span><span class="p">)</span>
-<span class="n">pipeline</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;¡Modelo entrenado exitosamente!&quot;</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Entrenando el modelo...
-</pre></div>
-</div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>¡Modelo entrenado exitosamente!
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># --- 4. EVALUACIÓN DEL MODELO ---</span>
-
-<span class="c1"># Usar el modelo entrenado para hacer predicciones sobre los datos de prueba (que nunca ha visto).</span>
-<span class="n">y_pred</span> <span class="o">=</span> <span class="n">pipeline</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_test</span><span class="p">)</span>
-
-<span class="c1"># a) Exactitud (Accuracy): ¿Qué porcentaje de predicciones fueron correctas?</span>
-<span class="n">accuracy</span> <span class="o">=</span> <span class="n">accuracy_score</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Exactitud del modelo: </span><span class="si">{</span><span class="n">accuracy</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-
-<span class="c1"># b) Reporte de Clasificación: Métricas detalladas como Precisión, Recall y F1-Score.</span>
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Reporte de Clasificación:&quot;</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">classification_report</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">,</span> <span class="n">target_names</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;No Reingresado&#39;</span><span class="p">,</span> <span class="s1">&#39;Reingresado&#39;</span><span class="p">]))</span>
-
-<span class="c1"># c) Matriz de Confusión: Muestra visualmente los aciertos y errores.</span>
-<span class="c1"># - Verdaderos Negativos (TN): predijo &#39;No Reingresado&#39; y era correcto.</span>
-<span class="c1"># - Falsos Positivos (FP): predijo &#39;Reingresado&#39; pero era incorrecto.</span>
-<span class="c1"># - Falsos Negativos (FN): predijo &#39;No Reingresado&#39; pero era incorrecto (el error más costoso).</span>
-<span class="c1"># - Verdaderos Positivos (TP): predijo &#39;Reingresado&#39; y era correcto.</span>
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Matriz de Confusión:&quot;</span><span class="p">)</span>
-<span class="n">cm</span> <span class="o">=</span> <span class="n">confusion_matrix</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">)</span>
-<span class="n">disp</span> <span class="o">=</span> <span class="n">ConfusionMatrixDisplay</span><span class="p">(</span><span class="n">confusion_matrix</span><span class="o">=</span><span class="n">cm</span><span class="p">,</span> <span class="n">display_labels</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;No Reingresado&#39;</span><span class="p">,</span> <span class="s1">&#39;Reingresado&#39;</span><span class="p">])</span>
-<span class="n">disp</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">cmap</span><span class="o">=</span><span class="s2">&quot;Blues&quot;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Matriz de Confusión&quot;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
-
-<span class="c1"># d) Curva ROC y AUC: Mide la capacidad del modelo para distinguir entre las dos clases.</span>
-<span class="c1"># Un AUC cercano a 1.0 es excelente. Un AUC de 0.5 es un modelo que adivina al azar.</span>
-<span class="n">y_pred_proba</span> <span class="o">=</span> <span class="n">pipeline</span><span class="o">.</span><span class="n">predict_proba</span><span class="p">(</span><span class="n">X_test</span><span class="p">)[:,</span> <span class="mi">1</span><span class="p">]</span> <span class="c1"># Probabilidades para la clase positiva (Reingresado)</span>
-<span class="n">fpr</span><span class="p">,</span> <span class="n">tpr</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">roc_curve</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">y_pred_proba</span><span class="p">)</span>
-<span class="n">roc_auc</span> <span class="o">=</span> <span class="n">auc</span><span class="p">(</span><span class="n">fpr</span><span class="p">,</span> <span class="n">tpr</span><span class="p">)</span>
-
-<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">fpr</span><span class="p">,</span> <span class="n">tpr</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;darkorange&#39;</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;Curva ROC (AUC = </span><span class="si">{</span><span class="n">roc_auc</span><span class="si">:</span><span class="s1">.2f</span><span class="si">}</span><span class="s1">)&#39;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;navy&#39;</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;--&#39;</span><span class="p">)</span> <span class="c1"># Línea de referencia (azar)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Tasa de Falsos Positivos (FPR)&#39;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Tasa de Verdaderos Positivos (TPR)&#39;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Curva ROC&#39;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="s2">&quot;lower right&quot;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Exactitud del modelo: 0.6294
-
-Reporte de Clasificación:
-</pre></div>
-</div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>                precision    recall  f1-score   support
-
-No Reingresado       0.63      0.73      0.68     10952
-   Reingresado       0.62      0.51      0.56      9402
-
-      accuracy                           0.63     20354
-     macro avg       0.63      0.62      0.62     20354
-  weighted avg       0.63      0.63      0.62     20354
-
-
-Matriz de Confusión:
-</pre></div>
-</div>
-<img alt="_images/c78a29ef17565db7282818abb0a320cd14f466c0c6f2b53ae87f1bb9faeda80d.png" src="_images/c78a29ef17565db7282818abb0a320cd14f466c0c6f2b53ae87f1bb9faeda80d.png" />
-<img alt="_images/f7fb42f8c48767af674c6e5f683487c3b94a57deace601cf0934ec8db6d85fe2.png" src="_images/f7fb42f8c48767af674c6e5f683487c3b94a57deace601cf0934ec8db6d85fe2.png" />
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># 5. Guardar el modelo logistico</span>
-<span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;modelo_logistico_diabetes.pkl&#39;</span><span class="p">,</span> <span class="s1">&#39;wb&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
-    <span class="n">pickle</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="n">pipeline</span><span class="p">,</span> <span class="n">f</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Modelo guardado como &#39;modelo_logistico_diabetes.pkl&#39;&quot;</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Modelo guardado como &#39;modelo_logistico_diabetes.pkl&#39;
-</pre></div>
-</div>
-</div>
-</div>
-</section>
 </section>
 
     <script type="text/x-thebe-config">
@@ -2081,6 +1901,15 @@ Matriz de Confusión:
                 <footer class="prev-next-footer d-print-none">
                   
 <div class="prev-next-area">
+    <a class="right-next"
+       href="Modelos_Logisticos.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Modelos de Clasificación: Logístico, Ridge y Lasso</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
 </div>
                 </footer>
               
@@ -2112,7 +1941,6 @@ Matriz de Confusión:
 </li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#modelo-logistico"><strong>Modelo Logistico</strong></a></li>
 </ul>
   </nav></div>
 
