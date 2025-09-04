@@ -3,3 +3,6 @@
 
 format: jb-book
 root: EDA
+chapters:
+- file: Modelos_Logisticos
+- file: Modelo_Knn
