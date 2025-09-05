@@ -180,8 +180,8 @@
             </li>
         </ul>
         <ul class="current nav bd-sidenav">
-<li class="toctree-l1 current active"><a class="current reference internal" href="#">Modelos de Clasificación: Logístico, Ridge y Lasso</a></li>
-<li class="toctree-l1"><a class="reference internal" href="Modelo_Knn.html">Modelo Knn</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#"><strong>Modelos de Clasificación: Logístico, Ridge y Lasso</strong></a></li>
+<li class="toctree-l1"><a class="reference internal" href="Modelo_Knn.html"><strong>Modelo Knn</strong></a></li>
 </ul>
 
     </div>
@@ -354,7 +354,9 @@ document.write(`
   </button>
 `);
 </script>
-
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
 </div></div>
       
     </div>
@@ -370,6 +372,19 @@ document.write(`
     <div id="print-main-content">
         <div id="jb-print-toc">
             
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#conclusiones">Conclusiones.</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#analisis-por-modelo">Análisis por Modelo</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#posibles-mejoras">Posibles mejoras</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#plan-a-futuro">Plan a futuro</a></li>
+</ul>
+</li>
+</ul>
+            </nav>
         </div>
     </div>
 </div>
@@ -379,7 +394,10 @@ document.write(`
 <div id="searchbox"></div>
                 <article class="bd-article">
                   
-  <div class="cell docutils container">
+  <section class="tex2jax_ignore mathjax_ignore" id="modelos-de-clasificacion-logistico-ridge-y-lasso">
+<h1><strong>Modelos de Clasificación: Logístico, Ridge y Lasso</strong><a class="headerlink" href="#modelos-de-clasificacion-logistico-ridge-y-lasso" title="Link to this heading">#</a></h1>
+<p>Comparativa de tres modelos de clasificación.</p>
+<div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># --- IMPORTACIÓN DE LIBRERÍAS ---</span>
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
@@ -409,9 +427,6 @@ document.write(`
 </div>
 </div>
 </div>
-<section class="tex2jax_ignore mathjax_ignore" id="modelos-de-clasificacion-logistico-ridge-y-lasso">
-<h1>Modelos de Clasificación: Logístico, Ridge y Lasso<a class="headerlink" href="#modelos-de-clasificacion-logistico-ridge-y-lasso" title="Link to this heading">#</a></h1>
-<p>Comparativa de tres modelos de clasificación lineal para predecir reingresos hospitalarios</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># --- 1. CARGA Y PREPARACIÓN DE DATOS ---</span>
@@ -872,6 +887,44 @@ Proporción clase positiva: 0.461
 </div>
 </div>
 </div>
+<section id="conclusiones">
+<h2>Conclusiones.<a class="headerlink" href="#conclusiones" title="Link to this heading">#</a></h2>
+<p><strong>Panorama:</strong> Mejora marginal vs KNN, pero rendimiento clínicamente inaceptable. Ningún modelo alcanza estándar médico operacional.</p>
+<section id="analisis-por-modelo">
+<h3>Análisis por Modelo<a class="headerlink" href="#analisis-por-modelo" title="Link to this heading">#</a></h3>
+<p><strong>Regresión Logística &amp; Ridge:</strong></p>
+<ul class="simple">
+<li><p>Recall ~47%: <strong>Pierden &gt;50% casos críticos</strong> - inaceptable para setting hospitalario</p></li>
+<li><p>Precision ~63%: Genera falsas alarmas masivas (2,500+ FP)</p></li>
+<li><p>AUC 0.67: Capacidad discriminativa <strong>débil</strong> - límite de modelos lineales alcanzado</p></li>
+</ul>
+<p><strong>Lasso:</strong></p>
+<ul class="simple">
+<li><p><strong>Error conceptual:</strong> <code class="docutils literal notranslate"><span class="pre">scoring='r2'</span></code> para clasificación → modelo regresivo forzado</p></li>
+<li><p>Recall 1.2%: Virtualmente ciego a casos positivos</p></li>
+<li><p>Precision 85%: <strong>Espejismo estadístico</strong> - conservadurismo extremo por L1</p></li>
+</ul>
+</section>
+<section id="posibles-mejoras">
+<h3>Posibles mejoras<a class="headerlink" href="#posibles-mejoras" title="Link to this heading">#</a></h3>
+<ol class="arabic simple">
+<li><p><strong>Cambio de objetivo:</strong> <code class="docutils literal notranslate"><span class="pre">readmitted</span></code> ∈ [‘&lt;30’, ‘&gt;30’] contamina señal específica &lt;30 días</p></li>
+<li><p><strong>Límite arquitectural:</strong> Relaciones lineales insuficientes para complejidad médica</p></li>
+<li><p><strong>Métrica persistente:</strong> <code class="docutils literal notranslate"><span class="pre">scoring='accuracy'</span></code> sigue saboteando optimización</p></li>
+</ol>
+</section>
+<section id="plan-a-futuro">
+<h3>Plan a futuro<a class="headerlink" href="#plan-a-futuro" title="Link to this heading">#</a></h3>
+<p><strong>Estratégico:</strong></p>
+<ul class="simple">
+<li><p>Feature engineering: interacciones entre medicamentos, agrupación de diagnósticos.</p></li>
+<li><p>Threshold optimization vía Precision-Recall curves.</p></li>
+</ul>
+<blockquote>
+<div><p><strong>Conclusión:</strong> Modelos lineales han alcanzado techo de performance. <strong>Escalamiento no-lineal obligatorio</strong> para viabilidad clínica.</p>
+</div></blockquote>
+</section>
+</section>
 </section>
 
     <script type="text/x-thebe-config">
@@ -918,7 +971,7 @@ Proporción clase positiva: 0.461
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">Modelo Knn</p>
+        <p class="prev-next-title"><strong>Modelo Knn</strong></p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>
@@ -928,6 +981,26 @@ Proporción clase positiva: 0.461
             </div>
             
             
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#conclusiones">Conclusiones.</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#analisis-por-modelo">Análisis por Modelo</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#posibles-mejoras">Posibles mejoras</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#plan-a-futuro">Plan a futuro</a></li>
+</ul>
+</li>
+</ul>
+  </nav></div>
+
+</div></div>
               
             
           </div>

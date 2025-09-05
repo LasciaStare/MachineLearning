@@ -179,8 +179,8 @@
             </li>
         </ul>
         <ul class="current nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="Modelos_Logisticos.html">Modelos de Clasificación: Logístico, Ridge y Lasso</a></li>
-<li class="toctree-l1 current active"><a class="current reference internal" href="#">Modelo Knn</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Modelos_Logisticos.html"><strong>Modelos de Clasificación: Logístico, Ridge y Lasso</strong></a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#"><strong>Modelo Knn</strong></a></li>
 </ul>
 
     </div>
@@ -353,7 +353,9 @@ document.write(`
   </button>
 `);
 </script>
-
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
 </div></div>
       
     </div>
@@ -369,6 +371,18 @@ document.write(`
     <div id="print-main-content">
         <div id="jb-print-toc">
             
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#analisis">Análisis.</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#anatomia-del-fracaso">Anatomía del Fracaso</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#oportunidades-de-mejora">Oportunidades de mejora:</a></li>
+</ul>
+</li>
+</ul>
+            </nav>
         </div>
     </div>
 </div>
@@ -378,9 +392,10 @@ document.write(`
 <div id="searchbox"></div>
                 <article class="bd-article">
                   
-  <section class="tex2jax_ignore mathjax_ignore" id="modelo-knn">
-<h1>Modelo Knn<a class="headerlink" href="#modelo-knn" title="Link to this heading">#</a></h1>
-<div class="cell docutils container">
+  <center>
+<section class="tex2jax_ignore mathjax_ignore" id="modelo-knn">
+<h1><strong>Modelo Knn</strong><a class="headerlink" href="#modelo-knn" title="Link to this heading">#</a></h1>
+</center><div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
@@ -1018,6 +1033,34 @@ Readmitido &lt;30       0.45      0.02      0.03      2271
 <img alt="_images/226762075b9455c910d1579c0f81f661a57f75465baca8da33b5ceb14fb5285a.png" src="_images/226762075b9455c910d1579c0f81f661a57f75465baca8da33b5ceb14fb5285a.png" />
 </div>
 </div>
+<section id="analisis">
+<h2>Análisis.<a class="headerlink" href="#analisis" title="Link to this heading">#</a></h2>
+<p><strong>Fracaso rotundo:</strong> Accuracy 89%. El modelo adoptó estrategia “perezosa” - predecir siempre la clase mayoritaria.</p>
+<section id="anatomia-del-fracaso">
+<h3>Anatomía del Fracaso<a class="headerlink" href="#anatomia-del-fracaso" title="Link to this heading">#</a></h3>
+<p><strong>Matriz de Confusión:</strong></p>
+<ul class="simple">
+<li><p>FN: 2,236 (98% de casos positivos perdidos) → Este es el error más crítico. 2,236 pacientes que sí fueron readmitidos fueron incorrectamente clasificados como “No Readmitido”. Esto significa que el hospital dejaría de aplicar intervenciones preventivas a más de 2,200 pacientes de alto riesgo.</p></li>
+<li><p>TP: 35 (2% recall) → El modelo solo logró identificar correctamente a 35 de los 2,271 pacientes que fueron readmitidos. Es una cifra abismalmente baja.</p></li>
+<li><p>Sesgo masivo hacia “No Readmitido” (88.8% dataset)</p></li>
+</ul>
+<p><strong>Métricas Reveladoras:</strong></p>
+<ul class="simple">
+<li><p>Recall 0.02: Detecta 2% de casos críticos</p></li>
+<li><p>AUC 0.60: Apenas superior a moneda a tirar una moneda al aire</p></li>
+<li><p>F1 0.03: Confirmación de fracaso total</p></li>
+</ul>
+</section>
+<section id="oportunidades-de-mejora">
+<h3>Oportunidades de mejora:<a class="headerlink" href="#oportunidades-de-mejora" title="Link to this heading">#</a></h3>
+<ol class="arabic simple">
+<li><p><strong>Métrica poco robusta:</strong> <code class="docutils literal notranslate"><span class="pre">scoring='accuracy'</span></code> en desbalance severo</p></li>
+<li><p><strong>Sin tratamiento de desbalance:</strong> Ausencia de SMOTE/undersampling</p></li>
+<li><p><strong>Modelo subóptimo:</strong> KNN vulnerable a maldición dimensionalidad + dominancia mayoritaria</p></li>
+</ol>
+<blockquote>
+<div><p><strong>Lección crítica:</strong> En problemas desbalanceados, accuracy alta puede señalar fracaso, no éxito.</p>
+</div></blockquote>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># --- 7. GUARDAR EL MODELO Y PREPROCESADOR ---</span>
@@ -1040,6 +1083,8 @@ Mejor modelo KNN guardado exitosamente en &#39;best_knn_model.pkl&#39;
 </div>
 </div>
 </div>
+</section>
+</section>
 </section>
 
     <script type="text/x-thebe-config">
@@ -1078,7 +1123,7 @@ Mejor modelo KNN guardado exitosamente en &#39;best_knn_model.pkl&#39;
       <i class="fa-solid fa-angle-left"></i>
       <div class="prev-next-info">
         <p class="prev-next-subtitle">previous</p>
-        <p class="prev-next-title">Modelos de Clasificación: Logístico, Ridge y Lasso</p>
+        <p class="prev-next-title"><strong>Modelos de Clasificación: Logístico, Ridge y Lasso</strong></p>
       </div>
     </a>
 </div>
@@ -1087,6 +1132,25 @@ Mejor modelo KNN guardado exitosamente en &#39;best_knn_model.pkl&#39;
             </div>
             
             
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#analisis">Análisis.</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#anatomia-del-fracaso">Anatomía del Fracaso</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#oportunidades-de-mejora">Oportunidades de mejora:</a></li>
+</ul>
+</li>
+</ul>
+  </nav></div>
+
+</div></div>
               
             
           </div>
