@@ -1,0 +1,1162 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="./" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Técnicas de balanceo &#8212; Readmission Diabetes Prediction</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=fa44fd50" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css?v=eba8b062" />
+    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.8ecb98da25f57f5357bf6f572d296f466b2cfe2517ffebfabe82451661e28f02.css?v=6644e6bb" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-design.min.css?v=95c83b7e" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script src="_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="_static/doctools.js?v=9a2dae69"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="_static/copybutton.js?v=f281be69"></script>
+    <script src="_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="_static/togglebutton.js?v=4a39c7ea"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'Balanceo';</script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="prev" title="Benchamark" href="Benchmark.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="EDA.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="_static/logo.png" class="logo__image only-light" alt="Readmission Diabetes Prediction - Home"/>
+    <script>document.write(`<img src="_static/logo.png" class="logo__image only-dark" alt="Readmission Diabetes Prediction - Home"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="EDA.html">
+                    EDA
+                </a>
+            </li>
+        </ul>
+        <ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="Modelos_Logisticos.html"><strong>Modelos de Clasificación: Logístico, Ridge y Lasso</strong></a></li>
+<li class="toctree-l1"><a class="reference internal" href="Modelo_Knn.html"><strong>Modelo Knn</strong></a></li>
+<li class="toctree-l1"><a class="reference internal" href="Benchmark.html">Benchamark</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Técnicas de balanceo</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/executablebooks/jupyter-book" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/executablebooks/jupyter-book/issues/new?title=Issue%20on%20page%20%2FBalanceo.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="_sources/Balanceo.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Técnicas de balanceo</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#smote">SMOTE</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#class-weight-balanced">class weight=’balanced’</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#adasyn">ADASYN</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#conclusion">Conclusión</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#analisis-comparativo">Análisis comparativo</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#a-manera-general">A manera general</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="tecnicas-de-balanceo">
+<h1>Técnicas de balanceo<a class="headerlink" href="#tecnicas-de-balanceo" title="Link to this heading">#</a></h1>
+<p>Nuestra variable objetivo no cuenta con un desbalanceo evidente, sin embargo aplicaremos las tecnicas de balanceo por efectos academicos y por el cumplimiento de los requerimientos del taller. Además por temas de tiempo solo utilizaremos los 3 modelos con mejor score vistos en el benchmark</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span>
+
+<span class="kn">from</span> <span class="nn">sklearn.naive_bayes</span> <span class="kn">import</span> <span class="n">GaussianNB</span>
+<span class="kn">from</span> <span class="nn">sklearn.ensemble</span> <span class="kn">import</span> <span class="n">RandomForestClassifier</span>
+<span class="kn">from</span> <span class="nn">sklearn.metrics</span> <span class="kn">import</span> <span class="n">accuracy_score</span><span class="p">,</span> <span class="n">f1_score</span><span class="p">,</span> <span class="n">roc_auc_score</span>
+<span class="kn">from</span> <span class="nn">imblearn.over_sampling</span> <span class="kn">import</span> <span class="n">SMOTE</span>
+<span class="kn">from</span> <span class="nn">xgboost</span> <span class="kn">import</span> <span class="n">XGBClassifier</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Cargar dataset (ajusta la ruta si es necesario)</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;data/raw/diabetic_data.csv&#39;</span><span class="p">)</span>
+
+<span class="c1"># Crear la variable objetivo &#39;target&#39;</span>
+<span class="n">df</span><span class="p">[</span><span class="s1">&#39;target&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;readmitted&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">isin</span><span class="p">([</span><span class="s1">&#39;&lt;30&#39;</span><span class="p">,</span> <span class="s1">&#39;&gt;30&#39;</span><span class="p">])</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span>
+<span class="n">df</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;readmitted&#39;</span><span class="p">],</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="c1"># Ver distribución de clases</span>
+<span class="n">proportion</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;target&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">value_counts</span><span class="p">(</span><span class="n">normalize</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">count</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;target&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Distribución de clases:</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">proportion</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Conteo absoluto:</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">count</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Distribución de clases:
+ target
+0    0.539119
+1    0.460881
+Name: proportion, dtype: float64
+
+Conteo absoluto:
+ target
+0    54864
+1    46902
+Name: count, dtype: int64
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># ===============================</span>
+<span class="c1"># Identificar y codificar variables categóricas</span>
+<span class="c1"># ===============================</span>
+<span class="n">cat_cols</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">select_dtypes</span><span class="p">(</span><span class="n">include</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;object&#39;</span><span class="p">])</span><span class="o">.</span><span class="n">columns</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Columnas categóricas:&quot;</span><span class="p">,</span> <span class="nb">list</span><span class="p">(</span><span class="n">cat_cols</span><span class="p">))</span>
+
+<span class="c1"># One-Hot Encoding</span>
+<span class="n">df_encoded</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">get_dummies</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="n">cat_cols</span><span class="p">,</span> <span class="n">drop_first</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="c1"># ===============================</span>
+<span class="c1"># Limpiar nombres de columnas después del encoding</span>
+<span class="c1"># ===============================</span>
+<span class="n">df_encoded</span><span class="o">.</span><span class="n">columns</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="n">df_encoded</span><span class="o">.</span><span class="n">columns</span>
+      <span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">str</span><span class="p">)</span>
+      <span class="o">.</span><span class="n">str</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;[&#39;</span><span class="p">,</span> <span class="s1">&#39;(&#39;</span><span class="p">,</span> <span class="n">regex</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+      <span class="o">.</span><span class="n">str</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;]&#39;</span><span class="p">,</span> <span class="s1">&#39;)&#39;</span><span class="p">,</span> <span class="n">regex</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+      <span class="o">.</span><span class="n">str</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;&lt;&#39;</span><span class="p">,</span> <span class="s1">&#39;menor_&#39;</span><span class="p">,</span> <span class="n">regex</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+      <span class="o">.</span><span class="n">str</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;&gt;&#39;</span><span class="p">,</span> <span class="s1">&#39;mayor_&#39;</span><span class="p">,</span> <span class="n">regex</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+      <span class="o">.</span><span class="n">str</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;=&#39;</span><span class="p">,</span> <span class="s1">&#39;_&#39;</span><span class="p">,</span> <span class="n">regex</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+      <span class="o">.</span><span class="n">str</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;:&#39;</span><span class="p">,</span> <span class="s1">&#39;_&#39;</span><span class="p">,</span> <span class="n">regex</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+      <span class="o">.</span><span class="n">str</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;,&#39;</span><span class="p">,</span> <span class="s1">&#39;_&#39;</span><span class="p">,</span> <span class="n">regex</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+      <span class="o">.</span><span class="n">str</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39; &#39;</span><span class="p">,</span> <span class="s1">&#39;_&#39;</span><span class="p">,</span> <span class="n">regex</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="p">)</span>
+
+
+<span class="c1"># ===============================</span>
+<span class="c1"># Sustituir el dataframe original</span>
+<span class="c1"># ===============================</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">df_encoded</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Dimensiones después del encoding:&quot;</span><span class="p">,</span> <span class="n">df</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Columnas categóricas: [&#39;race&#39;, &#39;gender&#39;, &#39;age&#39;, &#39;weight&#39;, &#39;payer_code&#39;, &#39;medical_specialty&#39;, &#39;diag_1&#39;, &#39;diag_2&#39;, &#39;diag_3&#39;, &#39;max_glu_serum&#39;, &#39;A1Cresult&#39;, &#39;metformin&#39;, &#39;repaglinide&#39;, &#39;nateglinide&#39;, &#39;chlorpropamide&#39;, &#39;glimepiride&#39;, &#39;acetohexamide&#39;, &#39;glipizide&#39;, &#39;glyburide&#39;, &#39;tolbutamide&#39;, &#39;pioglitazone&#39;, &#39;rosiglitazone&#39;, &#39;acarbose&#39;, &#39;miglitol&#39;, &#39;troglitazone&#39;, &#39;tolazamide&#39;, &#39;examide&#39;, &#39;citoglipton&#39;, &#39;insulin&#39;, &#39;glyburide-metformin&#39;, &#39;glipizide-metformin&#39;, &#39;glimepiride-pioglitazone&#39;, &#39;metformin-rosiglitazone&#39;, &#39;metformin-pioglitazone&#39;, &#39;change&#39;, &#39;diabetesMed&#39;]
+Dimensiones después del encoding: (101766, 2435)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># ===============================</span>
+<span class="c1"># 4️⃣ Separar X e y</span>
+<span class="c1"># ===============================</span>
+<span class="n">X</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;target&#39;</span><span class="p">])</span>
+<span class="n">y</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;target&#39;</span><span class="p">]</span>
+
+<span class="c1"># ===============================</span>
+<span class="c1"># 5️⃣ División de datos</span>
+<span class="c1"># ===============================</span>
+<span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">train_test_split</span>
+<span class="n">X_train</span><span class="p">,</span> <span class="n">X_test</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">y_test</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span>
+    <span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">test_size</span><span class="o">=</span><span class="mf">0.3</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">,</span> <span class="n">stratify</span><span class="o">=</span><span class="n">y</span>
+<span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Tamaño del set de entrenamiento:&quot;</span><span class="p">,</span> <span class="n">X_train</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Tamaño del set de prueba:&quot;</span><span class="p">,</span> <span class="n">X_test</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Tamaño del set de entrenamiento: (71236, 2434)
+Tamaño del set de prueba: (30530, 2434)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">evaluar_modelo</span><span class="p">(</span><span class="n">modelo</span><span class="p">,</span> <span class="n">X_train</span><span class="p">,</span> <span class="n">X_test</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">y_test</span><span class="p">,</span> <span class="n">nombre</span><span class="p">):</span>
+    <span class="n">modelo</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
+    <span class="n">y_pred</span> <span class="o">=</span> <span class="n">modelo</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_test</span><span class="p">)</span>
+    <span class="n">y_pred_proba</span> <span class="o">=</span> <span class="n">modelo</span><span class="o">.</span><span class="n">predict_proba</span><span class="p">(</span><span class="n">X_test</span><span class="p">)[:,</span> <span class="mi">1</span><span class="p">]</span> <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">modelo</span><span class="p">,</span> <span class="s2">&quot;predict_proba&quot;</span><span class="p">)</span> <span class="k">else</span> <span class="n">y_pred</span>
+
+    <span class="n">acc</span> <span class="o">=</span> <span class="n">accuracy_score</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">)</span>
+    <span class="n">f1</span> <span class="o">=</span> <span class="n">f1_score</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">)</span>
+    <span class="n">auc</span> <span class="o">=</span> <span class="n">roc_auc_score</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">y_pred_proba</span><span class="p">)</span>
+    
+    <span class="k">return</span> <span class="p">{</span>
+        <span class="s1">&#39;Modelo&#39;</span><span class="p">:</span> <span class="n">nombre</span><span class="p">,</span>
+        <span class="s1">&#39;Accuracy&#39;</span><span class="p">:</span> <span class="nb">round</span><span class="p">(</span><span class="n">acc</span><span class="p">,</span> <span class="mi">3</span><span class="p">),</span>
+        <span class="s1">&#39;F1-score&#39;</span><span class="p">:</span> <span class="nb">round</span><span class="p">(</span><span class="n">f1</span><span class="p">,</span> <span class="mi">3</span><span class="p">),</span>
+        <span class="s1">&#39;AUC&#39;</span><span class="p">:</span> <span class="nb">round</span><span class="p">(</span><span class="n">auc</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+    <span class="p">}</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">resultados</span> <span class="o">=</span> <span class="p">[]</span>
+
+<span class="n">modelos</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="p">(</span><span class="n">GaussianNB</span><span class="p">(),</span> <span class="s2">&quot;Naive Bayes&quot;</span><span class="p">),</span>
+    <span class="p">(</span><span class="n">RandomForestClassifier</span><span class="p">(</span><span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">),</span> <span class="s2">&quot;Random Forest&quot;</span><span class="p">),</span>
+    <span class="p">(</span><span class="n">XGBClassifier</span><span class="p">(</span><span class="n">use_label_encoder</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">eval_metric</span><span class="o">=</span><span class="s1">&#39;logloss&#39;</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">),</span> <span class="s2">&quot;XGBoost&quot;</span><span class="p">)</span>
+<span class="p">]</span>
+
+<span class="k">for</span> <span class="n">modelo</span><span class="p">,</span> <span class="n">nombre</span> <span class="ow">in</span> <span class="n">modelos</span><span class="p">:</span>
+    <span class="n">res</span> <span class="o">=</span> <span class="n">evaluar_modelo</span><span class="p">(</span><span class="n">modelo</span><span class="p">,</span> <span class="n">X_train</span><span class="p">,</span> <span class="n">X_test</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">y_test</span><span class="p">,</span> <span class="n">nombre</span> <span class="o">+</span> <span class="s2">&quot; (Original)&quot;</span><span class="p">)</span>
+    <span class="n">resultados</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">res</span><span class="p">)</span>
+
+<span class="n">df_resultados</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">resultados</span><span class="p">)</span>
+<span class="n">df_resultados</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>c:\Users\camil\anaconda3\envs\ML_VENV\lib\site-packages\xgboost\core.py:158: UserWarning: [19:31:49] WARNING: C:\buildkite-agent\builds\buildkite-windows-cpu-autoscaling-group-i-08cbc0333d8d4aae1-1\xgboost\xgboost-ci-windows\src\learner.cc:740: 
+Parameters: { &quot;use_label_encoder&quot; } are not used.
+
+  warnings.warn(smsg, UserWarning)
+</pre></div>
+</div>
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Modelo</th>
+      <th>Accuracy</th>
+      <th>F1-score</th>
+      <th>AUC</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>Naive Bayes (Original)</td>
+      <td>0.577</td>
+      <td>0.434</td>
+      <td>0.586</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>Random Forest (Original)</td>
+      <td>0.660</td>
+      <td>0.598</td>
+      <td>0.718</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>XGBoost (Original)</td>
+      <td>0.672</td>
+      <td>0.632</td>
+      <td>0.734</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<section id="smote">
+<h2>SMOTE<a class="headerlink" href="#smote" title="Link to this heading">#</a></h2>
+<p>Con el fin de explorar técnicas de manejo de desbalance en la variable objetivo, se aplicó el método <strong>SMOTE (Synthetic Minority Over-sampling Technique)</strong> al conjunto de entrenamiento. Este algoritmo genera nuevas instancias sintéticas de la clase minoritaria mediante interpolación entre observaciones cercanas, buscando igualar la cantidad de ejemplos entre ambas clases.</p>
+<p>En este caso, el dataset original presentaba una distribución ligeramente desbalanceada (≈54% clase 0 y 46% clase 1), lo cual no afecta significativamente el rendimiento de la mayoría de los modelos. Sin embargo, <strong>se aplicó SMOTE únicamente con fines académicos</strong> para observar cómo el balance artificial de las clases impacta las métricas de desempeño.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">smote</span> <span class="o">=</span> <span class="n">SMOTE</span><span class="p">(</span><span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
+<span class="n">X_train_sm</span><span class="p">,</span> <span class="n">y_train_sm</span> <span class="o">=</span> <span class="n">smote</span><span class="o">.</span><span class="n">fit_resample</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Distribución tras SMOTE:&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">y_train_sm</span><span class="p">)</span><span class="o">.</span><span class="n">value_counts</span><span class="p">(</span><span class="n">normalize</span><span class="o">=</span><span class="kc">True</span><span class="p">))</span>
+
+<span class="c1"># Evaluar con datos balanceados</span>
+<span class="k">for</span> <span class="n">modelo</span><span class="p">,</span> <span class="n">nombre</span> <span class="ow">in</span> <span class="n">modelos</span><span class="p">:</span>
+    <span class="n">res</span> <span class="o">=</span> <span class="n">evaluar_modelo</span><span class="p">(</span><span class="n">modelo</span><span class="p">,</span> <span class="n">X_train_sm</span><span class="p">,</span> <span class="n">X_test</span><span class="p">,</span> <span class="n">y_train_sm</span><span class="p">,</span> <span class="n">y_test</span><span class="p">,</span> <span class="n">nombre</span> <span class="o">+</span> <span class="s2">&quot; (SMOTE)&quot;</span><span class="p">)</span>
+    <span class="n">resultados</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">res</span><span class="p">)</span>
+
+<span class="n">df_resultados</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">resultados</span><span class="p">)</span>
+<span class="n">df_resultados</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>c:\Users\camil\anaconda3\envs\ML_VENV\lib\site-packages\sklearn\base.py:474: FutureWarning: `BaseEstimator._validate_data` is deprecated in 1.6 and will be removed in 1.7. Use `sklearn.utils.validation.validate_data` instead. This function becomes public and is part of the scikit-learn developer API.
+  warnings.warn(
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Distribución tras SMOTE:
+target
+1    0.5
+0    0.5
+Name: proportion, dtype: float64
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>c:\Users\camil\anaconda3\envs\ML_VENV\lib\site-packages\xgboost\core.py:158: UserWarning: [19:35:18] WARNING: C:\buildkite-agent\builds\buildkite-windows-cpu-autoscaling-group-i-08cbc0333d8d4aae1-1\xgboost\xgboost-ci-windows\src\learner.cc:740: 
+Parameters: { &quot;use_label_encoder&quot; } are not used.
+
+  warnings.warn(smsg, UserWarning)
+</pre></div>
+</div>
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Modelo</th>
+      <th>Accuracy</th>
+      <th>F1-score</th>
+      <th>AUC</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>Naive Bayes (Original)</td>
+      <td>0.577</td>
+      <td>0.434</td>
+      <td>0.586</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>Random Forest (Original)</td>
+      <td>0.660</td>
+      <td>0.598</td>
+      <td>0.718</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>XGBoost (Original)</td>
+      <td>0.672</td>
+      <td>0.632</td>
+      <td>0.734</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>Naive Bayes (SMOTE)</td>
+      <td>0.565</td>
+      <td>0.574</td>
+      <td>0.586</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>Random Forest (SMOTE)</td>
+      <td>0.656</td>
+      <td>0.622</td>
+      <td>0.712</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>XGBoost (SMOTE)</td>
+      <td>0.666</td>
+      <td>0.635</td>
+      <td>0.729</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<ul class="simple">
+<li><p>El balanceo con SMOTE <strong>no incrementó significativamente la precisión (Accuracy)</strong> en ninguno de los modelos, lo cual es esperable ya que el dataset original no estaba fuertemente desbalanceado o el modelo ya manejaba bien la clase minoritaria.</p></li>
+<li><p>Sin embargo, el <strong>F1-score mejora en el Naive Bayes</strong>, lo que indica un <strong>mejor equilibrio entre precisión y sensibilidad</strong> tras el balanceo. Esto sugiere que SMOTE ayudó a que el modelo reconozca más casos positivos, reduciendo falsos negativos.</p></li>
+<li><p>En los modelos más complejos (<strong>Random Forest</strong> y <strong>XGBoost</strong>), las métricas se mantienen casi iguales, con <strong>ligeras variaciones en el F1-score y el AUC</strong>, lo que refleja una <strong>mayor estabilidad y robustez</strong> frente al desbalance.</p></li>
+<li><p>El <strong>AUC</strong> se mantiene prácticamente estable, lo que indica que la capacidad discriminativa de los modelos <strong>no se vio afectada</strong> por el uso de datos sintéticos.</p></li>
+</ul>
+</section>
+<section id="class-weight-balanced">
+<h2>class weight=’balanced’<a class="headerlink" href="#class-weight-balanced" title="Link to this heading">#</a></h2>
+<p>Cada modelo fue entrenado y evaluado utilizando la misma partición de datos (<code class="docutils literal notranslate"><span class="pre">X_train</span></code>, <code class="docutils literal notranslate"><span class="pre">X_test</span></code>, <code class="docutils literal notranslate"><span class="pre">y_train</span></code>, <code class="docutils literal notranslate"><span class="pre">y_test</span></code>).<br />
+Las métricas consideradas fueron <strong>Accuracy</strong>, <strong>F1-score</strong> y <strong>AUC (Área Bajo la Curva ROC)</strong>, que permiten evaluar tanto el rendimiento general como la capacidad del modelo para distinguir entre clases.</p>
+<p>Naive Bayes no fue implementado pues no acepta la ‘class weight = ‘balanced’</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Calcular el peso de balanceo</span>
+<span class="n">neg</span><span class="p">,</span> <span class="n">pos</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">bincount</span><span class="p">(</span><span class="n">y_train</span><span class="p">)</span>
+<span class="n">scale</span> <span class="o">=</span> <span class="n">neg</span> <span class="o">/</span> <span class="n">pos</span>
+
+<span class="n">xgb_balanced</span> <span class="o">=</span> <span class="n">XGBClassifier</span><span class="p">(</span>
+    <span class="n">use_label_encoder</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+    <span class="n">eval_metric</span><span class="o">=</span><span class="s1">&#39;logloss&#39;</span><span class="p">,</span>
+    <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">,</span>
+    <span class="n">scale_pos_weight</span><span class="o">=</span><span class="n">scale</span>
+<span class="p">)</span>
+
+<span class="n">modelos_balanced</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="p">(</span><span class="n">RandomForestClassifier</span><span class="p">(</span><span class="n">class_weight</span><span class="o">=</span><span class="s1">&#39;balanced&#39;</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">),</span> <span class="s2">&quot;Random Forest (CW)&quot;</span><span class="p">),</span>
+    <span class="p">(</span><span class="n">xgb_balanced</span><span class="p">,</span> <span class="s2">&quot;XGBoost (CW)&quot;</span><span class="p">)</span>
+<span class="p">]</span>
+
+<span class="k">for</span> <span class="n">modelo</span><span class="p">,</span> <span class="n">nombre</span> <span class="ow">in</span> <span class="n">modelos_balanced</span><span class="p">:</span>
+    <span class="n">res</span> <span class="o">=</span> <span class="n">evaluar_modelo</span><span class="p">(</span><span class="n">modelo</span><span class="p">,</span> <span class="n">X_train</span><span class="p">,</span> <span class="n">X_test</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">y_test</span><span class="p">,</span> <span class="n">nombre</span><span class="p">)</span>
+    <span class="n">resultados</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">res</span><span class="p">)</span>
+
+<span class="n">df_resultados</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">resultados</span><span class="p">)</span>
+<span class="n">df_resultados</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>c:\Users\camil\anaconda3\envs\ML_VENV\lib\site-packages\xgboost\core.py:158: UserWarning: [19:38:12] WARNING: C:\buildkite-agent\builds\buildkite-windows-cpu-autoscaling-group-i-08cbc0333d8d4aae1-1\xgboost\xgboost-ci-windows\src\learner.cc:740: 
+Parameters: { &quot;use_label_encoder&quot; } are not used.
+
+  warnings.warn(smsg, UserWarning)
+</pre></div>
+</div>
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Modelo</th>
+      <th>Accuracy</th>
+      <th>F1-score</th>
+      <th>AUC</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>Naive Bayes (Original)</td>
+      <td>0.577</td>
+      <td>0.434</td>
+      <td>0.586</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>Random Forest (Original)</td>
+      <td>0.660</td>
+      <td>0.598</td>
+      <td>0.718</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>XGBoost (Original)</td>
+      <td>0.672</td>
+      <td>0.632</td>
+      <td>0.734</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>Naive Bayes (SMOTE)</td>
+      <td>0.565</td>
+      <td>0.574</td>
+      <td>0.586</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>Random Forest (SMOTE)</td>
+      <td>0.656</td>
+      <td>0.622</td>
+      <td>0.712</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>XGBoost (SMOTE)</td>
+      <td>0.666</td>
+      <td>0.635</td>
+      <td>0.729</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>Random Forest (CW)</td>
+      <td>0.663</td>
+      <td>0.602</td>
+      <td>0.719</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>XGBoost (CW)</td>
+      <td>0.668</td>
+      <td>0.651</td>
+      <td>0.733</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<ul class="simple">
+<li><p><strong>Efectividad del balanceo por pesos (<code class="docutils literal notranslate"><span class="pre">class_weight</span></code>)</strong><br />
+Los modelos con <code class="docutils literal notranslate"><span class="pre">class_weight='balanced'</span></code> lograron <strong>rendimientos similares o ligeramente superiores</strong> a sus versiones originales, especialmente en el <strong>F1-score</strong>, lo que sugiere una mejora en la capacidad de detección de la clase minoritaria sin pérdida significativa de precisión general.</p></li>
+<li><p><strong>Comparación con SMOTE</strong><br />
+En comparación con el sobremuestreo sintético (SMOTE), el balanceo por pesos fue <strong>más eficiente computacionalmente</strong> y produjo resultados muy cercanos en las métricas principales. Esto demuestra que <code class="docutils literal notranslate"><span class="pre">class_weight</span></code> puede ser una alternativa viable cuando los recursos de memoria son limitados o el dataset es grande.</p></li>
+<li><p><strong>XGBoost y Random Forest mantienen su liderazgo</strong><br />
+Como en los experimentos previos, <strong>XGBoost (CW)</strong> sigue siendo el modelo con mejor rendimiento general (AUC = 0.733), confirmando su solidez y estabilidad incluso con ajustes de balanceo de clases.</p></li>
+</ul>
+</section>
+<section id="adasyn">
+<h2>ADASYN<a class="headerlink" href="#adasyn" title="Link to this heading">#</a></h2>
+<p>Intentamos aplicar ADASYN para balancear la variable objetivo; sin embargo, el dataset presenta una distribución muy cercana al equilibrio (54% vs 46%), por lo que el algoritmo no generó nuevas instancias.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="sd">&#39;&#39;&#39;adasyn = ADASYN(random_state=42)</span>
+<span class="sd">X_train_ada, y_train_ada = adasyn.fit_resample(X_train, y_train)</span>
+
+<span class="sd">print(&quot;Distribución tras ADASYN:&quot;)</span>
+<span class="sd">print(pd.Series(y_train_ada).value_counts(normalize=True))</span>
+
+<span class="sd">for modelo, nombre in modelos:</span>
+<span class="sd">    res = evaluar_modelo(modelo, X_train_ada, X_test, y_train_ada, y_test, nombre + &quot; (ADASYN)&quot;)</span>
+<span class="sd">    resultados.append(res)</span>
+
+<span class="sd">df_resultados = pd.DataFrame(resultados)</span>
+<span class="sd">df_resultados&#39;&#39;&#39;</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&#39;adasyn = ADASYN(random_state=42)\nX_train_ada, y_train_ada = adasyn.fit_resample(X_train, y_train)\n\nprint(&quot;Distribución tras ADASYN:&quot;)\nprint(pd.Series(y_train_ada).value_counts(normalize=True))\n\nfor modelo, nombre in modelos:\n    res = evaluar_modelo(modelo, X_train_ada, X_test, y_train_ada, y_test, nombre + &quot; (ADASYN)&quot;)\n    resultados.append(res)\n\ndf_resultados = pd.DataFrame(resultados)\ndf_resultados&#39;
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="conclusion">
+<h2>Conclusión<a class="headerlink" href="#conclusion" title="Link to this heading">#</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Mostrar tabla comparativa final</span>
+<span class="n">display</span><span class="p">(</span><span class="n">df_resultados</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="n">by</span><span class="o">=</span><span class="s1">&#39;F1-score&#39;</span><span class="p">,</span> <span class="n">ascending</span><span class="o">=</span><span class="kc">False</span><span class="p">))</span>
+
+<span class="c1"># Gráfico comparativo</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="mi">6</span><span class="p">))</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">barplot</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">df_resultados</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="s1">&#39;Modelo&#39;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s1">&#39;F1-score&#39;</span><span class="p">,</span> <span class="n">palette</span><span class="o">=</span><span class="s1">&#39;viridis&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xticks</span><span class="p">(</span><span class="n">rotation</span><span class="o">=</span><span class="mi">75</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Comparación de F1-score antes y después del balanceo&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Modelo</th>
+      <th>Accuracy</th>
+      <th>F1-score</th>
+      <th>AUC</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>7</th>
+      <td>XGBoost (CW)</td>
+      <td>0.668</td>
+      <td>0.651</td>
+      <td>0.733</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>XGBoost (SMOTE)</td>
+      <td>0.666</td>
+      <td>0.635</td>
+      <td>0.729</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>XGBoost (Original)</td>
+      <td>0.672</td>
+      <td>0.632</td>
+      <td>0.734</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>Random Forest (SMOTE)</td>
+      <td>0.656</td>
+      <td>0.622</td>
+      <td>0.712</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>Random Forest (CW)</td>
+      <td>0.663</td>
+      <td>0.602</td>
+      <td>0.719</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>Random Forest (Original)</td>
+      <td>0.660</td>
+      <td>0.598</td>
+      <td>0.718</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>Naive Bayes (SMOTE)</td>
+      <td>0.565</td>
+      <td>0.574</td>
+      <td>0.586</td>
+    </tr>
+    <tr>
+      <th>0</th>
+      <td>Naive Bayes (Original)</td>
+      <td>0.577</td>
+      <td>0.434</td>
+      <td>0.586</td>
+    </tr>
+  </tbody>
+</table>
+</div></div><div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>C:\Users\camil\AppData\Local\Temp\ipykernel_4772\2998649608.py:6: FutureWarning: 
+
+Passing `palette` without assigning `hue` is deprecated and will be removed in v0.14.0. Assign the `x` variable to `hue` and set `legend=False` for the same effect.
+
+  sns.barplot(data=df_resultados, x=&#39;Modelo&#39;, y=&#39;F1-score&#39;, palette=&#39;viridis&#39;)
+</pre></div>
+</div>
+<img alt="_images/2e5da36e8527236af1ad038cc60427532d28692ce219f44b0b38f09983b718e2.png" src="_images/2e5da36e8527236af1ad038cc60427532d28692ce219f44b0b38f09983b718e2.png" />
+</div>
+</div>
+</section>
+<section id="analisis-comparativo">
+<h2>Análisis comparativo<a class="headerlink" href="#analisis-comparativo" title="Link to this heading">#</a></h2>
+<ol class="arabic simple">
+<li><p><strong>Impacto del balanceo en Naive Bayes</strong></p>
+<ul class="simple">
+<li><p>Al aplicar SMOTE, el modelo Naive Bayes incrementó notablemente su <strong>F1-score</strong> (de 0.434 a 0.574), indicando una mejora en la detección de la clase minoritaria.</p></li>
+<li><p>Sin embargo, el <strong>Accuracy</strong> disminuyó levemente, lo cual es esperable cuando se busca un mejor equilibrio entre clases.</p></li>
+<li><p>En general, el balanceo ayudó a Naive Bayes a ser más justo entre clases, aunque sigue siendo un modelo limitado frente a los demás.</p></li>
+</ul>
+</li>
+<li><p><strong>Comportamiento del Random Forest</strong></p>
+<ul class="simple">
+<li><p>Tanto con SMOTE como con <code class="docutils literal notranslate"><span class="pre">class_weight='balanced'</span></code>, Random Forest mantuvo un rendimiento sólido, con pequeñas variaciones entre técnicas.</p></li>
+<li><p>El <strong>F1-score</strong> aumentó con SMOTE, y el <strong>AUC</strong> mejoró ligeramente con <code class="docutils literal notranslate"><span class="pre">class_weight</span></code>.</p></li>
+<li><p>Esto demuestra que el modelo aprovecha bien ambas estrategias, aunque el beneficio marginal sugiere que el desbalance original no era severo.</p></li>
+</ul>
+</li>
+<li><p><strong>Dominio del modelo XGBoost</strong></p>
+<ul class="simple">
+<li><p>En todas las pruebas, <strong>XGBoost</strong> obtuvo los mejores resultados en <strong>AUC</strong> y <strong>F1-score</strong>, confirmando su robustez y capacidad para manejar datos moderadamente desbalanceados.</p></li>
+<li><p>Las variaciones entre SMOTE y <code class="docutils literal notranslate"><span class="pre">class_weight</span></code> fueron mínimas, pero <code class="docutils literal notranslate"><span class="pre">class_weight</span></code> ofreció un mejor F1-score (0.651), destacándose como la configuración más equilibrada y eficiente.</p></li>
+</ul>
+</li>
+</ol>
+</section>
+<section id="a-manera-general">
+<h2>A manera general<a class="headerlink" href="#a-manera-general" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Las técnicas de balanceo aplicadas (SMOTE y <code class="docutils literal notranslate"><span class="pre">class_weight='balanced'</span></code>) <strong>lograron mejorar el rendimiento de los modelos en términos de F1-score</strong>, es decir, en su capacidad para reconocer correctamente ambas clases.</p></li>
+<li><p><strong>SMOTE</strong> resultó útil a nivel académico, permitiendo observar cómo la generación sintética de muestras puede equilibrar los datos, aunque con un costo computacional más alto.</p></li>
+<li><p><strong>El balanceo mediante <code class="docutils literal notranslate"><span class="pre">class_weight</span></code> fue más eficiente y estable</strong>, mostrando mejoras similares sin requerir más memoria ni procesamiento adicional.</p></li>
+<li><p>En conjunto, los resultados muestran que cuando el desbalance no es extremo, <strong>ajustar los pesos de clase suele ser preferible a técnicas de sobremuestreo</strong>.</p></li>
+<li><p>Finalmente, <strong>XGBoost con <code class="docutils literal notranslate"><span class="pre">class_weight='balanced'</span></code></strong> se posiciona como el modelo más competitivo en esta evaluación, combinando alta precisión con una excelente capacidad de discriminación entre clases.</p></li>
+</ul>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./."
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="Benchmark.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Benchamark</p>
+      </div>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#smote">SMOTE</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#class-weight-balanced">class weight=’balanced’</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#adasyn">ADASYN</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#conclusion">Conclusión</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#analisis-comparativo">Análisis comparativo</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#a-manera-general">A manera general</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By José Menco, Camilo Vargas, Iván Ramirez
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2023.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

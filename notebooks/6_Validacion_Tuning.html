@@ -1,0 +1,1384 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Validacion Avanzada, Tuning e Interpretabilidad &#8212; Readmission Diabetes Prediction</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="../_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=fa44fd50" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=eba8b062" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.8ecb98da25f57f5357bf6f572d296f466b2cfe2517ffebfabe82451661e28f02.css?v=6644e6bb" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script src="../_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../_static/copybutton.js?v=f281be69"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../_static/togglebutton.js?v=4a39c7ea"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="../_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'notebooks/6_Validacion_Tuning';</script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Modelos de Clasificación: Logístico, Ridge y Lasso" href="Modelos_Logisticos.html" />
+    <link rel="prev" title="Evaluacion de Modelos de Machine Learning" href="5_Evaluacion.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../Introduccion.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../_static/logo.png" class="logo__image only-light" alt="Readmission Diabetes Prediction - Home"/>
+    <script>document.write(`<img src="../_static/logo.png" class="logo__image only-dark" alt="Readmission Diabetes Prediction - Home"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../Introduccion.html">
+                    Predicción de Readmisión Hospitalaria en Pacientes Diabéticos
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Entregable 3</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="1_EDA.html"><strong>EDA</strong></a></li>
+<li class="toctree-l1"><a class="reference internal" href="1_5_Preprocesamiento.html"><strong>Preprocesamiento de Datos</strong></a></li>
+<li class="toctree-l1"><a class="reference internal" href="2_Benchmark.html">Benchmark</a></li>
+
+<li class="toctree-l1"><a class="reference internal" href="3_Balanceo.html">Técnicas de balanceo</a></li>
+<li class="toctree-l1"><a class="reference internal" href="4_Optimizacion.html">Optimización de Modelos de Machine Learning</a></li>
+<li class="toctree-l1"><a class="reference internal" href="5_Evaluacion.html">Evaluacion de Modelos de Machine Learning</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Validacion Avanzada, Tuning e Interpretabilidad</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Modelos pasados</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="Modelos_Logisticos.html"><strong>Modelos de Clasificación: Logístico, Ridge y Lasso</strong></a></li>
+<li class="toctree-l1"><a class="reference internal" href="Modelo_Knn.html"><strong>Modelo Knn</strong></a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/executablebooks/jupyter-book" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/executablebooks/jupyter-book/issues/new?title=Issue%20on%20page%20%2Fnotebooks/6_Validacion_Tuning.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../_sources/notebooks/6_Validacion_Tuning.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Validacion Avanzada, Tuning e Interpretabilidad</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#objetivo">Objetivo</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#metodologia">Metodologia</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#datos">Datos</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#importar-librerias">1. Importar Librerias</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#cargar-datos-preprocesados">2. Cargar Datos Preprocesados</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#estrategia-de-validacion-y-metricas">3. Estrategia de Validación y Métricas</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#xgboost-optunasearchcv">3.1. XGBoost + OptunaSearchCV</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#arbol-de-decision-gridsearchcv">3.3. Árbol de Decisión + GridSearchCV</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#comparativa-de-resultados-en-validacion-y-test">4. Comparativa de Resultados en Validación y Test</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#interpretabilidad-de-los-modelos">5. Interpretabilidad de los Modelos</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#xgboost-feature-importances-y-shap">5.1. XGBoost: Feature Importances y SHAP</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#arbol-de-decision-feature-importances-y-permutation-importance">5.3. Árbol de Decisión: Feature Importances y Permutation Importance</a></li>
+</ul>
+</li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="validacion-avanzada-tuning-e-interpretabilidad">
+<h1>Validacion Avanzada, Tuning e Interpretabilidad<a class="headerlink" href="#validacion-avanzada-tuning-e-interpretabilidad" title="Link to this heading">#</a></h1>
+<p>En este notebook aplicamos tecnicas avanzadas de validacion, optimizacion de hiperparametros e interpretabilidad de modelos.</p>
+<hr class="docutils" />
+<section id="objetivo">
+<h2>Objetivo<a class="headerlink" href="#objetivo" title="Link to this heading">#</a></h2>
+<p>Realizar un analisis exhaustivo de los tres mejores modelos identificados en la etapa de evaluacion:</p>
+<ol class="arabic simple">
+<li><p><strong>XGBoost</strong></p></li>
+<li><p><strong>Random Forest</strong></p></li>
+<li><p><strong>Arbol de Decision</strong></p></li>
+</ol>
+</section>
+<hr class="docutils" />
+<section id="metodologia">
+<h2>Metodologia<a class="headerlink" href="#metodologia" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p><strong>Tuning de Hiperparametros:</strong> Uso de sklearn.Pipeline con GridSearchCV y BayesSearchCV</p></li>
+<li><p><strong>Validacion Cruzada:</strong> StratifiedKFold con minimo 5 folds</p></li>
+<li><p><strong>Interpretabilidad:</strong> Aplicacion de feature_importances_, SHAP y Permutation Importance</p></li>
+</ul>
+</section>
+<hr class="docutils" />
+<section id="datos">
+<h2>Datos<a class="headerlink" href="#datos" title="Link to this heading">#</a></h2>
+<p>Utilizamos los datos preprocesados de <code class="docutils literal notranslate"><span class="pre">../data/processed/</span></code>:</p>
+<ul class="simple">
+<li><p>Escalados con StandardScaler</p></li>
+<li><p>Codificados (One-Hot Encoding)</p></li>
+<li><p>Train balanceado con SMOTE</p></li>
+<li><p>Sin valores faltantes</p></li>
+</ul>
+</section>
+<section id="importar-librerias">
+<h2>1. Importar Librerias<a class="headerlink" href="#importar-librerias" title="Link to this heading">#</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Librerias basicas</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span>
+<span class="kn">import</span> <span class="nn">warnings</span>
+<span class="kn">import</span> <span class="nn">time</span>
+<span class="kn">from</span> <span class="nn">pathlib</span> <span class="kn">import</span> <span class="n">Path</span>
+
+<span class="c1"># Modelos de clasificacion</span>
+<span class="kn">from</span> <span class="nn">sklearn.tree</span> <span class="kn">import</span> <span class="n">DecisionTreeClassifier</span>
+<span class="kn">from</span> <span class="nn">sklearn.ensemble</span> <span class="kn">import</span> <span class="n">RandomForestClassifier</span>
+<span class="kn">from</span> <span class="nn">xgboost</span> <span class="kn">import</span> <span class="n">XGBClassifier</span>
+
+<span class="c1"># Pipeline y transformadores</span>
+<span class="kn">from</span> <span class="nn">sklearn.pipeline</span> <span class="kn">import</span> <span class="n">Pipeline</span>
+<span class="kn">from</span> <span class="nn">sklearn.preprocessing</span> <span class="kn">import</span> <span class="n">StandardScaler</span>
+
+<span class="c1"># Validacion cruzada</span>
+<span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="p">(</span>
+    <span class="n">StratifiedKFold</span><span class="p">,</span> <span class="n">cross_val_score</span><span class="p">,</span> <span class="n">cross_validate</span>
+ <span class="p">)</span>
+
+<span class="c1"># Busqueda de hiperparametros</span>
+<span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">GridSearchCV</span>
+<span class="kn">from</span> <span class="nn">skopt</span> <span class="kn">import</span> <span class="n">BayesSearchCV</span>
+<span class="kn">from</span> <span class="nn">skopt.space</span> <span class="kn">import</span> <span class="n">Real</span><span class="p">,</span> <span class="n">Integer</span><span class="p">,</span> <span class="n">Categorical</span>
+<span class="kn">from</span> <span class="nn">optuna.integration</span> <span class="kn">import</span> <span class="n">OptunaSearchCV</span>
+<span class="kn">import</span> <span class="nn">optuna</span>
+
+<span class="c1"># Metricas</span>
+<span class="kn">from</span> <span class="nn">sklearn.metrics</span> <span class="kn">import</span> <span class="p">(</span>
+    <span class="n">accuracy_score</span><span class="p">,</span> <span class="n">precision_score</span><span class="p">,</span> <span class="n">recall_score</span><span class="p">,</span> <span class="n">f1_score</span><span class="p">,</span>
+    <span class="n">roc_auc_score</span><span class="p">,</span> <span class="n">make_scorer</span><span class="p">,</span> <span class="n">classification_report</span>
+ <span class="p">)</span>
+
+<span class="c1"># Interpretabilidad</span>
+<span class="kn">from</span> <span class="nn">sklearn.inspection</span> <span class="kn">import</span> <span class="n">permutation_importance</span>
+<span class="kn">import</span> <span class="nn">shap</span>
+
+<span class="n">warnings</span><span class="o">.</span><span class="n">filterwarnings</span><span class="p">(</span><span class="s1">&#39;ignore&#39;</span><span class="p">)</span>
+
+<span class="c1"># Configuracion de visualizacion</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">style</span><span class="o">.</span><span class="n">use</span><span class="p">(</span><span class="s1">&#39;default&#39;</span><span class="p">)</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">set_palette</span><span class="p">(</span><span class="s2">&quot;pastel&quot;</span><span class="p">)</span>
+<span class="n">pd</span><span class="o">.</span><span class="n">set_option</span><span class="p">(</span><span class="s1">&#39;display.max_columns&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Librerias importadas correctamente&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Librerias importadas correctamente
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="cargar-datos-preprocesados">
+<h2>2. Cargar Datos Preprocesados<a class="headerlink" href="#cargar-datos-preprocesados" title="Link to this heading">#</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Cargando datos procesados de &#39;../data/processed/&#39;...</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="c1"># Cargar datos de entrenamiento (BALANCEADOS con SMOTE)</span>
+<span class="n">X_train</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;../data/processed/X_train.csv&#39;</span><span class="p">)</span>
+<span class="n">y_train</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;../data/processed/y_train.csv&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">values</span><span class="o">.</span><span class="n">ravel</span><span class="p">()</span>
+
+<span class="c1"># Cargar datos de validacion (SIN balancear)</span>
+<span class="n">X_val</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;../data/processed/X_val.csv&#39;</span><span class="p">)</span>
+<span class="n">y_val</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;../data/processed/y_val.csv&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">values</span><span class="o">.</span><span class="n">ravel</span><span class="p">()</span>
+
+<span class="c1"># Cargar datos de test (SIN balancear)</span>
+<span class="n">X_test</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;../data/processed/X_test.csv&#39;</span><span class="p">)</span>
+<span class="n">y_test</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;../data/processed/y_test.csv&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">values</span><span class="o">.</span><span class="n">ravel</span><span class="p">()</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Datos cargados exitosamente</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="c1"># Informacion de los datos</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;=&quot;</span><span class="o">*</span><span class="mi">60</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot; &quot;</span><span class="o">*</span><span class="mi">15</span> <span class="o">+</span> <span class="s2">&quot;INFORMACION DE LOS DATOS&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;=&quot;</span><span class="o">*</span><span class="mi">60</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Dimensiones:&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  Train:      </span><span class="si">{</span><span class="n">X_train</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="si">:</span><span class="s2">&gt;7,</span><span class="si">}</span><span class="s2"> muestras × </span><span class="si">{</span><span class="n">X_train</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="si">:</span><span class="s2">&gt;3</span><span class="si">}</span><span class="s2"> features&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  Validation: </span><span class="si">{</span><span class="n">X_val</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="si">:</span><span class="s2">&gt;7,</span><span class="si">}</span><span class="s2"> muestras × </span><span class="si">{</span><span class="n">X_val</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="si">:</span><span class="s2">&gt;3</span><span class="si">}</span><span class="s2"> features&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  Test:       </span><span class="si">{</span><span class="n">X_test</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="si">:</span><span class="s2">&gt;7,</span><span class="si">}</span><span class="s2"> muestras × </span><span class="si">{</span><span class="n">X_test</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="si">:</span><span class="s2">&gt;3</span><span class="si">}</span><span class="s2"> features&quot;</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Balance de clases (Test - datos reales):&quot;</span><span class="p">)</span>
+<span class="n">test_counts</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">y_test</span><span class="p">)</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  Clase 0: </span><span class="si">{</span><span class="n">test_counts</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="si">:</span><span class="s2">&gt;7,</span><span class="si">}</span><span class="s2"> (</span><span class="si">{</span><span class="n">test_counts</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">/</span><span class="nb">len</span><span class="p">(</span><span class="n">y_test</span><span class="p">)</span><span class="o">*</span><span class="mi">100</span><span class="si">:</span><span class="s2">&gt;5.1f</span><span class="si">}</span><span class="s2">%)&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  Clase 1: </span><span class="si">{</span><span class="n">test_counts</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="si">:</span><span class="s2">&gt;7,</span><span class="si">}</span><span class="s2"> (</span><span class="si">{</span><span class="n">test_counts</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">/</span><span class="nb">len</span><span class="p">(</span><span class="n">y_test</span><span class="p">)</span><span class="o">*</span><span class="mi">100</span><span class="si">:</span><span class="s2">&gt;5.1f</span><span class="si">}</span><span class="s2">%)&quot;</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span> <span class="o">+</span> <span class="s2">&quot;=&quot;</span><span class="o">*</span><span class="mi">60</span><span class="p">)</span>
+
+<span class="c1"># Guardar nombres de features</span>
+<span class="n">feature_names</span> <span class="o">=</span> <span class="n">X_train</span><span class="o">.</span><span class="n">columns</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Total de features: </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">feature_names</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Cargando datos procesados de &#39;../data/processed/&#39;...
+
+Datos cargados exitosamente
+
+============================================================
+               INFORMACION DE LOS DATOS
+============================================================
+
+Dimensiones:
+  Train:       71,236 muestras × 113 features
+  Validation:  15,265 muestras × 113 features
+  Test:        15,265 muestras × 113 features
+
+Balance de clases (Test - datos reales):
+  Clase 0:   8,230 ( 53.9%)
+  Clase 1:   7,035 ( 46.1%)
+
+============================================================
+
+Total de features: 113
+Datos cargados exitosamente
+
+============================================================
+               INFORMACION DE LOS DATOS
+============================================================
+
+Dimensiones:
+  Train:       71,236 muestras × 113 features
+  Validation:  15,265 muestras × 113 features
+  Test:        15,265 muestras × 113 features
+
+Balance de clases (Test - datos reales):
+  Clase 0:   8,230 ( 53.9%)
+  Clase 1:   7,035 ( 46.1%)
+
+============================================================
+
+Total de features: 113
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Convertir DataFrames a NumPy arrays para evitar problemas con nombres de columnas</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Convirtiendo DataFrames a NumPy arrays...</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="n">X_train_array</span> <span class="o">=</span> <span class="n">X_train</span><span class="o">.</span><span class="n">values</span>
+<span class="n">X_val_array</span> <span class="o">=</span> <span class="n">X_val</span><span class="o">.</span><span class="n">values</span>
+<span class="n">X_test_array</span> <span class="o">=</span> <span class="n">X_test</span><span class="o">.</span><span class="n">values</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Conversion completada&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  X_train: </span><span class="si">{</span><span class="n">X_train_array</span><span class="o">.</span><span class="n">shape</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  X_val:   </span><span class="si">{</span><span class="n">X_val_array</span><span class="o">.</span><span class="n">shape</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  X_test:  </span><span class="si">{</span><span class="n">X_test_array</span><span class="o">.</span><span class="n">shape</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Convirtiendo DataFrames a NumPy arrays...
+
+Conversion completada
+  X_train: (71236, 113)
+  X_val:   (15265, 113)
+  X_test:  (15265, 113)
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="estrategia-de-validacion-y-metricas">
+<h2>3. Estrategia de Validación y Métricas<a class="headerlink" href="#estrategia-de-validacion-y-metricas" title="Link to this heading">#</a></h2>
+<p>Definimos la estrategia de validación cruzada, las métricas que monitorizaremos durante el ajuste de hiperparámetros y utilidades para evaluar los modelos sintonizados.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># =========================================</span>
+<span class="c1"># 3. Estrategia de validación y utilidades</span>
+<span class="c1"># =========================================</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Configurando validación cruzada estratificada y métricas personalizadas...</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="n">cv_strategy</span> <span class="o">=</span> <span class="n">StratifiedKFold</span><span class="p">(</span><span class="n">n_splits</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">shuffle</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
+<span class="n">scoring</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s1">&#39;f1&#39;</span><span class="p">:</span> <span class="n">make_scorer</span><span class="p">(</span><span class="n">f1_score</span><span class="p">),</span>
+    <span class="s1">&#39;precision&#39;</span><span class="p">:</span> <span class="n">make_scorer</span><span class="p">(</span><span class="n">precision_score</span><span class="p">),</span>
+    <span class="s1">&#39;recall&#39;</span><span class="p">:</span> <span class="n">make_scorer</span><span class="p">(</span><span class="n">recall_score</span><span class="p">),</span>
+    <span class="s1">&#39;roc_auc&#39;</span><span class="p">:</span> <span class="n">make_scorer</span><span class="p">(</span><span class="n">roc_auc_score</span><span class="p">,</span> <span class="n">needs_threshold</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="p">}</span>
+
+<span class="k">def</span> <span class="nf">_descomponer_modelo</span><span class="p">(</span><span class="n">modelo</span><span class="p">,</span> <span class="n">X</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Devuelve el estimador final entrenado y el conjunto de features transformadas.&quot;&quot;&quot;</span>
+    <span class="n">Xt</span> <span class="o">=</span> <span class="n">X</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span> <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">)</span> <span class="k">else</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
+    <span class="n">estimador_final</span> <span class="o">=</span> <span class="n">modelo</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">modelo</span><span class="p">,</span> <span class="n">Pipeline</span><span class="p">):</span>
+        <span class="n">Xt_transformado</span> <span class="o">=</span> <span class="n">Xt</span>
+        <span class="k">for</span> <span class="n">_</span><span class="p">,</span> <span class="n">paso</span> <span class="ow">in</span> <span class="n">modelo</span><span class="o">.</span><span class="n">steps</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">]:</span>
+            <span class="k">if</span> <span class="n">paso</span> <span class="o">==</span> <span class="s1">&#39;passthrough&#39;</span><span class="p">:</span>
+                <span class="k">continue</span>
+            <span class="n">Xt_transformado</span> <span class="o">=</span> <span class="n">paso</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">Xt_transformado</span><span class="p">)</span>
+        <span class="n">estimador_final</span> <span class="o">=</span> <span class="n">modelo</span><span class="o">.</span><span class="n">steps</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span>
+        <span class="k">return</span> <span class="n">estimador_final</span><span class="p">,</span> <span class="n">Xt_transformado</span>
+    <span class="k">return</span> <span class="n">estimador_final</span><span class="p">,</span> <span class="n">Xt</span>
+
+<span class="k">def</span> <span class="nf">_predecir</span><span class="p">(</span><span class="n">modelo</span><span class="p">,</span> <span class="n">X</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Obtiene predicciones y scores de decision manejando Pipelines con pasos &#39;passthrough&#39;.&quot;&quot;&quot;</span>
+    <span class="n">estimador</span><span class="p">,</span> <span class="n">Xt</span> <span class="o">=</span> <span class="n">_descomponer_modelo</span><span class="p">(</span><span class="n">modelo</span><span class="p">,</span> <span class="n">X</span><span class="p">)</span>
+    <span class="n">y_pred</span> <span class="o">=</span> <span class="n">estimador</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">Xt</span><span class="p">)</span>
+    <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">estimador</span><span class="p">,</span> <span class="s1">&#39;predict_proba&#39;</span><span class="p">):</span>
+        <span class="n">y_scores</span> <span class="o">=</span> <span class="n">estimador</span><span class="o">.</span><span class="n">predict_proba</span><span class="p">(</span><span class="n">Xt</span><span class="p">)[:,</span> <span class="mi">1</span><span class="p">]</span>
+    <span class="k">elif</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">estimador</span><span class="p">,</span> <span class="s1">&#39;decision_function&#39;</span><span class="p">):</span>
+        <span class="n">y_scores</span> <span class="o">=</span> <span class="n">estimador</span><span class="o">.</span><span class="n">decision_function</span><span class="p">(</span><span class="n">Xt</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">y_scores</span> <span class="o">=</span> <span class="n">y_pred</span>
+    <span class="k">return</span> <span class="n">y_pred</span><span class="p">,</span> <span class="n">y_scores</span>
+
+<span class="k">def</span> <span class="nf">evaluar_pipeline</span><span class="p">(</span><span class="n">nombre</span><span class="p">,</span> <span class="n">modelo</span><span class="p">,</span> <span class="n">datasets</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Calcula métricas clave para un modelo/pipeline en distintos conjuntos.&quot;&quot;&quot;</span>
+    <span class="n">registros</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">dataset_name</span><span class="p">,</span> <span class="n">X_data</span><span class="p">,</span> <span class="n">y_data</span> <span class="ow">in</span> <span class="n">datasets</span><span class="p">:</span>
+        <span class="n">y_pred</span><span class="p">,</span> <span class="n">y_scores</span> <span class="o">=</span> <span class="n">_predecir</span><span class="p">(</span><span class="n">modelo</span><span class="p">,</span> <span class="n">X_data</span><span class="p">)</span>
+        <span class="n">accuracy</span> <span class="o">=</span> <span class="n">accuracy_score</span><span class="p">(</span><span class="n">y_data</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">)</span>
+        <span class="n">precision</span> <span class="o">=</span> <span class="n">precision_score</span><span class="p">(</span><span class="n">y_data</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">,</span> <span class="n">zero_division</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+        <span class="n">recall</span> <span class="o">=</span> <span class="n">recall_score</span><span class="p">(</span><span class="n">y_data</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">,</span> <span class="n">zero_division</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+        <span class="n">f1</span> <span class="o">=</span> <span class="n">f1_score</span><span class="p">(</span><span class="n">y_data</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">,</span> <span class="n">zero_division</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">auc</span> <span class="o">=</span> <span class="n">roc_auc_score</span><span class="p">(</span><span class="n">y_data</span><span class="p">,</span> <span class="n">y_scores</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">ValueError</span><span class="p">:</span>
+            <span class="n">auc</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span>
+        <span class="n">registros</span><span class="o">.</span><span class="n">append</span><span class="p">({</span>
+            <span class="s1">&#39;Modelo&#39;</span><span class="p">:</span> <span class="n">nombre</span><span class="p">,</span>
+            <span class="s1">&#39;Conjunto&#39;</span><span class="p">:</span> <span class="n">dataset_name</span><span class="p">,</span>
+            <span class="s1">&#39;Accuracy&#39;</span><span class="p">:</span> <span class="n">accuracy</span><span class="p">,</span>
+            <span class="s1">&#39;Precision&#39;</span><span class="p">:</span> <span class="n">precision</span><span class="p">,</span>
+            <span class="s1">&#39;Recall&#39;</span><span class="p">:</span> <span class="n">recall</span><span class="p">,</span>
+            <span class="s1">&#39;F1-score&#39;</span><span class="p">:</span> <span class="n">f1</span><span class="p">,</span>
+            <span class="s1">&#39;AUC&#39;</span><span class="p">:</span> <span class="n">auc</span>
+        <span class="p">})</span>
+    <span class="k">return</span> <span class="n">registros</span>
+
+<span class="n">resultados_modelos</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="n">modelos_tunados</span> <span class="o">=</span> <span class="p">{}</span>
+<span class="n">datasets_eval</span> <span class="o">=</span> <span class="p">[(</span><span class="s1">&#39;Validación&#39;</span><span class="p">,</span> <span class="n">X_val_array</span><span class="p">,</span> <span class="n">y_val</span><span class="p">),</span> <span class="p">(</span><span class="s1">&#39;Test&#39;</span><span class="p">,</span> <span class="n">X_test_array</span><span class="p">,</span> <span class="n">y_test</span><span class="p">)]</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Configuración lista</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Configurando validación cruzada estratificada y métricas personalizadas...
+
+Configuración lista
+</pre></div>
+</div>
+</div>
+</div>
+<section id="xgboost-optunasearchcv">
+<h3>3.1. XGBoost + OptunaSearchCV<a class="headerlink" href="#xgboost-optunasearchcv" title="Link to this heading">#</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># =========================================</span>
+<span class="c1"># XGBoost con Pipeline + Optuna</span>
+<span class="c1"># =========================================</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Iniciando optimización con Optuna para XGBoost...</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="n">optuna</span><span class="o">.</span><span class="n">logging</span><span class="o">.</span><span class="n">set_verbosity</span><span class="p">(</span><span class="n">optuna</span><span class="o">.</span><span class="n">logging</span><span class="o">.</span><span class="n">WARNING</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">xgb_objective</span><span class="p">(</span><span class="n">trial</span><span class="p">):</span>
+    <span class="n">params</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s1">&#39;max_depth&#39;</span><span class="p">:</span> <span class="n">trial</span><span class="o">.</span><span class="n">suggest_int</span><span class="p">(</span><span class="s1">&#39;max_depth&#39;</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">9</span><span class="p">),</span>
+        <span class="s1">&#39;learning_rate&#39;</span><span class="p">:</span> <span class="n">trial</span><span class="o">.</span><span class="n">suggest_float</span><span class="p">(</span><span class="s1">&#39;learning_rate&#39;</span><span class="p">,</span> <span class="mf">0.01</span><span class="p">,</span> <span class="mf">0.3</span><span class="p">,</span> <span class="n">log</span><span class="o">=</span><span class="kc">True</span><span class="p">),</span>
+        <span class="s1">&#39;n_estimators&#39;</span><span class="p">:</span> <span class="n">trial</span><span class="o">.</span><span class="n">suggest_int</span><span class="p">(</span><span class="s1">&#39;n_estimators&#39;</span><span class="p">,</span> <span class="mi">150</span><span class="p">,</span> <span class="mi">1200</span><span class="p">),</span>
+        <span class="s1">&#39;subsample&#39;</span><span class="p">:</span> <span class="n">trial</span><span class="o">.</span><span class="n">suggest_float</span><span class="p">(</span><span class="s1">&#39;subsample&#39;</span><span class="p">,</span> <span class="mf">0.6</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">),</span>
+        <span class="s1">&#39;colsample_bytree&#39;</span><span class="p">:</span> <span class="n">trial</span><span class="o">.</span><span class="n">suggest_float</span><span class="p">(</span><span class="s1">&#39;colsample_bytree&#39;</span><span class="p">,</span> <span class="mf">0.6</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">),</span>
+        <span class="s1">&#39;gamma&#39;</span><span class="p">:</span> <span class="n">trial</span><span class="o">.</span><span class="n">suggest_float</span><span class="p">(</span><span class="s1">&#39;gamma&#39;</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">1.5</span><span class="p">),</span>
+        <span class="s1">&#39;reg_alpha&#39;</span><span class="p">:</span> <span class="n">trial</span><span class="o">.</span><span class="n">suggest_float</span><span class="p">(</span><span class="s1">&#39;reg_alpha&#39;</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">),</span>
+        <span class="s1">&#39;reg_lambda&#39;</span><span class="p">:</span> <span class="n">trial</span><span class="o">.</span><span class="n">suggest_float</span><span class="p">(</span><span class="s1">&#39;reg_lambda&#39;</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">,</span> <span class="mf">10.0</span><span class="p">),</span>
+        <span class="s1">&#39;min_child_weight&#39;</span><span class="p">:</span> <span class="n">trial</span><span class="o">.</span><span class="n">suggest_int</span><span class="p">(</span><span class="s1">&#39;min_child_weight&#39;</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">10</span><span class="p">),</span>
+        <span class="s1">&#39;objective&#39;</span><span class="p">:</span> <span class="s1">&#39;binary:logistic&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;eval_metric&#39;</span><span class="p">:</span> <span class="s1">&#39;logloss&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;use_label_encoder&#39;</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span>
+        <span class="s1">&#39;tree_method&#39;</span><span class="p">:</span> <span class="s1">&#39;hist&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;n_jobs&#39;</span><span class="p">:</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span>
+        <span class="s1">&#39;random_state&#39;</span><span class="p">:</span> <span class="mi">42</span><span class="p">,</span>
+        <span class="s1">&#39;verbosity&#39;</span><span class="p">:</span> <span class="mi">0</span>
+    <span class="p">}</span>
+    <span class="n">pipeline</span> <span class="o">=</span> <span class="n">Pipeline</span><span class="p">([</span>
+        <span class="p">(</span><span class="s1">&#39;preprocessor&#39;</span><span class="p">,</span> <span class="s1">&#39;passthrough&#39;</span><span class="p">),</span>
+        <span class="p">(</span><span class="s1">&#39;classifier&#39;</span><span class="p">,</span> <span class="n">XGBClassifier</span><span class="p">(</span><span class="o">**</span><span class="n">params</span><span class="p">))</span>
+    <span class="p">])</span>
+    <span class="n">score</span> <span class="o">=</span> <span class="n">cross_val_score</span><span class="p">(</span>
+        <span class="n">pipeline</span><span class="p">,</span>
+        <span class="n">X_train_array</span><span class="p">,</span>
+        <span class="n">y_train</span><span class="p">,</span>
+        <span class="n">cv</span><span class="o">=</span><span class="n">cv_strategy</span><span class="p">,</span>
+        <span class="n">scoring</span><span class="o">=</span><span class="s1">&#39;roc_auc&#39;</span><span class="p">,</span>
+        <span class="n">n_jobs</span><span class="o">=-</span><span class="mi">1</span>
+    <span class="p">)</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+    <span class="k">return</span> <span class="n">score</span>
+
+<span class="n">start_time</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+<span class="n">study</span> <span class="o">=</span> <span class="n">optuna</span><span class="o">.</span><span class="n">create_study</span><span class="p">(</span><span class="n">direction</span><span class="o">=</span><span class="s1">&#39;maximize&#39;</span><span class="p">)</span>
+<span class="n">study</span><span class="o">.</span><span class="n">optimize</span><span class="p">(</span><span class="n">xgb_objective</span><span class="p">,</span> <span class="n">n_trials</span><span class="o">=</span><span class="mi">80</span><span class="p">,</span> <span class="n">show_progress_bar</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="n">elapsed</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span> <span class="o">-</span> <span class="n">start_time</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Optuna finalizado en </span><span class="si">{</span><span class="n">elapsed</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2"> segundos&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Mejor AUC en validación cruzada: </span><span class="si">{</span><span class="n">study</span><span class="o">.</span><span class="n">best_value</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Mejores hiperparámetros encontrados:&quot;</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">clave</span><span class="p">,</span> <span class="n">valor</span> <span class="ow">in</span> <span class="n">study</span><span class="o">.</span><span class="n">best_params</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  </span><span class="si">{</span><span class="n">clave</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="n">valor</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="n">best_params</span> <span class="o">=</span> <span class="n">study</span><span class="o">.</span><span class="n">best_params</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+<span class="n">best_params</span><span class="o">.</span><span class="n">update</span><span class="p">({</span>
+    <span class="s1">&#39;objective&#39;</span><span class="p">:</span> <span class="s1">&#39;binary:logistic&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;eval_metric&#39;</span><span class="p">:</span> <span class="s1">&#39;logloss&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;use_label_encoder&#39;</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span>
+    <span class="s1">&#39;tree_method&#39;</span><span class="p">:</span> <span class="s1">&#39;hist&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;n_jobs&#39;</span><span class="p">:</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span>
+    <span class="s1">&#39;random_state&#39;</span><span class="p">:</span> <span class="mi">42</span><span class="p">,</span>
+    <span class="s1">&#39;verbosity&#39;</span><span class="p">:</span> <span class="mi">0</span>
+<span class="p">})</span>
+
+<span class="n">xgb_mejor_pipeline</span> <span class="o">=</span> <span class="n">Pipeline</span><span class="p">([</span>
+    <span class="p">(</span><span class="s1">&#39;preprocessor&#39;</span><span class="p">,</span> <span class="s1">&#39;passthrough&#39;</span><span class="p">),</span>
+    <span class="p">(</span><span class="s1">&#39;classifier&#39;</span><span class="p">,</span> <span class="n">XGBClassifier</span><span class="p">(</span><span class="o">**</span><span class="n">best_params</span><span class="p">))</span>
+<span class="p">])</span>
+<span class="n">xgb_mejor_pipeline</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train_array</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
+<span class="n">modelos_tunados</span><span class="p">[</span><span class="s1">&#39;XGBoost&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">xgb_mejor_pipeline</span>
+
+<span class="n">xgb_registros</span> <span class="o">=</span> <span class="n">evaluar_pipeline</span><span class="p">(</span><span class="s1">&#39;XGBoost (Optuna)&#39;</span><span class="p">,</span> <span class="n">xgb_mejor_pipeline</span><span class="p">,</span> <span class="n">datasets_eval</span><span class="p">)</span>
+<span class="n">resultados_modelos</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">xgb_registros</span><span class="p">)</span>
+
+<span class="n">display</span><span class="p">(</span><span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">xgb_registros</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Iniciando optimización con Optuna para XGBoost...
+
+Optuna finalizado en 1291.91 segundos
+Mejor AUC en validación cruzada: 0.6808
+Mejores hiperparámetros encontrados:
+  max_depth: 5
+  learning_rate: 0.023326582037893454
+  n_estimators: 888
+  subsample: 0.6525801197234337
+  colsample_bytree: 0.8594365619005631
+  gamma: 1.1173834179782174
+  reg_alpha: 0.9769098509860692
+  reg_lambda: 5.8778578966445245
+  min_child_weight: 10
+Optuna finalizado en 1291.91 segundos
+Mejor AUC en validación cruzada: 0.6808
+Mejores hiperparámetros encontrados:
+  max_depth: 5
+  learning_rate: 0.023326582037893454
+  n_estimators: 888
+  subsample: 0.6525801197234337
+  colsample_bytree: 0.8594365619005631
+  gamma: 1.1173834179782174
+  reg_alpha: 0.9769098509860692
+  reg_lambda: 5.8778578966445245
+  min_child_weight: 10
+</pre></div>
+</div>
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Modelo</th>
+      <th>Conjunto</th>
+      <th>Accuracy</th>
+      <th>Precision</th>
+      <th>Recall</th>
+      <th>F1-score</th>
+      <th>AUC</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>XGBoost (Optuna)</td>
+      <td>Validación</td>
+      <td>0.630789</td>
+      <td>0.623675</td>
+      <td>0.501706</td>
+      <td>0.556081</td>
+      <td>0.681183</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>XGBoost (Optuna)</td>
+      <td>Test</td>
+      <td>0.638257</td>
+      <td>0.633775</td>
+      <td>0.509453</td>
+      <td>0.564854</td>
+      <td>0.688086</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<blockquote>
+<div><p>Nota: Optuna optimiza sobre AUC para evitar soluciones sin positivos; posteriormente se reporta F1 en validación y test.</p>
+</div></blockquote>
+</section>
+<section id="arbol-de-decision-gridsearchcv">
+<h3>3.3. Árbol de Decisión + GridSearchCV<a class="headerlink" href="#arbol-de-decision-gridsearchcv" title="Link to this heading">#</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># =========================================</span>
+<span class="c1"># Árbol de Decisión con Pipeline + GridSearchCV</span>
+<span class="c1"># =========================================</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Iniciando GridSearchCV para Árbol de Decisión...</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="n">dt_pipeline</span> <span class="o">=</span> <span class="n">Pipeline</span><span class="p">([</span>
+    <span class="p">(</span><span class="s1">&#39;preprocessor&#39;</span><span class="p">,</span> <span class="s1">&#39;passthrough&#39;</span><span class="p">),</span>
+    <span class="p">(</span><span class="s1">&#39;classifier&#39;</span><span class="p">,</span> <span class="n">DecisionTreeClassifier</span><span class="p">(</span><span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">))</span>
+<span class="p">])</span>
+
+<span class="n">dt_param_grid</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s1">&#39;classifier__max_depth&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="kc">None</span><span class="p">],</span>
+    <span class="s1">&#39;classifier__min_samples_split&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">14</span><span class="p">],</span>
+    <span class="s1">&#39;classifier__min_samples_leaf&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">8</span><span class="p">],</span>
+    <span class="s1">&#39;classifier__criterion&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;gini&#39;</span><span class="p">,</span> <span class="s1">&#39;entropy&#39;</span><span class="p">,</span> <span class="s1">&#39;log_loss&#39;</span><span class="p">]</span>
+<span class="p">}</span>
+
+<span class="n">dt_grid_search</span> <span class="o">=</span> <span class="n">GridSearchCV</span><span class="p">(</span>
+    <span class="n">estimator</span><span class="o">=</span><span class="n">dt_pipeline</span><span class="p">,</span>
+    <span class="n">param_grid</span><span class="o">=</span><span class="n">dt_param_grid</span><span class="p">,</span>
+    <span class="n">cv</span><span class="o">=</span><span class="n">cv_strategy</span><span class="p">,</span>
+    <span class="n">scoring</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;f1&#39;</span><span class="p">:</span> <span class="n">make_scorer</span><span class="p">(</span><span class="n">f1_score</span><span class="p">),</span> <span class="s1">&#39;roc_auc&#39;</span><span class="p">:</span> <span class="n">scoring</span><span class="p">[</span><span class="s1">&#39;roc_auc&#39;</span><span class="p">]},</span>
+    <span class="n">refit</span><span class="o">=</span><span class="s1">&#39;roc_auc&#39;</span><span class="p">,</span>
+    <span class="n">n_jobs</span><span class="o">=-</span><span class="mi">1</span><span class="p">,</span>
+    <span class="n">verbose</span><span class="o">=</span><span class="mi">0</span>
+<span class="p">)</span>
+
+<span class="n">start_time</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+<span class="n">dt_grid_search</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train_array</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
+<span class="n">elapsed</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span> <span class="o">-</span> <span class="n">start_time</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;GridSearch finalizado en </span><span class="si">{</span><span class="n">elapsed</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2"> segundos&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Mejores hiperparámetros (según AUC):&quot;</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">clave</span><span class="p">,</span> <span class="n">valor</span> <span class="ow">in</span> <span class="n">dt_grid_search</span><span class="o">.</span><span class="n">best_params_</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  </span><span class="si">{</span><span class="n">clave</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="n">valor</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="n">dt_mejor_pipeline</span> <span class="o">=</span> <span class="n">dt_grid_search</span><span class="o">.</span><span class="n">best_estimator_</span>
+<span class="n">modelos_tunados</span><span class="p">[</span><span class="s1">&#39;Árbol de Decisión&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">dt_mejor_pipeline</span>
+
+<span class="n">dt_registros</span> <span class="o">=</span> <span class="n">evaluar_pipeline</span><span class="p">(</span><span class="s1">&#39;Árbol de Decisión (GridSearchCV)&#39;</span><span class="p">,</span> <span class="n">dt_mejor_pipeline</span><span class="p">,</span> <span class="n">datasets_eval</span><span class="p">)</span>
+<span class="n">resultados_modelos</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">dt_registros</span><span class="p">)</span>
+
+<span class="n">display</span><span class="p">(</span><span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">dt_registros</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Iniciando GridSearchCV para Árbol de Decisión...
+
+GridSearch finalizado en 486.02 segundos
+Mejores hiperparámetros (según AUC):
+  classifier__criterion: entropy
+  classifier__max_depth: 7
+  classifier__min_samples_leaf: 5
+  classifier__min_samples_split: 2
+GridSearch finalizado en 486.02 segundos
+Mejores hiperparámetros (según AUC):
+  classifier__criterion: entropy
+  classifier__max_depth: 7
+  classifier__min_samples_leaf: 5
+  classifier__min_samples_split: 2
+</pre></div>
+</div>
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Modelo</th>
+      <th>Conjunto</th>
+      <th>Accuracy</th>
+      <th>Precision</th>
+      <th>Recall</th>
+      <th>F1-score</th>
+      <th>AUC</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>Árbol de Decisión (GridSearchCV)</td>
+      <td>Validación</td>
+      <td>0.616508</td>
+      <td>0.603466</td>
+      <td>0.489909</td>
+      <td>0.540791</td>
+      <td>0.648632</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>Árbol de Decisión (GridSearchCV)</td>
+      <td>Test</td>
+      <td>0.626924</td>
+      <td>0.618082</td>
+      <td>0.498507</td>
+      <td>0.551892</td>
+      <td>0.660141</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+</section>
+</section>
+<section id="comparativa-de-resultados-en-validacion-y-test">
+<h2>4. Comparativa de Resultados en Validación y Test<a class="headerlink" href="#comparativa-de-resultados-en-validacion-y-test" title="Link to this heading">#</a></h2>
+<blockquote>
+<div><p><strong>Métrica de refit:</strong> Para evitar soluciones degeneradas (sin positivos), en los ajustes se refitó con AUC y las tablas siguientes muestran las métricas finales (incluyendo F1).</p>
+</div></blockquote>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Consolidar métricas en tabla</span>
+<span class="n">metricas_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">resultados_modelos</span><span class="p">)</span>
+<span class="n">metricas_df</span> <span class="o">=</span> <span class="n">metricas_df</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="n">by</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;Conjunto&#39;</span><span class="p">,</span> <span class="s1">&#39;F1-score&#39;</span><span class="p">],</span> <span class="n">ascending</span><span class="o">=</span><span class="p">[</span><span class="kc">True</span><span class="p">,</span> <span class="kc">False</span><span class="p">])</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Métricas completas por conjunto:</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="n">display</span><span class="p">(</span><span class="n">metricas_df</span><span class="p">)</span>
+
+<span class="n">resumen_test</span> <span class="o">=</span> <span class="n">metricas_df</span><span class="p">[</span><span class="n">metricas_df</span><span class="p">[</span><span class="s1">&#39;Conjunto&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;Test&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="n">by</span><span class="o">=</span><span class="s1">&#39;F1-score&#39;</span><span class="p">,</span> <span class="n">ascending</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Ranking en test (ordenado por F1-score):</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="n">display</span><span class="p">(</span><span class="n">resumen_test</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">barplot</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">resumen_test</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="s1">&#39;F1-score&#39;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s1">&#39;Modelo&#39;</span><span class="p">,</span> <span class="n">palette</span><span class="o">=</span><span class="s1">&#39;viridis&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Comparativa F1-score en conjunto de test&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">13</span><span class="p">,</span> <span class="n">fontweight</span><span class="o">=</span><span class="s1">&#39;bold&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlim</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;F1-score&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Modelo&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Métricas completas por conjunto:
+</pre></div>
+</div>
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Modelo</th>
+      <th>Conjunto</th>
+      <th>Accuracy</th>
+      <th>Precision</th>
+      <th>Recall</th>
+      <th>F1-score</th>
+      <th>AUC</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>1</th>
+      <td>XGBoost (Optuna)</td>
+      <td>Test</td>
+      <td>0.638257</td>
+      <td>0.633775</td>
+      <td>0.509453</td>
+      <td>0.564854</td>
+      <td>0.688086</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>Árbol de Decisión (GridSearchCV)</td>
+      <td>Test</td>
+      <td>0.626924</td>
+      <td>0.618082</td>
+      <td>0.498507</td>
+      <td>0.551892</td>
+      <td>0.660141</td>
+    </tr>
+    <tr>
+      <th>0</th>
+      <td>XGBoost (Optuna)</td>
+      <td>Validación</td>
+      <td>0.630789</td>
+      <td>0.623675</td>
+      <td>0.501706</td>
+      <td>0.556081</td>
+      <td>0.681183</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>Árbol de Decisión (GridSearchCV)</td>
+      <td>Validación</td>
+      <td>0.616508</td>
+      <td>0.603466</td>
+      <td>0.489909</td>
+      <td>0.540791</td>
+      <td>0.648632</td>
+    </tr>
+  </tbody>
+</table>
+</div></div><div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Ranking en test (ordenado por F1-score):
+</pre></div>
+</div>
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Modelo</th>
+      <th>Conjunto</th>
+      <th>Accuracy</th>
+      <th>Precision</th>
+      <th>Recall</th>
+      <th>F1-score</th>
+      <th>AUC</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>1</th>
+      <td>XGBoost (Optuna)</td>
+      <td>Test</td>
+      <td>0.638257</td>
+      <td>0.633775</td>
+      <td>0.509453</td>
+      <td>0.564854</td>
+      <td>0.688086</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>Árbol de Decisión (GridSearchCV)</td>
+      <td>Test</td>
+      <td>0.626924</td>
+      <td>0.618082</td>
+      <td>0.498507</td>
+      <td>0.551892</td>
+      <td>0.660141</td>
+    </tr>
+  </tbody>
+</table>
+</div></div><img alt="../_images/24aa2c96c5e0613c8f542896fda6add2b69270079aeea728d94e27d30e185ad7.png" src="../_images/24aa2c96c5e0613c8f542896fda6add2b69270079aeea728d94e27d30e185ad7.png" />
+</div>
+</div>
+</section>
+<section id="interpretabilidad-de-los-modelos">
+<h2>5. Interpretabilidad de los Modelos<a class="headerlink" href="#interpretabilidad-de-los-modelos" title="Link to this heading">#</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">plot_feature_importances</span><span class="p">(</span><span class="n">importances</span><span class="p">,</span> <span class="n">titulo</span><span class="p">,</span> <span class="n">top_n</span><span class="o">=</span><span class="mi">15</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Visualiza las importancias promedio del modelo.&quot;&quot;&quot;</span>
+    <span class="n">fi_df</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span><span class="s1">&#39;feature&#39;</span><span class="p">:</span> <span class="n">feature_names</span><span class="p">,</span> <span class="s1">&#39;importance&#39;</span><span class="p">:</span> <span class="n">importances</span><span class="p">})</span>
+        <span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="s1">&#39;importance&#39;</span><span class="p">,</span> <span class="n">ascending</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+        <span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="n">top_n</span><span class="p">)</span>
+        <span class="o">.</span><span class="n">iloc</span><span class="p">[::</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+    <span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">barh</span><span class="p">(</span><span class="n">fi_df</span><span class="p">[</span><span class="s1">&#39;feature&#39;</span><span class="p">],</span> <span class="n">fi_df</span><span class="p">[</span><span class="s1">&#39;importance&#39;</span><span class="p">],</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;steelblue&#39;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="n">titulo</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">13</span><span class="p">,</span> <span class="n">fontweight</span><span class="o">=</span><span class="s1">&#39;bold&#39;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Importancia&#39;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Feature&#39;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<section id="xgboost-feature-importances-y-shap">
+<h3>5.1. XGBoost: Feature Importances y SHAP<a class="headerlink" href="#xgboost-feature-importances-y-shap" title="Link to this heading">#</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">xgb_best</span> <span class="o">=</span> <span class="n">modelos_tunados</span><span class="p">[</span><span class="s1">&#39;XGBoost&#39;</span><span class="p">]</span>
+<span class="n">xgb_clf</span><span class="p">,</span> <span class="n">X_val_xgb</span> <span class="o">=</span> <span class="n">_descomponer_modelo</span><span class="p">(</span><span class="n">xgb_best</span><span class="p">,</span> <span class="n">X_val_array</span><span class="p">)</span>
+
+<span class="n">plot_feature_importances</span><span class="p">(</span><span class="n">xgb_clf</span><span class="o">.</span><span class="n">feature_importances_</span><span class="p">,</span> <span class="s1">&#39;XGBoost - Importancia de características&#39;</span><span class="p">)</span>
+
+<span class="n">sample_size</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="mi">200</span><span class="p">,</span> <span class="n">X_val_xgb</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+<span class="n">sample_idx</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="n">X_val_xgb</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">size</span><span class="o">=</span><span class="n">sample_size</span><span class="p">,</span> <span class="n">replace</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="n">sample_proc</span> <span class="o">=</span> <span class="n">X_val_xgb</span><span class="p">[</span><span class="n">sample_idx</span><span class="p">]</span>
+<span class="n">explainer</span> <span class="o">=</span> <span class="n">shap</span><span class="o">.</span><span class="n">TreeExplainer</span><span class="p">(</span><span class="n">xgb_clf</span><span class="p">)</span>
+<span class="n">shap_values</span> <span class="o">=</span> <span class="n">explainer</span><span class="o">.</span><span class="n">shap_values</span><span class="p">(</span><span class="n">sample_proc</span><span class="p">)</span>
+<span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">shap_values</span><span class="p">,</span> <span class="nb">list</span><span class="p">):</span>
+    <span class="n">shap_to_plot</span> <span class="o">=</span> <span class="n">shap_values</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="n">shap_to_plot</span> <span class="o">=</span> <span class="n">shap_values</span>
+<span class="n">shap</span><span class="o">.</span><span class="n">summary_plot</span><span class="p">(</span><span class="n">shap_to_plot</span><span class="p">,</span> <span class="n">sample_proc</span><span class="p">,</span> <span class="n">feature_names</span><span class="o">=</span><span class="n">feature_names</span><span class="p">,</span> <span class="n">plot_type</span><span class="o">=</span><span class="s1">&#39;bar&#39;</span><span class="p">,</span> <span class="n">show</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;SHAP - Impacto promedio (XGBoost)&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/e3e7673b14a7b09bba6b79168f72cacebdc82245dd4e0249c2fb9f27204cec63.png" src="../_images/e3e7673b14a7b09bba6b79168f72cacebdc82245dd4e0249c2fb9f27204cec63.png" />
+<img alt="../_images/3fe7fff596eb9ae196f7edef288e821d92f66ae7db1f9f63d95988540d455a7e.png" src="../_images/3fe7fff596eb9ae196f7edef288e821d92f66ae7db1f9f63d95988540d455a7e.png" />
+</div>
+</div>
+</section>
+<section id="arbol-de-decision-feature-importances-y-permutation-importance">
+<h3>5.3. Árbol de Decisión: Feature Importances y Permutation Importance<a class="headerlink" href="#arbol-de-decision-feature-importances-y-permutation-importance" title="Link to this heading">#</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dt_best</span> <span class="o">=</span> <span class="n">modelos_tunados</span><span class="p">[</span><span class="s1">&#39;Árbol de Decisión&#39;</span><span class="p">]</span>
+<span class="n">dt_clf</span><span class="p">,</span> <span class="n">X_val_dt</span> <span class="o">=</span> <span class="n">_descomponer_modelo</span><span class="p">(</span><span class="n">dt_best</span><span class="p">,</span> <span class="n">X_val_array</span><span class="p">)</span>
+
+<span class="n">plot_feature_importances</span><span class="p">(</span><span class="n">dt_clf</span><span class="o">.</span><span class="n">feature_importances_</span><span class="p">,</span> <span class="s1">&#39;Árbol de Decisión - Importancia de características&#39;</span><span class="p">)</span>
+
+<span class="n">perm_dt</span> <span class="o">=</span> <span class="n">permutation_importance</span><span class="p">(</span>
+    <span class="n">dt_clf</span><span class="p">,</span> <span class="n">X_val_dt</span><span class="p">,</span> <span class="n">y_val</span><span class="p">,</span>
+    <span class="n">n_repeats</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span>
+    <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">,</span>
+    <span class="n">n_jobs</span><span class="o">=-</span><span class="mi">1</span><span class="p">,</span>
+    <span class="n">scoring</span><span class="o">=</span><span class="s1">&#39;f1&#39;</span>
+ <span class="p">)</span>
+<span class="n">perm_dt_df</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span><span class="s1">&#39;feature&#39;</span><span class="p">:</span> <span class="n">feature_names</span><span class="p">,</span> <span class="s1">&#39;importance&#39;</span><span class="p">:</span> <span class="n">perm_dt</span><span class="o">.</span><span class="n">importances_mean</span><span class="p">})</span>
+    <span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="s1">&#39;importance&#39;</span><span class="p">,</span> <span class="n">ascending</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+    <span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">15</span><span class="p">)</span>
+    <span class="o">.</span><span class="n">iloc</span><span class="p">[::</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+<span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">barh</span><span class="p">(</span><span class="n">perm_dt_df</span><span class="p">[</span><span class="s1">&#39;feature&#39;</span><span class="p">],</span> <span class="n">perm_dt_df</span><span class="p">[</span><span class="s1">&#39;importance&#39;</span><span class="p">],</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;seagreen&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Árbol de Decisión - Permutation Importance (F1)&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">13</span><span class="p">,</span> <span class="n">fontweight</span><span class="o">=</span><span class="s1">&#39;bold&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Cambio medio en F1&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Feature&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/a94e6c10d917dddf8032b43d0cb0069d140d518d3db81826f4b48b572126c7df.png" src="../_images/a94e6c10d917dddf8032b43d0cb0069d140d518d3db81826f4b48b572126c7df.png" />
+<img alt="../_images/1b48de0a80b2ccf15264dee0b7508b5b06b7cc557520d4e6925097f4bc44a20a.png" src="../_images/1b48de0a80b2ccf15264dee0b7508b5b06b7cc557520d4e6925097f4bc44a20a.png" />
+</div>
+</div>
+</section>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./notebooks"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="5_Evaluacion.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Evaluacion de Modelos de Machine Learning</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="Modelos_Logisticos.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title"><strong>Modelos de Clasificación: Logístico, Ridge y Lasso</strong></p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#objetivo">Objetivo</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#metodologia">Metodologia</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#datos">Datos</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#importar-librerias">1. Importar Librerias</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#cargar-datos-preprocesados">2. Cargar Datos Preprocesados</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#estrategia-de-validacion-y-metricas">3. Estrategia de Validación y Métricas</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#xgboost-optunasearchcv">3.1. XGBoost + OptunaSearchCV</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#arbol-de-decision-gridsearchcv">3.3. Árbol de Decisión + GridSearchCV</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#comparativa-de-resultados-en-validacion-y-test">4. Comparativa de Resultados en Validación y Test</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#interpretabilidad-de-los-modelos">5. Interpretabilidad de los Modelos</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#xgboost-feature-importances-y-shap">5.1. XGBoost: Feature Importances y SHAP</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#arbol-de-decision-feature-importances-y-permutation-importance">5.3. Árbol de Decisión: Feature Importances y Permutation Importance</a></li>
+</ul>
+</li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By José Menco, Camilo Vargas, Iván Ramirez
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2023.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

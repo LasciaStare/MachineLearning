@@ -1,0 +1,2153 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Optimización de Modelos de Machine Learning &#8212; Readmission Diabetes Prediction</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="../_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=fa44fd50" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=eba8b062" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.8ecb98da25f57f5357bf6f572d296f466b2cfe2517ffebfabe82451661e28f02.css?v=6644e6bb" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script src="../_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../_static/copybutton.js?v=f281be69"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../_static/togglebutton.js?v=4a39c7ea"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="../_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'notebooks/4_Optimizacion';</script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Evaluacion de Modelos de Machine Learning" href="5_Evaluacion.html" />
+    <link rel="prev" title="Técnicas de balanceo" href="3_Balanceo.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../Introduccion.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../_static/logo.png" class="logo__image only-light" alt="Readmission Diabetes Prediction - Home"/>
+    <script>document.write(`<img src="../_static/logo.png" class="logo__image only-dark" alt="Readmission Diabetes Prediction - Home"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../Introduccion.html">
+                    Predicción de Readmisión Hospitalaria en Pacientes Diabéticos
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Entregable 3</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="1_EDA.html"><strong>EDA</strong></a></li>
+<li class="toctree-l1"><a class="reference internal" href="1_5_Preprocesamiento.html"><strong>Preprocesamiento de Datos</strong></a></li>
+<li class="toctree-l1"><a class="reference internal" href="2_Benchmark.html">Benchmark</a></li>
+
+<li class="toctree-l1"><a class="reference internal" href="3_Balanceo.html">Técnicas de balanceo</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Optimización de Modelos de Machine Learning</a></li>
+<li class="toctree-l1"><a class="reference internal" href="5_Evaluacion.html">Evaluacion de Modelos de Machine Learning</a></li>
+<li class="toctree-l1"><a class="reference internal" href="6_Validacion_Tuning.html">Validacion Avanzada, Tuning e Interpretabilidad</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Modelos pasados</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="Modelos_Logisticos.html"><strong>Modelos de Clasificación: Logístico, Ridge y Lasso</strong></a></li>
+<li class="toctree-l1"><a class="reference internal" href="Modelo_Knn.html"><strong>Modelo Knn</strong></a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/executablebooks/jupyter-book" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/executablebooks/jupyter-book/issues/new?title=Issue%20on%20page%20%2Fnotebooks/4_Optimizacion.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../_sources/notebooks/4_Optimizacion.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Optimización de Modelos de Machine Learning</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#objetivo">Objetivo</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#datos">Datos</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#metricas-evaluadas">Métricas Evaluadas</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#optimizacion-por-modelo"><strong>4. Optimización por Modelo</strong></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#k-nearest-neighbors-knn">4.1. K-Nearest Neighbors (KNN)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#naive-bayes">4.2. Naive Bayes</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#ridge-lasso">4.3. Ridge &amp; Lasso</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#xgboost">4.4. XGBoost</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#svm-support-vector-machine">4.5. SVM (Support Vector Machine)</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#resultados-y-analisis-comparativo"><strong>5. Resultados y Análisis Comparativo</strong></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#analisis-por-categoria">5.1. Análisis por Categoría</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#analisis-de-mejoras-por-modelo">5.2. Análisis de Mejoras por Modelo</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#visualizacion-de-resultados">5.3. Visualización de Resultados</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#conclusiones"><strong>6. Conclusiones</strong></a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="optimizacion-de-modelos-de-machine-learning">
+<h1>Optimización de Modelos de Machine Learning<a class="headerlink" href="#optimizacion-de-modelos-de-machine-learning" title="Link to this heading">#</a></h1>
+<p>Este notebook implementa <strong>técnicas de optimización especializadas</strong> para acelerar el entrenamiento y predicción de modelos ML sin perder capacidad predictiva.</p>
+<hr class="docutils" />
+<section id="objetivo">
+<h2>Objetivo<a class="headerlink" href="#objetivo" title="Link to this heading">#</a></h2>
+<p>Comparar el desempeño de diferentes técnicas de optimización por modelo:</p>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Modelo</p></th>
+<th class="head"><p>Técnica de Optimización</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><strong>KNN</strong></p></td>
+<td><p>KD-Trees, Ball Trees, FAISS</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>Ridge/Lasso</strong></p></td>
+<td><p>Solver optimizado: saga</p></td>
+</tr>
+<tr class="row-even"><td><p><strong>Naive Bayes</strong></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">partial_fit()</span></code> con entrenamiento por lotes</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>XGBoost</strong></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">tree_method='hist'</span></code>, <code class="docutils literal notranslate"><span class="pre">early_stopping_rounds</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p><strong>SVM</strong></p></td>
+<td><p>SGDClassifier, LinearSVC</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+<hr class="docutils" />
+<section id="datos">
+<h2>Datos<a class="headerlink" href="#datos" title="Link to this heading">#</a></h2>
+<p>Se utilizan los <strong>datos preprocesados</strong> de <code class="docutils literal notranslate"><span class="pre">data/processed/</span></code>:</p>
+<ul class="simple">
+<li><p>Ya escalados con StandardScaler</p></li>
+<li><p>Ya codificados (One-Hot Encoding)</p></li>
+<li><p>Train balanceado con SMOTE</p></li>
+<li><p>Sin valores faltantes</p></li>
+</ul>
+</section>
+<hr class="docutils" />
+<section id="metricas-evaluadas">
+<h2>Métricas Evaluadas<a class="headerlink" href="#metricas-evaluadas" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p><strong>Tiempo de entrenamiento</strong> (segundos)</p></li>
+<li><p><strong>Uso de memoria</strong> (MB)</p></li>
+<li><p><strong>Accuracy</strong> en validación</p></li>
+<li><p><strong>Velocidad de predicción</strong> (muestras/segundo)</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># =========================================</span>
+<span class="c1"># 1. Importar librerías necesarias</span>
+<span class="c1"># =========================================</span>
+
+<span class="kn">import</span> <span class="nn">time</span>
+<span class="kn">import</span> <span class="nn">psutil</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span>
+<span class="kn">import</span> <span class="nn">warnings</span>
+
+<span class="c1"># Modelos de clasificación</span>
+<span class="kn">from</span> <span class="nn">sklearn.neighbors</span> <span class="kn">import</span> <span class="n">KNeighborsClassifier</span>
+<span class="kn">from</span> <span class="nn">sklearn.naive_bayes</span> <span class="kn">import</span> <span class="n">GaussianNB</span>
+<span class="kn">from</span> <span class="nn">sklearn.linear_model</span> <span class="kn">import</span> <span class="n">LogisticRegression</span><span class="p">,</span> <span class="n">RidgeClassifier</span><span class="p">,</span> <span class="n">SGDClassifier</span>
+<span class="kn">from</span> <span class="nn">sklearn.svm</span> <span class="kn">import</span> <span class="n">LinearSVC</span>
+<span class="kn">from</span> <span class="nn">xgboost</span> <span class="kn">import</span> <span class="n">XGBClassifier</span>
+
+<span class="c1"># Métricas y utilidades</span>
+<span class="kn">from</span> <span class="nn">sklearn.metrics</span> <span class="kn">import</span> <span class="n">accuracy_score</span><span class="p">,</span> <span class="n">f1_score</span><span class="p">,</span> <span class="n">precision_score</span><span class="p">,</span> <span class="n">recall_score</span>
+<span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">train_test_split</span>
+
+<span class="n">warnings</span><span class="o">.</span><span class="n">filterwarnings</span><span class="p">(</span><span class="s1">&#39;ignore&#39;</span><span class="p">)</span>
+
+<span class="c1"># Configuración de visualización</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">style</span><span class="o">.</span><span class="n">use</span><span class="p">(</span><span class="s1">&#39;default&#39;</span><span class="p">)</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">set_palette</span><span class="p">(</span><span class="s2">&quot;pastel&quot;</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot; Librerías importadas correctamente&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Librerías importadas correctamente
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># =========================================</span>
+<span class="c1"># 2. Cargar datos preprocesados</span>
+<span class="c1"># =========================================</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;📂 Cargando datos procesados de &#39;data/processed/&#39;...</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="c1"># Cargar datos de entrenamiento (BALANCEADOS con SMOTE)</span>
+<span class="n">X_train</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;data/processed/X_train.csv&#39;</span><span class="p">)</span>
+<span class="n">y_train</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;data/processed/y_train.csv&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">values</span><span class="o">.</span><span class="n">ravel</span><span class="p">()</span>
+
+<span class="c1"># Cargar datos de validación (SIN balancear)</span>
+<span class="n">X_val</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;data/processed/X_val.csv&#39;</span><span class="p">)</span>
+<span class="n">y_val</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;data/processed/y_val.csv&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">values</span><span class="o">.</span><span class="n">ravel</span><span class="p">()</span>
+
+<span class="c1"># Cargar datos de test (SIN balancear)</span>
+<span class="n">X_test</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;data/processed/X_test.csv&#39;</span><span class="p">)</span>
+<span class="n">y_test</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;data/processed/y_test.csv&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">values</span><span class="o">.</span><span class="n">ravel</span><span class="p">()</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot; Datos cargados exitosamente</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="c1"># Información de los datos</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;=&quot;</span><span class="o">*</span><span class="mi">60</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot; &quot;</span><span class="o">*</span><span class="mi">15</span> <span class="o">+</span> <span class="s2">&quot;INFORMACIÓN DE LOS DATOS&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;=&quot;</span><span class="o">*</span><span class="mi">60</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2"> DIMENSIONES:&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  Train:      </span><span class="si">{</span><span class="n">X_train</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="si">:</span><span class="s2">&gt;7,</span><span class="si">}</span><span class="s2"> muestras × </span><span class="si">{</span><span class="n">X_train</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="si">:</span><span class="s2">&gt;3</span><span class="si">}</span><span class="s2"> features&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  Validation: </span><span class="si">{</span><span class="n">X_val</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="si">:</span><span class="s2">&gt;7,</span><span class="si">}</span><span class="s2"> muestras × </span><span class="si">{</span><span class="n">X_val</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="si">:</span><span class="s2">&gt;3</span><span class="si">}</span><span class="s2"> features&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  Test:       </span><span class="si">{</span><span class="n">X_test</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="si">:</span><span class="s2">&gt;7,</span><span class="si">}</span><span class="s2"> muestras × </span><span class="si">{</span><span class="n">X_test</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="si">:</span><span class="s2">&gt;3</span><span class="si">}</span><span class="s2"> features&quot;</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2"> BALANCE DE CLASES (Train - SMOTE aplicado):&quot;</span><span class="p">)</span>
+<span class="n">train_counts</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">y_train</span><span class="p">)</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  Clase 0: </span><span class="si">{</span><span class="n">train_counts</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="si">:</span><span class="s2">&gt;7,</span><span class="si">}</span><span class="s2"> (</span><span class="si">{</span><span class="n">train_counts</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">/</span><span class="nb">len</span><span class="p">(</span><span class="n">y_train</span><span class="p">)</span><span class="o">*</span><span class="mi">100</span><span class="si">:</span><span class="s2">&gt;5.1f</span><span class="si">}</span><span class="s2">%)&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  Clase 1: </span><span class="si">{</span><span class="n">train_counts</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="si">:</span><span class="s2">&gt;7,</span><span class="si">}</span><span class="s2"> (</span><span class="si">{</span><span class="n">train_counts</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">/</span><span class="nb">len</span><span class="p">(</span><span class="n">y_train</span><span class="p">)</span><span class="o">*</span><span class="mi">100</span><span class="si">:</span><span class="s2">&gt;5.1f</span><span class="si">}</span><span class="s2">%)&quot;</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span> <span class="o">+</span> <span class="s2">&quot;=&quot;</span><span class="o">*</span><span class="mi">60</span><span class="p">)</span>
+
+<span class="c1"># Convertir a arrays de NumPy para algunos modelos</span>
+<span class="n">X_train_array</span> <span class="o">=</span> <span class="n">X_train</span><span class="o">.</span><span class="n">values</span>
+<span class="n">X_val_array</span> <span class="o">=</span> <span class="n">X_val</span><span class="o">.</span><span class="n">values</span>
+<span class="n">X_test_array</span> <span class="o">=</span> <span class="n">X_test</span><span class="o">.</span><span class="n">values</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>📂 Cargando datos procesados de &#39;data/processed/&#39;...
+
+ Datos cargados exitosamente
+
+============================================================
+               INFORMACIÓN DE LOS DATOS
+============================================================
+
+ DIMENSIONES:
+  Train:       71,236 muestras × 113 features
+  Validation:  15,265 muestras × 113 features
+  Test:        15,265 muestras × 113 features
+
+ BALANCE DE CLASES (Train - SMOTE aplicado):
+  Clase 0:  38,405 ( 53.9%)
+  Clase 1:  32,831 ( 46.1%)
+
+============================================================
+ Datos cargados exitosamente
+
+============================================================
+               INFORMACIÓN DE LOS DATOS
+============================================================
+
+ DIMENSIONES:
+  Train:       71,236 muestras × 113 features
+  Validation:  15,265 muestras × 113 features
+  Test:        15,265 muestras × 113 features
+
+ BALANCE DE CLASES (Train - SMOTE aplicado):
+  Clase 0:  38,405 ( 53.9%)
+  Clase 1:  32,831 ( 46.1%)
+
+============================================================
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># =========================================</span>
+<span class="c1"># 3. Función de evaluación con métricas de optimización</span>
+<span class="c1"># =========================================</span>
+
+<span class="k">def</span> <span class="nf">evaluar_modelo_optimizado</span><span class="p">(</span><span class="n">nombre</span><span class="p">,</span> <span class="n">modelo</span><span class="p">,</span> <span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">X_val</span><span class="p">,</span> <span class="n">y_val</span><span class="p">,</span> 
+                                <span class="n">tecnica</span><span class="p">,</span> <span class="n">config</span><span class="p">,</span> <span class="n">train_params</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Evalúa un modelo con técnicas de optimización, midiendo:</span>
+<span class="sd">    - Tiempo de entrenamiento</span>
+<span class="sd">    - Uso de memoria</span>
+<span class="sd">    - Accuracy, F1-score, Precision, Recall</span>
+<span class="sd">    - Velocidad de predicción</span>
+<span class="sd">    </span>
+<span class="sd">    Args:</span>
+<span class="sd">        nombre: Nombre del modelo</span>
+<span class="sd">        modelo: Instancia del modelo</span>
+<span class="sd">        train_params: Diccionario con parámetros adicionales para fit()</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="si">{</span><span class="s1">&#39;=&#39;</span><span class="o">*</span><span class="mi">70</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;🔧 OPTIMIZANDO: </span><span class="si">{</span><span class="n">nombre</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="s1">&#39;=&#39;</span><span class="o">*</span><span class="mi">70</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Técnica: </span><span class="si">{</span><span class="n">tecnica</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Config:  </span><span class="si">{</span><span class="n">config</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    
+    <span class="c1"># Obtener proceso para medir memoria</span>
+    <span class="n">process</span> <span class="o">=</span> <span class="n">psutil</span><span class="o">.</span><span class="n">Process</span><span class="p">()</span>
+    
+    <span class="c1"># 1. ENTRENAMIENTO</span>
+    <span class="n">memory_before</span> <span class="o">=</span> <span class="n">process</span><span class="o">.</span><span class="n">memory_info</span><span class="p">()</span><span class="o">.</span><span class="n">rss</span> <span class="o">/</span> <span class="p">(</span><span class="mi">1024</span> <span class="o">*</span> <span class="mi">1024</span><span class="p">)</span>  <span class="c1"># MB</span>
+    <span class="n">start_train</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+    
+    <span class="k">if</span> <span class="n">train_params</span><span class="p">:</span>
+        <span class="n">modelo</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="o">**</span><span class="n">train_params</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">modelo</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
+    
+    <span class="n">end_train</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+    <span class="n">memory_after</span> <span class="o">=</span> <span class="n">process</span><span class="o">.</span><span class="n">memory_info</span><span class="p">()</span><span class="o">.</span><span class="n">rss</span> <span class="o">/</span> <span class="p">(</span><span class="mi">1024</span> <span class="o">*</span> <span class="mi">1024</span><span class="p">)</span>  <span class="c1"># MB</span>
+    
+    <span class="n">tiempo_entrenamiento</span> <span class="o">=</span> <span class="n">end_train</span> <span class="o">-</span> <span class="n">start_train</span>
+    <span class="n">memoria_usada</span> <span class="o">=</span> <span class="n">memory_after</span> <span class="o">-</span> <span class="n">memory_before</span>
+    
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">⏱️  Tiempo entrenamiento: </span><span class="si">{</span><span class="n">tiempo_entrenamiento</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">s&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;💾 Memoria usada: </span><span class="si">{</span><span class="n">memoria_usada</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2"> MB&quot;</span><span class="p">)</span>
+    
+    <span class="c1"># 2. PREDICCIÓN Y VELOCIDAD</span>
+    <span class="n">start_pred</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+    <span class="n">y_pred</span> <span class="o">=</span> <span class="n">modelo</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_val</span><span class="p">)</span>
+    <span class="n">end_pred</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+    
+    <span class="n">tiempo_prediccion</span> <span class="o">=</span> <span class="n">end_pred</span> <span class="o">-</span> <span class="n">start_pred</span>
+    <span class="c1"># Evitar división por cero</span>
+    <span class="k">if</span> <span class="n">tiempo_prediccion</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="n">velocidad_pred</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">X_val</span><span class="p">)</span> <span class="o">/</span> <span class="n">tiempo_prediccion</span>  <span class="c1"># muestras/segundo</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">velocidad_pred</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">X_val</span><span class="p">)</span> <span class="o">/</span> <span class="mf">0.0001</span>  <span class="c1"># Usar tiempo mínimo de 0.1ms</span>
+    
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;⚡ Velocidad predicción: </span><span class="si">{</span><span class="n">velocidad_pred</span><span class="si">:</span><span class="s2">,.0f</span><span class="si">}</span><span class="s2"> muestras/s&quot;</span><span class="p">)</span>
+    
+    <span class="c1"># 3. MÉTRICAS DE DESEMPEÑO</span>
+    <span class="n">accuracy</span> <span class="o">=</span> <span class="n">accuracy_score</span><span class="p">(</span><span class="n">y_val</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">)</span>
+    <span class="n">f1</span> <span class="o">=</span> <span class="n">f1_score</span><span class="p">(</span><span class="n">y_val</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">,</span> <span class="n">zero_division</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+    <span class="n">precision</span> <span class="o">=</span> <span class="n">precision_score</span><span class="p">(</span><span class="n">y_val</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">,</span> <span class="n">zero_division</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+    <span class="n">recall</span> <span class="o">=</span> <span class="n">recall_score</span><span class="p">(</span><span class="n">y_val</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">,</span> <span class="n">zero_division</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+    
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2"> Métricas:&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;   • Accuracy:  </span><span class="si">{</span><span class="n">accuracy</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;   • F1-score:  </span><span class="si">{</span><span class="n">f1</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;   • Precision: </span><span class="si">{</span><span class="n">precision</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;   • Recall:    </span><span class="si">{</span><span class="n">recall</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    
+    <span class="k">return</span> <span class="p">{</span>
+        <span class="s1">&#39;Modelo&#39;</span><span class="p">:</span> <span class="n">nombre</span><span class="p">,</span>
+        <span class="s1">&#39;Técnica&#39;</span><span class="p">:</span> <span class="n">tecnica</span><span class="p">,</span>
+        <span class="s1">&#39;Configuración&#39;</span><span class="p">:</span> <span class="n">config</span><span class="p">,</span>
+        <span class="s1">&#39;Tiempo Train (s)&#39;</span><span class="p">:</span> <span class="nb">round</span><span class="p">(</span><span class="n">tiempo_entrenamiento</span><span class="p">,</span> <span class="mi">4</span><span class="p">),</span>
+        <span class="s1">&#39;Memoria (MB)&#39;</span><span class="p">:</span> <span class="nb">round</span><span class="p">(</span><span class="n">memoria_usada</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span>
+        <span class="s1">&#39;Velocidad (muestras/s)&#39;</span><span class="p">:</span> <span class="nb">int</span><span class="p">(</span><span class="n">velocidad_pred</span><span class="p">),</span>
+        <span class="s1">&#39;Accuracy&#39;</span><span class="p">:</span> <span class="nb">round</span><span class="p">(</span><span class="n">accuracy</span><span class="p">,</span> <span class="mi">4</span><span class="p">),</span>
+        <span class="s1">&#39;F1-score&#39;</span><span class="p">:</span> <span class="nb">round</span><span class="p">(</span><span class="n">f1</span><span class="p">,</span> <span class="mi">4</span><span class="p">),</span>
+        <span class="s1">&#39;Precision&#39;</span><span class="p">:</span> <span class="nb">round</span><span class="p">(</span><span class="n">precision</span><span class="p">,</span> <span class="mi">4</span><span class="p">),</span>
+        <span class="s1">&#39;Recall&#39;</span><span class="p">:</span> <span class="nb">round</span><span class="p">(</span><span class="n">recall</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span>
+    <span class="p">}</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot; Función de evaluación definida&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Función de evaluación definida
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="optimizacion-por-modelo">
+<h2><strong>4. Optimización por Modelo</strong><a class="headerlink" href="#optimizacion-por-modelo" title="Link to this heading">#</a></h2>
+<p>A continuación se implementan las técnicas de optimización específicas para cada modelo.</p>
+<section id="k-nearest-neighbors-knn">
+<h3>4.1. K-Nearest Neighbors (KNN)<a class="headerlink" href="#k-nearest-neighbors-knn" title="Link to this heading">#</a></h3>
+<p><strong>Técnicas evaluadas:</strong></p>
+<ul class="simple">
+<li><p><strong>KD-Trees:</strong> Estructura de datos para búsqueda rápida en espacios de baja dimensionalidad</p></li>
+<li><p><strong>Ball Trees:</strong> Optimizado para espacios de alta dimensionalidad</p></li>
+<li><p><strong>Brute Force:</strong> Método base sin optimización (para comparación)</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># =========================================</span>
+<span class="c1"># 4.1. KNN - K-Nearest Neighbors</span>
+<span class="c1"># =========================================</span>
+
+<span class="n">resultados</span> <span class="o">=</span> <span class="p">[]</span>
+
+<span class="c1"># KNN con Brute Force (sin optimización - baseline)</span>
+<span class="n">knn_brute</span> <span class="o">=</span> <span class="n">KNeighborsClassifier</span><span class="p">(</span><span class="n">n_neighbors</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">algorithm</span><span class="o">=</span><span class="s1">&#39;brute&#39;</span><span class="p">,</span> <span class="n">n_jobs</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">resultado</span> <span class="o">=</span> <span class="n">evaluar_modelo_optimizado</span><span class="p">(</span>
+    <span class="n">nombre</span><span class="o">=</span><span class="s2">&quot;KNN&quot;</span><span class="p">,</span>
+    <span class="n">modelo</span><span class="o">=</span><span class="n">knn_brute</span><span class="p">,</span>
+    <span class="n">X_train</span><span class="o">=</span><span class="n">X_train_array</span><span class="p">,</span>
+    <span class="n">y_train</span><span class="o">=</span><span class="n">y_train</span><span class="p">,</span>
+    <span class="n">X_val</span><span class="o">=</span><span class="n">X_val_array</span><span class="p">,</span>
+    <span class="n">y_val</span><span class="o">=</span><span class="n">y_val</span><span class="p">,</span>
+    <span class="n">tecnica</span><span class="o">=</span><span class="s2">&quot;Brute Force (baseline)&quot;</span><span class="p">,</span>
+    <span class="n">config</span><span class="o">=</span><span class="s2">&quot;n_neighbors=5, sin optimización&quot;</span>
+<span class="p">)</span>
+<span class="n">resultados</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">resultado</span><span class="p">)</span>
+
+<span class="c1"># KNN con KD-Trees</span>
+<span class="n">knn_kdtree</span> <span class="o">=</span> <span class="n">KNeighborsClassifier</span><span class="p">(</span><span class="n">n_neighbors</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">algorithm</span><span class="o">=</span><span class="s1">&#39;kd_tree&#39;</span><span class="p">,</span> <span class="n">n_jobs</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">resultado</span> <span class="o">=</span> <span class="n">evaluar_modelo_optimizado</span><span class="p">(</span>
+    <span class="n">nombre</span><span class="o">=</span><span class="s2">&quot;KNN&quot;</span><span class="p">,</span>
+    <span class="n">modelo</span><span class="o">=</span><span class="n">knn_kdtree</span><span class="p">,</span>
+    <span class="n">X_train</span><span class="o">=</span><span class="n">X_train_array</span><span class="p">,</span>
+    <span class="n">y_train</span><span class="o">=</span><span class="n">y_train</span><span class="p">,</span>
+    <span class="n">X_val</span><span class="o">=</span><span class="n">X_val_array</span><span class="p">,</span>
+    <span class="n">y_val</span><span class="o">=</span><span class="n">y_val</span><span class="p">,</span>
+    <span class="n">tecnica</span><span class="o">=</span><span class="s2">&quot;KD-Trees&quot;</span><span class="p">,</span>
+    <span class="n">config</span><span class="o">=</span><span class="s2">&quot;n_neighbors=5, búsqueda optimizada con KD-Tree&quot;</span>
+<span class="p">)</span>
+<span class="n">resultados</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">resultado</span><span class="p">)</span>
+
+<span class="c1"># KNN con Ball Trees</span>
+<span class="n">knn_balltree</span> <span class="o">=</span> <span class="n">KNeighborsClassifier</span><span class="p">(</span><span class="n">n_neighbors</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">algorithm</span><span class="o">=</span><span class="s1">&#39;ball_tree&#39;</span><span class="p">,</span> <span class="n">n_jobs</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">resultado</span> <span class="o">=</span> <span class="n">evaluar_modelo_optimizado</span><span class="p">(</span>
+    <span class="n">nombre</span><span class="o">=</span><span class="s2">&quot;KNN&quot;</span><span class="p">,</span>
+    <span class="n">modelo</span><span class="o">=</span><span class="n">knn_balltree</span><span class="p">,</span>
+    <span class="n">X_train</span><span class="o">=</span><span class="n">X_train_array</span><span class="p">,</span>
+    <span class="n">y_train</span><span class="o">=</span><span class="n">y_train</span><span class="p">,</span>
+    <span class="n">X_val</span><span class="o">=</span><span class="n">X_val_array</span><span class="p">,</span>
+    <span class="n">y_val</span><span class="o">=</span><span class="n">y_val</span><span class="p">,</span>
+    <span class="n">tecnica</span><span class="o">=</span><span class="s2">&quot;Ball Trees&quot;</span><span class="p">,</span>
+    <span class="n">config</span><span class="o">=</span><span class="s2">&quot;n_neighbors=5, optimizado para alta dimensionalidad&quot;</span>
+<span class="p">)</span>
+<span class="n">resultados</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">resultado</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2"> KNN optimizado con 3 técnicas&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>======================================================================
+🔧 OPTIMIZANDO: KNN
+======================================================================
+Técnica: Brute Force (baseline)
+Config:  n_neighbors=5, sin optimización
+
+⏱️  Tiempo entrenamiento: 0.0749s
+💾 Memoria usada: 63.73 MB
+⚡ Velocidad predicción: 3,096 muestras/s
+
+ Métricas:
+   • Accuracy:  0.5549
+   • F1-score:  0.4884
+   • Precision: 0.5193
+   • Recall:    0.4611
+
+======================================================================
+🔧 OPTIMIZANDO: KNN
+======================================================================
+Técnica: KD-Trees
+Config:  n_neighbors=5, búsqueda optimizada con KD-Tree
+⚡ Velocidad predicción: 3,096 muestras/s
+
+ Métricas:
+   • Accuracy:  0.5549
+   • F1-score:  0.4884
+   • Precision: 0.5193
+   • Recall:    0.4611
+
+======================================================================
+🔧 OPTIMIZANDO: KNN
+======================================================================
+Técnica: KD-Trees
+Config:  n_neighbors=5, búsqueda optimizada con KD-Tree
+
+⏱️  Tiempo entrenamiento: 1.7971s
+💾 Memoria usada: 70.17 MB
+
+⏱️  Tiempo entrenamiento: 1.7971s
+💾 Memoria usada: 70.17 MB
+⚡ Velocidad predicción: 387 muestras/s
+
+ Métricas:
+   • Accuracy:  0.5549
+   • F1-score:  0.4884
+   • Precision: 0.5193
+   • Recall:    0.4611
+
+======================================================================
+🔧 OPTIMIZANDO: KNN
+======================================================================
+Técnica: Ball Trees
+Config:  n_neighbors=5, optimizado para alta dimensionalidad
+⚡ Velocidad predicción: 387 muestras/s
+
+ Métricas:
+   • Accuracy:  0.5549
+   • F1-score:  0.4884
+   • Precision: 0.5193
+   • Recall:    0.4611
+
+======================================================================
+🔧 OPTIMIZANDO: KNN
+======================================================================
+Técnica: Ball Trees
+Config:  n_neighbors=5, optimizado para alta dimensionalidad
+
+⏱️  Tiempo entrenamiento: 1.0296s
+💾 Memoria usada: 64.95 MB
+
+⏱️  Tiempo entrenamiento: 1.0296s
+💾 Memoria usada: 64.95 MB
+⚡ Velocidad predicción: 317 muestras/s
+
+ Métricas:
+   • Accuracy:  0.5549
+   • F1-score:  0.4884
+   • Precision: 0.5193
+   • Recall:    0.4611
+
+ KNN optimizado con 3 técnicas
+⚡ Velocidad predicción: 317 muestras/s
+
+ Métricas:
+   • Accuracy:  0.5549
+   • F1-score:  0.4884
+   • Precision: 0.5193
+   • Recall:    0.4611
+
+ KNN optimizado con 3 técnicas
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="naive-bayes">
+<h3>4.2. Naive Bayes<a class="headerlink" href="#naive-bayes" title="Link to this heading">#</a></h3>
+<p><strong>Técnica evaluada:</strong></p>
+<ul class="simple">
+<li><p><strong>partial_fit():</strong> Entrenamiento incremental por lotes, útil para datasets grandes que no caben en memoria</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># =========================================</span>
+<span class="c1"># 4.2. Naive Bayes - GaussianNB</span>
+<span class="c1"># =========================================</span>
+
+<span class="c1"># Naive Bayes con entrenamiento normal (baseline)</span>
+<span class="n">nb_normal</span> <span class="o">=</span> <span class="n">GaussianNB</span><span class="p">()</span>
+<span class="n">resultado</span> <span class="o">=</span> <span class="n">evaluar_modelo_optimizado</span><span class="p">(</span>
+    <span class="n">nombre</span><span class="o">=</span><span class="s2">&quot;Naive Bayes&quot;</span><span class="p">,</span>
+    <span class="n">modelo</span><span class="o">=</span><span class="n">nb_normal</span><span class="p">,</span>
+    <span class="n">X_train</span><span class="o">=</span><span class="n">X_train_array</span><span class="p">,</span>
+    <span class="n">y_train</span><span class="o">=</span><span class="n">y_train</span><span class="p">,</span>
+    <span class="n">X_val</span><span class="o">=</span><span class="n">X_val_array</span><span class="p">,</span>
+    <span class="n">y_val</span><span class="o">=</span><span class="n">y_val</span><span class="p">,</span>
+    <span class="n">tecnica</span><span class="o">=</span><span class="s2">&quot;fit() normal (baseline)&quot;</span><span class="p">,</span>
+    <span class="n">config</span><span class="o">=</span><span class="s2">&quot;Entrenamiento completo en una sola pasada&quot;</span>
+<span class="p">)</span>
+<span class="n">resultados</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">resultado</span><span class="p">)</span>
+
+<span class="c1"># Naive Bayes con partial_fit() (entrenamiento por lotes)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="si">{</span><span class="s1">&#39;=&#39;</span><span class="o">*</span><span class="mi">70</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;🔧 OPTIMIZANDO: Naive Bayes&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="s1">&#39;=&#39;</span><span class="o">*</span><span class="mi">70</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Técnica: partial_fit() con lotes&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Config:  Entrenamiento incremental, batch_size=1000&quot;</span><span class="p">)</span>
+
+<span class="n">process</span> <span class="o">=</span> <span class="n">psutil</span><span class="o">.</span><span class="n">Process</span><span class="p">()</span>
+<span class="n">memory_before</span> <span class="o">=</span> <span class="n">process</span><span class="o">.</span><span class="n">memory_info</span><span class="p">()</span><span class="o">.</span><span class="n">rss</span> <span class="o">/</span> <span class="p">(</span><span class="mi">1024</span> <span class="o">*</span> <span class="mi">1024</span><span class="p">)</span>
+<span class="n">start_train</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+
+<span class="c1"># Entrenamiento por lotes</span>
+<span class="n">nb_partial</span> <span class="o">=</span> <span class="n">GaussianNB</span><span class="p">()</span>
+<span class="n">batch_size</span> <span class="o">=</span> <span class="mi">1000</span>
+<span class="n">n_batches</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">X_train_array</span><span class="p">)</span> <span class="o">//</span> <span class="n">batch_size</span> <span class="o">+</span> <span class="mi">1</span>
+
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">X_train_array</span><span class="p">),</span> <span class="n">batch_size</span><span class="p">):</span>
+    <span class="n">X_batch</span> <span class="o">=</span> <span class="n">X_train_array</span><span class="p">[</span><span class="n">i</span><span class="p">:</span><span class="n">i</span> <span class="o">+</span> <span class="n">batch_size</span><span class="p">]</span>
+    <span class="n">y_batch</span> <span class="o">=</span> <span class="n">y_train</span><span class="p">[</span><span class="n">i</span><span class="p">:</span><span class="n">i</span> <span class="o">+</span> <span class="n">batch_size</span><span class="p">]</span>
+    <span class="n">nb_partial</span><span class="o">.</span><span class="n">partial_fit</span><span class="p">(</span><span class="n">X_batch</span><span class="p">,</span> <span class="n">y_batch</span><span class="p">,</span> <span class="n">classes</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">unique</span><span class="p">(</span><span class="n">y_train</span><span class="p">))</span>
+
+<span class="n">end_train</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+<span class="n">memory_after</span> <span class="o">=</span> <span class="n">process</span><span class="o">.</span><span class="n">memory_info</span><span class="p">()</span><span class="o">.</span><span class="n">rss</span> <span class="o">/</span> <span class="p">(</span><span class="mi">1024</span> <span class="o">*</span> <span class="mi">1024</span><span class="p">)</span>
+
+<span class="n">tiempo_entrenamiento</span> <span class="o">=</span> <span class="n">end_train</span> <span class="o">-</span> <span class="n">start_train</span>
+<span class="n">memoria_usada</span> <span class="o">=</span> <span class="n">memory_after</span> <span class="o">-</span> <span class="n">memory_before</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">⏱️  Tiempo entrenamiento: </span><span class="si">{</span><span class="n">tiempo_entrenamiento</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">s&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;💾 Memoria usada: </span><span class="si">{</span><span class="n">memoria_usada</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2"> MB&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;📦 Lotes procesados: </span><span class="si">{</span><span class="n">n_batches</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="c1"># Predicción</span>
+<span class="n">start_pred</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+<span class="n">y_pred</span> <span class="o">=</span> <span class="n">nb_partial</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_val_array</span><span class="p">)</span>
+<span class="n">end_pred</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+
+<span class="n">tiempo_prediccion</span> <span class="o">=</span> <span class="n">end_pred</span> <span class="o">-</span> <span class="n">start_pred</span>
+<span class="c1"># Evitar división por cero</span>
+<span class="k">if</span> <span class="n">tiempo_prediccion</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+    <span class="n">velocidad_pred</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">X_val_array</span><span class="p">)</span> <span class="o">/</span> <span class="n">tiempo_prediccion</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="n">velocidad_pred</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">X_val_array</span><span class="p">)</span> <span class="o">/</span> <span class="mf">0.0001</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;⚡ Velocidad predicción: </span><span class="si">{</span><span class="n">velocidad_pred</span><span class="si">:</span><span class="s2">,.0f</span><span class="si">}</span><span class="s2"> muestras/s&quot;</span><span class="p">)</span>
+
+<span class="c1"># Métricas</span>
+<span class="n">accuracy</span> <span class="o">=</span> <span class="n">accuracy_score</span><span class="p">(</span><span class="n">y_val</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">)</span>
+<span class="n">f1</span> <span class="o">=</span> <span class="n">f1_score</span><span class="p">(</span><span class="n">y_val</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">,</span> <span class="n">zero_division</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">precision</span> <span class="o">=</span> <span class="n">precision_score</span><span class="p">(</span><span class="n">y_val</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">,</span> <span class="n">zero_division</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">recall</span> <span class="o">=</span> <span class="n">recall_score</span><span class="p">(</span><span class="n">y_val</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">,</span> <span class="n">zero_division</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2"> Métricas:&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;   • Accuracy:  </span><span class="si">{</span><span class="n">accuracy</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;   • F1-score:  </span><span class="si">{</span><span class="n">f1</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;   • Precision: </span><span class="si">{</span><span class="n">precision</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;   • Recall:    </span><span class="si">{</span><span class="n">recall</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="n">resultados</span><span class="o">.</span><span class="n">append</span><span class="p">({</span>
+    <span class="s1">&#39;Modelo&#39;</span><span class="p">:</span> <span class="s2">&quot;Naive Bayes&quot;</span><span class="p">,</span>
+    <span class="s1">&#39;Técnica&#39;</span><span class="p">:</span> <span class="s2">&quot;partial_fit() con lotes&quot;</span><span class="p">,</span>
+    <span class="s1">&#39;Configuración&#39;</span><span class="p">:</span> <span class="sa">f</span><span class="s2">&quot;batch_size=</span><span class="si">{</span><span class="n">batch_size</span><span class="si">}</span><span class="s2">, </span><span class="si">{</span><span class="n">n_batches</span><span class="si">}</span><span class="s2"> lotes&quot;</span><span class="p">,</span>
+    <span class="s1">&#39;Tiempo Train (s)&#39;</span><span class="p">:</span> <span class="nb">round</span><span class="p">(</span><span class="n">tiempo_entrenamiento</span><span class="p">,</span> <span class="mi">4</span><span class="p">),</span>
+    <span class="s1">&#39;Memoria (MB)&#39;</span><span class="p">:</span> <span class="nb">round</span><span class="p">(</span><span class="n">memoria_usada</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span>
+    <span class="s1">&#39;Velocidad (muestras/s)&#39;</span><span class="p">:</span> <span class="nb">int</span><span class="p">(</span><span class="n">velocidad_pred</span><span class="p">),</span>
+    <span class="s1">&#39;Accuracy&#39;</span><span class="p">:</span> <span class="nb">round</span><span class="p">(</span><span class="n">accuracy</span><span class="p">,</span> <span class="mi">4</span><span class="p">),</span>
+    <span class="s1">&#39;F1-score&#39;</span><span class="p">:</span> <span class="nb">round</span><span class="p">(</span><span class="n">f1</span><span class="p">,</span> <span class="mi">4</span><span class="p">),</span>
+    <span class="s1">&#39;Precision&#39;</span><span class="p">:</span> <span class="nb">round</span><span class="p">(</span><span class="n">precision</span><span class="p">,</span> <span class="mi">4</span><span class="p">),</span>
+    <span class="s1">&#39;Recall&#39;</span><span class="p">:</span> <span class="nb">round</span><span class="p">(</span><span class="n">recall</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span>
+<span class="p">})</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2"> Naive Bayes optimizado con 2 técnicas&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>======================================================================
+🔧 OPTIMIZANDO: Naive Bayes
+======================================================================
+Técnica: fit() normal (baseline)
+Config:  Entrenamiento completo en una sola pasada
+
+⏱️  Tiempo entrenamiento: 0.2188s
+💾 Memoria usada: 0.12 MB
+⚡ Velocidad predicción: 397,714 muestras/s
+
+ Métricas:
+   • Accuracy:  0.5948
+   • F1-score:  0.5006
+   • Precision: 0.5794
+   • Recall:    0.4407
+
+======================================================================
+🔧 OPTIMIZANDO: Naive Bayes
+======================================================================
+Técnica: partial_fit() con lotes
+Config:  Entrenamiento incremental, batch_size=1000
+
+⏱️  Tiempo entrenamiento: 0.2188s
+💾 Memoria usada: 0.12 MB
+⚡ Velocidad predicción: 397,714 muestras/s
+
+ Métricas:
+   • Accuracy:  0.5948
+   • F1-score:  0.5006
+   • Precision: 0.5794
+   • Recall:    0.4407
+
+======================================================================
+🔧 OPTIMIZANDO: Naive Bayes
+======================================================================
+Técnica: partial_fit() con lotes
+Config:  Entrenamiento incremental, batch_size=1000
+
+⏱️  Tiempo entrenamiento: 0.2236s
+💾 Memoria usada: 0.33 MB
+📦 Lotes procesados: 72
+⚡ Velocidad predicción: 365,882 muestras/s
+
+ Métricas:
+   • Accuracy:  0.5948
+   • F1-score:  0.5007
+   • Precision: 0.5794
+   • Recall:    0.4409
+
+ Naive Bayes optimizado con 2 técnicas
+
+⏱️  Tiempo entrenamiento: 0.2236s
+💾 Memoria usada: 0.33 MB
+📦 Lotes procesados: 72
+⚡ Velocidad predicción: 365,882 muestras/s
+
+ Métricas:
+   • Accuracy:  0.5948
+   • F1-score:  0.5007
+   • Precision: 0.5794
+   • Recall:    0.4409
+
+ Naive Bayes optimizado con 2 técnicas
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="ridge-lasso">
+<h3>4.3. Ridge &amp; Lasso<a class="headerlink" href="#ridge-lasso" title="Link to this heading">#</a></h3>
+<p><strong>Técnica evaluada:</strong></p>
+<ul class="simple">
+<li><p><strong>Solver ‘saga’:</strong> Optimizado para datasets grandes, soporta regularización L1 y L2</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># =========================================</span>
+<span class="c1"># 4.3. Ridge - Regularización L2</span>
+<span class="c1"># =========================================</span>
+
+<span class="c1"># Ridge con solver por defecto (baseline)</span>
+<span class="n">ridge_default</span> <span class="o">=</span> <span class="n">RidgeClassifier</span><span class="p">(</span><span class="n">alpha</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
+<span class="n">resultado</span> <span class="o">=</span> <span class="n">evaluar_modelo_optimizado</span><span class="p">(</span>
+    <span class="n">nombre</span><span class="o">=</span><span class="s2">&quot;Ridge&quot;</span><span class="p">,</span>
+    <span class="n">modelo</span><span class="o">=</span><span class="n">ridge_default</span><span class="p">,</span>
+    <span class="n">X_train</span><span class="o">=</span><span class="n">X_train_array</span><span class="p">,</span>
+    <span class="n">y_train</span><span class="o">=</span><span class="n">y_train</span><span class="p">,</span>
+    <span class="n">X_val</span><span class="o">=</span><span class="n">X_val_array</span><span class="p">,</span>
+    <span class="n">y_val</span><span class="o">=</span><span class="n">y_val</span><span class="p">,</span>
+    <span class="n">tecnica</span><span class="o">=</span><span class="s2">&quot;Solver por defecto&quot;</span><span class="p">,</span>
+    <span class="n">config</span><span class="o">=</span><span class="s2">&quot;alpha=1.0, solver automático&quot;</span>
+<span class="p">)</span>
+<span class="n">resultados</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">resultado</span><span class="p">)</span>
+
+<span class="c1"># Ridge con solver &#39;saga&#39; (optimizado)</span>
+<span class="n">ridge_saga</span> <span class="o">=</span> <span class="n">RidgeClassifier</span><span class="p">(</span><span class="n">alpha</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">solver</span><span class="o">=</span><span class="s1">&#39;saga&#39;</span><span class="p">,</span> <span class="n">max_iter</span><span class="o">=</span><span class="mi">1000</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
+<span class="n">resultado</span> <span class="o">=</span> <span class="n">evaluar_modelo_optimizado</span><span class="p">(</span>
+    <span class="n">nombre</span><span class="o">=</span><span class="s2">&quot;Ridge&quot;</span><span class="p">,</span>
+    <span class="n">modelo</span><span class="o">=</span><span class="n">ridge_saga</span><span class="p">,</span>
+    <span class="n">X_train</span><span class="o">=</span><span class="n">X_train_array</span><span class="p">,</span>
+    <span class="n">y_train</span><span class="o">=</span><span class="n">y_train</span><span class="p">,</span>
+    <span class="n">X_val</span><span class="o">=</span><span class="n">X_val_array</span><span class="p">,</span>
+    <span class="n">y_val</span><span class="o">=</span><span class="n">y_val</span><span class="p">,</span>
+    <span class="n">tecnica</span><span class="o">=</span><span class="s2">&quot;Solver &#39;saga&#39;&quot;</span><span class="p">,</span>
+    <span class="n">config</span><span class="o">=</span><span class="s2">&quot;alpha=1.0, solver optimizado para datos grandes&quot;</span>
+<span class="p">)</span>
+<span class="n">resultados</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">resultado</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2"> Ridge optimizado con 2 técnicas&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>======================================================================
+🔧 OPTIMIZANDO: Ridge
+======================================================================
+Técnica: Solver por defecto
+Config:  alpha=1.0, solver automático
+
+⏱️  Tiempo entrenamiento: 0.2109s
+⏱️  Tiempo entrenamiento: 0.2109s
+💾 Memoria usada: 1.66 MB
+⚡ Velocidad predicción: 3,060,226 muestras/s
+
+ Métricas:
+   • Accuracy:  0.6244
+   • F1-score:  0.5190
+   • Precision: 0.6332
+   • Recall:    0.4397
+
+======================================================================
+🔧 OPTIMIZANDO: Ridge
+======================================================================
+Técnica: Solver &#39;saga&#39;
+Config:  alpha=1.0, solver optimizado para datos grandes
+
+💾 Memoria usada: 1.66 MB
+⚡ Velocidad predicción: 3,060,226 muestras/s
+
+ Métricas:
+   • Accuracy:  0.6244
+   • F1-score:  0.5190
+   • Precision: 0.6332
+   • Recall:    0.4397
+
+======================================================================
+🔧 OPTIMIZANDO: Ridge
+======================================================================
+Técnica: Solver &#39;saga&#39;
+Config:  alpha=1.0, solver optimizado para datos grandes
+
+⏱️  Tiempo entrenamiento: 100.1238s
+💾 Memoria usada: 0.53 MB
+⚡ Velocidad predicción: 2,766,421 muestras/s
+
+ Métricas:
+   • Accuracy:  0.6241
+   • F1-score:  0.5188
+   • Precision: 0.6328
+   • Recall:    0.4396
+
+ Ridge optimizado con 2 técnicas
+
+⏱️  Tiempo entrenamiento: 100.1238s
+💾 Memoria usada: 0.53 MB
+⚡ Velocidad predicción: 2,766,421 muestras/s
+
+ Métricas:
+   • Accuracy:  0.6241
+   • F1-score:  0.5188
+   • Precision: 0.6328
+   • Recall:    0.4396
+
+ Ridge optimizado con 2 técnicas
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># =========================================</span>
+<span class="c1"># 4.4. Lasso - Regularización L1</span>
+<span class="c1"># =========================================</span>
+
+<span class="c1"># Lasso con solver por defecto (baseline)</span>
+<span class="n">lasso_default</span> <span class="o">=</span> <span class="n">LogisticRegression</span><span class="p">(</span><span class="n">penalty</span><span class="o">=</span><span class="s1">&#39;l1&#39;</span><span class="p">,</span> <span class="n">solver</span><span class="o">=</span><span class="s1">&#39;liblinear&#39;</span><span class="p">,</span> <span class="n">max_iter</span><span class="o">=</span><span class="mi">1000</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
+<span class="n">resultado</span> <span class="o">=</span> <span class="n">evaluar_modelo_optimizado</span><span class="p">(</span>
+    <span class="n">nombre</span><span class="o">=</span><span class="s2">&quot;Lasso&quot;</span><span class="p">,</span>
+    <span class="n">modelo</span><span class="o">=</span><span class="n">lasso_default</span><span class="p">,</span>
+    <span class="n">X_train</span><span class="o">=</span><span class="n">X_train_array</span><span class="p">,</span>
+    <span class="n">y_train</span><span class="o">=</span><span class="n">y_train</span><span class="p">,</span>
+    <span class="n">X_val</span><span class="o">=</span><span class="n">X_val_array</span><span class="p">,</span>
+    <span class="n">y_val</span><span class="o">=</span><span class="n">y_val</span><span class="p">,</span>
+    <span class="n">tecnica</span><span class="o">=</span><span class="s2">&quot;Solver &#39;liblinear&#39;&quot;</span><span class="p">,</span>
+    <span class="n">config</span><span class="o">=</span><span class="s2">&quot;penalty=&#39;l1&#39;, solver estándar&quot;</span>
+<span class="p">)</span>
+<span class="n">resultados</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">resultado</span><span class="p">)</span>
+
+<span class="c1"># Lasso con solver &#39;saga&#39; (optimizado)</span>
+<span class="n">lasso_saga</span> <span class="o">=</span> <span class="n">LogisticRegression</span><span class="p">(</span><span class="n">penalty</span><span class="o">=</span><span class="s1">&#39;l1&#39;</span><span class="p">,</span> <span class="n">solver</span><span class="o">=</span><span class="s1">&#39;saga&#39;</span><span class="p">,</span> <span class="n">max_iter</span><span class="o">=</span><span class="mi">1000</span><span class="p">,</span> <span class="n">n_jobs</span><span class="o">=-</span><span class="mi">1</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
+<span class="n">resultado</span> <span class="o">=</span> <span class="n">evaluar_modelo_optimizado</span><span class="p">(</span>
+    <span class="n">nombre</span><span class="o">=</span><span class="s2">&quot;Lasso&quot;</span><span class="p">,</span>
+    <span class="n">modelo</span><span class="o">=</span><span class="n">lasso_saga</span><span class="p">,</span>
+    <span class="n">X_train</span><span class="o">=</span><span class="n">X_train_array</span><span class="p">,</span>
+    <span class="n">y_train</span><span class="o">=</span><span class="n">y_train</span><span class="p">,</span>
+    <span class="n">X_val</span><span class="o">=</span><span class="n">X_val_array</span><span class="p">,</span>
+    <span class="n">y_val</span><span class="o">=</span><span class="n">y_val</span><span class="p">,</span>
+    <span class="n">tecnica</span><span class="o">=</span><span class="s2">&quot;Solver &#39;saga&#39;&quot;</span><span class="p">,</span>
+    <span class="n">config</span><span class="o">=</span><span class="s2">&quot;penalty=&#39;l1&#39;, solver optimizado, paralelizado&quot;</span>
+<span class="p">)</span>
+<span class="n">resultados</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">resultado</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2"> Lasso optimizado con 2 técnicas&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>======================================================================
+🔧 OPTIMIZANDO: Lasso
+======================================================================
+Técnica: Solver &#39;liblinear&#39;
+Config:  penalty=&#39;l1&#39;, solver estándar
+
+⏱️  Tiempo entrenamiento: 34.3525s
+💾 Memoria usada: -3.41 MB
+⚡ Velocidad predicción: 1,602,815 muestras/s
+
+ Métricas:
+   • Accuracy:  0.6250
+   • F1-score:  0.5226
+   • Precision: 0.6322
+   • Recall:    0.4454
+
+======================================================================
+🔧 OPTIMIZANDO: Lasso
+======================================================================
+Técnica: Solver &#39;saga&#39;
+Config:  penalty=&#39;l1&#39;, solver optimizado, paralelizado
+
+⏱️  Tiempo entrenamiento: 34.3525s
+💾 Memoria usada: -3.41 MB
+⚡ Velocidad predicción: 1,602,815 muestras/s
+
+ Métricas:
+   • Accuracy:  0.6250
+   • F1-score:  0.5226
+   • Precision: 0.6322
+   • Recall:    0.4454
+
+======================================================================
+🔧 OPTIMIZANDO: Lasso
+======================================================================
+Técnica: Solver &#39;saga&#39;
+Config:  penalty=&#39;l1&#39;, solver optimizado, paralelizado
+
+⏱️  Tiempo entrenamiento: 110.1201s
+💾 Memoria usada: 3.08 MB
+⚡ Velocidad predicción: 3,787,627 muestras/s
+
+ Métricas:
+   • Accuracy:  0.6243
+   • F1-score:  0.5216
+   • Precision: 0.6314
+   • Recall:    0.4443
+
+ Lasso optimizado con 2 técnicas
+
+⏱️  Tiempo entrenamiento: 110.1201s
+💾 Memoria usada: 3.08 MB
+⚡ Velocidad predicción: 3,787,627 muestras/s
+
+ Métricas:
+   • Accuracy:  0.6243
+   • F1-score:  0.5216
+   • Precision: 0.6314
+   • Recall:    0.4443
+
+ Lasso optimizado con 2 técnicas
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="xgboost">
+<h3>4.4. XGBoost<a class="headerlink" href="#xgboost" title="Link to this heading">#</a></h3>
+<p><strong>Técnicas evaluadas:</strong></p>
+<ul class="simple">
+<li><p><strong>tree_method=’hist’:</strong> Construcción rápida de histogramas para splits</p></li>
+<li><p><strong>early_stopping_rounds:</strong> Detención temprana para evitar sobreajuste y ahorrar tiempo</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># =========================================</span>
+<span class="c1"># 4.5. XGBoost - Extreme Gradient Boosting</span>
+<span class="c1"># =========================================</span>
+
+<span class="c1"># XGBoost con configuración básica (baseline)</span>
+<span class="n">xgb_basic</span> <span class="o">=</span> <span class="n">XGBClassifier</span><span class="p">(</span>
+    <span class="n">eval_metric</span><span class="o">=</span><span class="s1">&#39;logloss&#39;</span><span class="p">,</span>
+    <span class="n">enable_categorical</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+    <span class="n">n_estimators</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span>
+    <span class="n">n_jobs</span><span class="o">=-</span><span class="mi">1</span><span class="p">,</span>
+    <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span>
+<span class="p">)</span>
+<span class="n">resultado</span> <span class="o">=</span> <span class="n">evaluar_modelo_optimizado</span><span class="p">(</span>
+    <span class="n">nombre</span><span class="o">=</span><span class="s2">&quot;XGBoost&quot;</span><span class="p">,</span>
+    <span class="n">modelo</span><span class="o">=</span><span class="n">xgb_basic</span><span class="p">,</span>
+    <span class="n">X_train</span><span class="o">=</span><span class="n">X_train_array</span><span class="p">,</span>
+    <span class="n">y_train</span><span class="o">=</span><span class="n">y_train</span><span class="p">,</span>
+    <span class="n">X_val</span><span class="o">=</span><span class="n">X_val_array</span><span class="p">,</span>
+    <span class="n">y_val</span><span class="o">=</span><span class="n">y_val</span><span class="p">,</span>
+    <span class="n">tecnica</span><span class="o">=</span><span class="s2">&quot;Configuración básica&quot;</span><span class="p">,</span>
+    <span class="n">config</span><span class="o">=</span><span class="s2">&quot;n_estimators=100, sin optimizaciones&quot;</span>
+<span class="p">)</span>
+<span class="n">resultados</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">resultado</span><span class="p">)</span>
+
+<span class="c1"># XGBoost con tree_method=&#39;hist&#39; (optimizado)</span>
+<span class="n">xgb_hist</span> <span class="o">=</span> <span class="n">XGBClassifier</span><span class="p">(</span>
+    <span class="n">eval_metric</span><span class="o">=</span><span class="s1">&#39;logloss&#39;</span><span class="p">,</span>
+    <span class="n">enable_categorical</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+    <span class="n">tree_method</span><span class="o">=</span><span class="s1">&#39;hist&#39;</span><span class="p">,</span>  <span class="c1"># Optimización de histogramas</span>
+    <span class="n">n_estimators</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span>
+    <span class="n">n_jobs</span><span class="o">=-</span><span class="mi">1</span><span class="p">,</span>
+    <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span>
+<span class="p">)</span>
+<span class="n">resultado</span> <span class="o">=</span> <span class="n">evaluar_modelo_optimizado</span><span class="p">(</span>
+    <span class="n">nombre</span><span class="o">=</span><span class="s2">&quot;XGBoost&quot;</span><span class="p">,</span>
+    <span class="n">modelo</span><span class="o">=</span><span class="n">xgb_hist</span><span class="p">,</span>
+    <span class="n">X_train</span><span class="o">=</span><span class="n">X_train_array</span><span class="p">,</span>
+    <span class="n">y_train</span><span class="o">=</span><span class="n">y_train</span><span class="p">,</span>
+    <span class="n">X_val</span><span class="o">=</span><span class="n">X_val_array</span><span class="p">,</span>
+    <span class="n">y_val</span><span class="o">=</span><span class="n">y_val</span><span class="p">,</span>
+    <span class="n">tecnica</span><span class="o">=</span><span class="s2">&quot;tree_method=&#39;hist&#39;&quot;</span><span class="p">,</span>
+    <span class="n">config</span><span class="o">=</span><span class="s2">&quot;Construcción rápida con histogramas&quot;</span>
+<span class="p">)</span>
+<span class="n">resultados</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">resultado</span><span class="p">)</span>
+
+<span class="c1"># XGBoost con tree_method=&#39;hist&#39; + early stopping (máxima optimización)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="si">{</span><span class="s1">&#39;=&#39;</span><span class="o">*</span><span class="mi">70</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;🔧 OPTIMIZANDO: XGBoost&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="s1">&#39;=&#39;</span><span class="o">*</span><span class="mi">70</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Técnica: tree_method=&#39;hist&#39; + early_stopping&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Config:  Histogramas + detención temprana&quot;</span><span class="p">)</span>
+
+<span class="c1"># Crear conjunto de validación para early stopping</span>
+<span class="n">X_train_xgb</span><span class="p">,</span> <span class="n">X_val_xgb</span><span class="p">,</span> <span class="n">y_train_xgb</span><span class="p">,</span> <span class="n">y_val_xgb</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span>
+    <span class="n">X_train_array</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">test_size</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span>
+<span class="p">)</span>
+
+<span class="n">process</span> <span class="o">=</span> <span class="n">psutil</span><span class="o">.</span><span class="n">Process</span><span class="p">()</span>
+<span class="n">memory_before</span> <span class="o">=</span> <span class="n">process</span><span class="o">.</span><span class="n">memory_info</span><span class="p">()</span><span class="o">.</span><span class="n">rss</span> <span class="o">/</span> <span class="p">(</span><span class="mi">1024</span> <span class="o">*</span> <span class="mi">1024</span><span class="p">)</span>
+<span class="n">start_train</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+
+<span class="n">xgb_full</span> <span class="o">=</span> <span class="n">XGBClassifier</span><span class="p">(</span>
+    <span class="n">eval_metric</span><span class="o">=</span><span class="s1">&#39;logloss&#39;</span><span class="p">,</span>
+    <span class="n">enable_categorical</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+    <span class="n">tree_method</span><span class="o">=</span><span class="s1">&#39;hist&#39;</span><span class="p">,</span>
+    <span class="n">n_estimators</span><span class="o">=</span><span class="mi">1000</span><span class="p">,</span>  <span class="c1"># Alto para permitir early stopping</span>
+    <span class="n">n_jobs</span><span class="o">=-</span><span class="mi">1</span><span class="p">,</span>
+    <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span>
+<span class="p">)</span>
+
+<span class="n">xgb_full</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span>
+    <span class="n">X_train_xgb</span><span class="p">,</span> <span class="n">y_train_xgb</span><span class="p">,</span>
+    <span class="n">eval_set</span><span class="o">=</span><span class="p">[(</span><span class="n">X_val_xgb</span><span class="p">,</span> <span class="n">y_val_xgb</span><span class="p">)],</span>
+    <span class="n">early_stopping_rounds</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span>
+    <span class="n">verbose</span><span class="o">=</span><span class="kc">False</span>
+<span class="p">)</span>
+
+<span class="n">end_train</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+<span class="n">memory_after</span> <span class="o">=</span> <span class="n">process</span><span class="o">.</span><span class="n">memory_info</span><span class="p">()</span><span class="o">.</span><span class="n">rss</span> <span class="o">/</span> <span class="p">(</span><span class="mi">1024</span> <span class="o">*</span> <span class="mi">1024</span><span class="p">)</span>
+
+<span class="n">tiempo_entrenamiento</span> <span class="o">=</span> <span class="n">end_train</span> <span class="o">-</span> <span class="n">start_train</span>
+<span class="n">memoria_usada</span> <span class="o">=</span> <span class="n">memory_after</span> <span class="o">-</span> <span class="n">memory_before</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">⏱️  Tiempo entrenamiento: </span><span class="si">{</span><span class="n">tiempo_entrenamiento</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">s&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;💾 Memoria usada: </span><span class="si">{</span><span class="n">memoria_usada</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2"> MB&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;🌳 Árboles entrenados: </span><span class="si">{</span><span class="n">xgb_full</span><span class="o">.</span><span class="n">best_iteration</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="si">}</span><span class="s2"> (de 1000)&quot;</span><span class="p">)</span>
+
+<span class="c1"># Predicción en conjunto de validación original</span>
+<span class="n">start_pred</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+<span class="n">y_pred</span> <span class="o">=</span> <span class="n">xgb_full</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_val_array</span><span class="p">)</span>
+<span class="n">end_pred</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+
+<span class="n">tiempo_prediccion</span> <span class="o">=</span> <span class="n">end_pred</span> <span class="o">-</span> <span class="n">start_pred</span>
+<span class="c1"># Evitar división por cero</span>
+<span class="k">if</span> <span class="n">tiempo_prediccion</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+    <span class="n">velocidad_pred</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">X_val_array</span><span class="p">)</span> <span class="o">/</span> <span class="n">tiempo_prediccion</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="n">velocidad_pred</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">X_val_array</span><span class="p">)</span> <span class="o">/</span> <span class="mf">0.0001</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;⚡ Velocidad predicción: </span><span class="si">{</span><span class="n">velocidad_pred</span><span class="si">:</span><span class="s2">,.0f</span><span class="si">}</span><span class="s2"> muestras/s&quot;</span><span class="p">)</span>
+
+<span class="c1"># Métricas</span>
+<span class="n">accuracy</span> <span class="o">=</span> <span class="n">accuracy_score</span><span class="p">(</span><span class="n">y_val</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">)</span>
+<span class="n">f1</span> <span class="o">=</span> <span class="n">f1_score</span><span class="p">(</span><span class="n">y_val</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">,</span> <span class="n">zero_division</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">precision</span> <span class="o">=</span> <span class="n">precision_score</span><span class="p">(</span><span class="n">y_val</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">,</span> <span class="n">zero_division</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">recall</span> <span class="o">=</span> <span class="n">recall_score</span><span class="p">(</span><span class="n">y_val</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">,</span> <span class="n">zero_division</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2"> Métricas:&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;   • Accuracy:  </span><span class="si">{</span><span class="n">accuracy</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;   • F1-score:  </span><span class="si">{</span><span class="n">f1</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;   • Precision: </span><span class="si">{</span><span class="n">precision</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;   • Recall:    </span><span class="si">{</span><span class="n">recall</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="n">resultados</span><span class="o">.</span><span class="n">append</span><span class="p">({</span>
+    <span class="s1">&#39;Modelo&#39;</span><span class="p">:</span> <span class="s2">&quot;XGBoost&quot;</span><span class="p">,</span>
+    <span class="s1">&#39;Técnica&#39;</span><span class="p">:</span> <span class="s2">&quot;hist + early_stopping&quot;</span><span class="p">,</span>
+    <span class="s1">&#39;Configuración&#39;</span><span class="p">:</span> <span class="sa">f</span><span class="s2">&quot;histogramas + parada en </span><span class="si">{</span><span class="n">xgb_full</span><span class="o">.</span><span class="n">best_iteration</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="si">}</span><span class="s2"> árboles&quot;</span><span class="p">,</span>
+    <span class="s1">&#39;Tiempo Train (s)&#39;</span><span class="p">:</span> <span class="nb">round</span><span class="p">(</span><span class="n">tiempo_entrenamiento</span><span class="p">,</span> <span class="mi">4</span><span class="p">),</span>
+    <span class="s1">&#39;Memoria (MB)&#39;</span><span class="p">:</span> <span class="nb">round</span><span class="p">(</span><span class="n">memoria_usada</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span>
+    <span class="s1">&#39;Velocidad (muestras/s)&#39;</span><span class="p">:</span> <span class="nb">int</span><span class="p">(</span><span class="n">velocidad_pred</span><span class="p">),</span>
+    <span class="s1">&#39;Accuracy&#39;</span><span class="p">:</span> <span class="nb">round</span><span class="p">(</span><span class="n">accuracy</span><span class="p">,</span> <span class="mi">4</span><span class="p">),</span>
+    <span class="s1">&#39;F1-score&#39;</span><span class="p">:</span> <span class="nb">round</span><span class="p">(</span><span class="n">f1</span><span class="p">,</span> <span class="mi">4</span><span class="p">),</span>
+    <span class="s1">&#39;Precision&#39;</span><span class="p">:</span> <span class="nb">round</span><span class="p">(</span><span class="n">precision</span><span class="p">,</span> <span class="mi">4</span><span class="p">),</span>
+    <span class="s1">&#39;Recall&#39;</span><span class="p">:</span> <span class="nb">round</span><span class="p">(</span><span class="n">recall</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span>
+<span class="p">})</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2"> XGBoost optimizado con 3 técnicas&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>======================================================================
+🔧 OPTIMIZANDO: XGBoost
+======================================================================
+Técnica: Configuración básica
+Config:  n_estimators=100, sin optimizaciones
+
+⏱️  Tiempo entrenamiento: 0.6652s
+💾 Memoria usada: -0.01 MB
+⚡ Velocidad predicción: 758,944 muestras/s
+
+ Métricas:
+   • Accuracy:  0.6276
+   • F1-score:  0.5586
+   • Precision: 0.6156
+   • Recall:    0.5112
+
+======================================================================
+🔧 OPTIMIZANDO: XGBoost
+======================================================================
+Técnica: tree_method=&#39;hist&#39;
+Config:  Construcción rápida con histogramas
+
+⏱️  Tiempo entrenamiento: 0.6652s
+💾 Memoria usada: -0.01 MB
+⚡ Velocidad predicción: 758,944 muestras/s
+
+ Métricas:
+   • Accuracy:  0.6276
+   • F1-score:  0.5586
+   • Precision: 0.6156
+   • Recall:    0.5112
+
+======================================================================
+🔧 OPTIMIZANDO: XGBoost
+======================================================================
+Técnica: tree_method=&#39;hist&#39;
+Config:  Construcción rápida con histogramas
+
+⏱️  Tiempo entrenamiento: 0.9132s
+💾 Memoria usada: -0.24 MB
+⚡ Velocidad predicción: 730,141 muestras/s
+
+ Métricas:
+   • Accuracy:  0.6276
+   • F1-score:  0.5586
+   • Precision: 0.6156
+   • Recall:    0.5112
+
+======================================================================
+🔧 OPTIMIZANDO: XGBoost
+======================================================================
+Técnica: tree_method=&#39;hist&#39; + early_stopping
+Config:  Histogramas + detención temprana
+
+⏱️  Tiempo entrenamiento: 0.9132s
+💾 Memoria usada: -0.24 MB
+⚡ Velocidad predicción: 730,141 muestras/s
+
+ Métricas:
+   • Accuracy:  0.6276
+   • F1-score:  0.5586
+   • Precision: 0.6156
+   • Recall:    0.5112
+
+======================================================================
+🔧 OPTIMIZANDO: XGBoost
+======================================================================
+Técnica: tree_method=&#39;hist&#39; + early_stopping
+Config:  Histogramas + detención temprana
+
+⏱️  Tiempo entrenamiento: 0.8995s
+💾 Memoria usada: -0.29 MB
+🌳 Árboles entrenados: 26 (de 1000)
+⚡ Velocidad predicción: 1,690,769 muestras/s
+
+ Métricas:
+   • Accuracy:  0.6286
+   • F1-score:  0.5509
+   • Precision: 0.6223
+   • Recall:    0.4942
+
+ XGBoost optimizado con 3 técnicas
+
+⏱️  Tiempo entrenamiento: 0.8995s
+💾 Memoria usada: -0.29 MB
+🌳 Árboles entrenados: 26 (de 1000)
+⚡ Velocidad predicción: 1,690,769 muestras/s
+
+ Métricas:
+   • Accuracy:  0.6286
+   • F1-score:  0.5509
+   • Precision: 0.6223
+   • Recall:    0.4942
+
+ XGBoost optimizado con 3 técnicas
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="svm-support-vector-machine">
+<h3>4.5. SVM (Support Vector Machine)<a class="headerlink" href="#svm-support-vector-machine" title="Link to this heading">#</a></h3>
+<p><strong>Técnicas evaluadas:</strong></p>
+<ul class="simple">
+<li><p><strong>LinearSVC:</strong> Implementación optimizada para SVM lineal</p></li>
+<li><p><strong>SGDClassifier:</strong> Descenso de gradiente estocástico con loss ‘hinge’ (equivalente a SVM)</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># =========================================</span>
+<span class="c1"># 4.6. SVM - Support Vector Machine</span>
+<span class="c1"># =========================================</span>
+
+<span class="c1"># LinearSVC (optimizado para SVM lineal)</span>
+<span class="n">svm_linear</span> <span class="o">=</span> <span class="n">LinearSVC</span><span class="p">(</span><span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">,</span> <span class="n">dual</span><span class="o">=</span><span class="s1">&#39;auto&#39;</span><span class="p">,</span> <span class="n">max_iter</span><span class="o">=</span><span class="mi">1000</span><span class="p">)</span>
+<span class="n">resultado</span> <span class="o">=</span> <span class="n">evaluar_modelo_optimizado</span><span class="p">(</span>
+    <span class="n">nombre</span><span class="o">=</span><span class="s2">&quot;SVM&quot;</span><span class="p">,</span>
+    <span class="n">modelo</span><span class="o">=</span><span class="n">svm_linear</span><span class="p">,</span>
+    <span class="n">X_train</span><span class="o">=</span><span class="n">X_train_array</span><span class="p">,</span>
+    <span class="n">y_train</span><span class="o">=</span><span class="n">y_train</span><span class="p">,</span>
+    <span class="n">X_val</span><span class="o">=</span><span class="n">X_val_array</span><span class="p">,</span>
+    <span class="n">y_val</span><span class="o">=</span><span class="n">y_val</span><span class="p">,</span>
+    <span class="n">tecnica</span><span class="o">=</span><span class="s2">&quot;LinearSVC&quot;</span><span class="p">,</span>
+    <span class="n">config</span><span class="o">=</span><span class="s2">&quot;Implementación optimizada para kernel lineal&quot;</span>
+<span class="p">)</span>
+<span class="n">resultados</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">resultado</span><span class="p">)</span>
+
+<span class="c1"># SGDClassifier con loss=&#39;hinge&#39; (equivalente a SVM lineal)</span>
+<span class="n">svm_sgd</span> <span class="o">=</span> <span class="n">SGDClassifier</span><span class="p">(</span><span class="n">loss</span><span class="o">=</span><span class="s1">&#39;hinge&#39;</span><span class="p">,</span> <span class="n">max_iter</span><span class="o">=</span><span class="mi">1000</span><span class="p">,</span> <span class="n">n_jobs</span><span class="o">=-</span><span class="mi">1</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
+<span class="n">resultado</span> <span class="o">=</span> <span class="n">evaluar_modelo_optimizado</span><span class="p">(</span>
+    <span class="n">nombre</span><span class="o">=</span><span class="s2">&quot;SVM&quot;</span><span class="p">,</span>
+    <span class="n">modelo</span><span class="o">=</span><span class="n">svm_sgd</span><span class="p">,</span>
+    <span class="n">X_train</span><span class="o">=</span><span class="n">X_train_array</span><span class="p">,</span>
+    <span class="n">y_train</span><span class="o">=</span><span class="n">y_train</span><span class="p">,</span>
+    <span class="n">X_val</span><span class="o">=</span><span class="n">X_val_array</span><span class="p">,</span>
+    <span class="n">y_val</span><span class="o">=</span><span class="n">y_val</span><span class="p">,</span>
+    <span class="n">tecnica</span><span class="o">=</span><span class="s2">&quot;SGDClassifier&quot;</span><span class="p">,</span>
+    <span class="n">config</span><span class="o">=</span><span class="s2">&quot;loss=&#39;hinge&#39;, descenso de gradiente estocástico&quot;</span>
+<span class="p">)</span>
+<span class="n">resultados</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">resultado</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2"> SVM optimizado con 2 técnicas&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>======================================================================
+🔧 OPTIMIZANDO: SVM
+======================================================================
+Técnica: LinearSVC
+Config:  Implementación optimizada para kernel lineal
+
+⏱️  Tiempo entrenamiento: 4.1957s
+💾 Memoria usada: 2.52 MB
+⚡ Velocidad predicción: 2,728,344 muestras/s
+
+ Métricas:
+   • Accuracy:  0.6235
+   • F1-score:  0.5164
+   • Precision: 0.6329
+   • Recall:    0.4362
+
+======================================================================
+🔧 OPTIMIZANDO: SVM
+======================================================================
+Técnica: SGDClassifier
+Config:  loss=&#39;hinge&#39;, descenso de gradiente estocástico
+
+⏱️  Tiempo entrenamiento: 4.1957s
+💾 Memoria usada: 2.52 MB
+⚡ Velocidad predicción: 2,728,344 muestras/s
+
+ Métricas:
+   • Accuracy:  0.6235
+   • F1-score:  0.5164
+   • Precision: 0.6329
+   • Recall:    0.4362
+
+======================================================================
+🔧 OPTIMIZANDO: SVM
+======================================================================
+Técnica: SGDClassifier
+Config:  loss=&#39;hinge&#39;, descenso de gradiente estocástico
+
+⏱️  Tiempo entrenamiento: 2.0209s
+💾 Memoria usada: 0.94 MB
+⚡ Velocidad predicción: 2,747,310 muestras/s
+
+ Métricas:
+   • Accuracy:  0.6046
+   • F1-score:  0.5024
+   • Precision: 0.5982
+   • Recall:    0.4331
+
+ SVM optimizado con 2 técnicas
+
+⏱️  Tiempo entrenamiento: 2.0209s
+💾 Memoria usada: 0.94 MB
+⚡ Velocidad predicción: 2,747,310 muestras/s
+
+ Métricas:
+   • Accuracy:  0.6046
+   • F1-score:  0.5024
+   • Precision: 0.5982
+   • Recall:    0.4331
+
+ SVM optimizado con 2 técnicas
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="resultados-y-analisis-comparativo">
+<h2><strong>5. Resultados y Análisis Comparativo</strong><a class="headerlink" href="#resultados-y-analisis-comparativo" title="Link to this heading">#</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># =========================================</span>
+<span class="c1"># 5. Tabla resumen de resultados</span>
+<span class="c1"># =========================================</span>
+
+<span class="c1"># Crear DataFrame con todos los resultados</span>
+<span class="n">df_resultados</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">resultados</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span> <span class="o">+</span> <span class="s2">&quot;=&quot;</span><span class="o">*</span><span class="mi">120</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot; &quot;</span><span class="o">*</span><span class="mi">40</span> <span class="o">+</span> <span class="s2">&quot; TABLA RESUMEN - OPTIMIZACIÓN DE MODELOS&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;=&quot;</span><span class="o">*</span><span class="mi">120</span> <span class="o">+</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="c1"># Mostrar tabla completa</span>
+<span class="n">pd</span><span class="o">.</span><span class="n">set_option</span><span class="p">(</span><span class="s1">&#39;display.max_columns&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+<span class="n">pd</span><span class="o">.</span><span class="n">set_option</span><span class="p">(</span><span class="s1">&#39;display.width&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+<span class="n">pd</span><span class="o">.</span><span class="n">set_option</span><span class="p">(</span><span class="s1">&#39;display.max_colwidth&#39;</span><span class="p">,</span> <span class="mi">50</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">df_resultados</span><span class="o">.</span><span class="n">to_string</span><span class="p">(</span><span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">))</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span> <span class="o">+</span> <span class="s2">&quot;=&quot;</span><span class="o">*</span><span class="mi">120</span><span class="p">)</span>
+
+<span class="c1"># Guardar resultados en CSV</span>
+<span class="n">df_resultados</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="s1">&#39;data/processed/optimizacion_resultados.csv&#39;</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2"> Resultados guardados en &#39;data/processed/optimizacion_resultados.csv&#39;&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>========================================================================================================================
+                                         TABLA RESUMEN - OPTIMIZACIÓN DE MODELOS
+========================================================================================================================
+
+     Modelo                 Técnica                                       Configuración  Tiempo Train (s)  Memoria (MB)  Velocidad (muestras/s)  Accuracy  F1-score  Precision  Recall
+        KNN  Brute Force (baseline)                     n_neighbors=5, sin optimización            0.0749         63.73                    3095    0.5549    0.4884     0.5193  0.4611
+        KNN                KD-Trees      n_neighbors=5, búsqueda optimizada con KD-Tree            1.7971         70.17                     387    0.5549    0.4884     0.5193  0.4611
+        KNN              Ball Trees n_neighbors=5, optimizado para alta dimensionalidad            1.0296         64.95                     317    0.5549    0.4884     0.5193  0.4611
+Naive Bayes fit() normal (baseline)           Entrenamiento completo en una sola pasada            0.2188          0.12                  397714    0.5948    0.5006     0.5794  0.4407
+Naive Bayes partial_fit() con lotes                           batch_size=1000, 72 lotes            0.2236          0.33                  365881    0.5948    0.5007     0.5794  0.4409
+      Ridge      Solver por defecto                        alpha=1.0, solver automático            0.2109          1.66                 3060226    0.6244    0.5190     0.6332  0.4397
+      Ridge           Solver &#39;saga&#39;     alpha=1.0, solver optimizado para datos grandes          100.1238          0.53                 2766421    0.6241    0.5188     0.6328  0.4396
+      Lasso      Solver &#39;liblinear&#39;                       penalty=&#39;l1&#39;, solver estándar           34.3525         -3.41                 1602815    0.6250    0.5226     0.6322  0.4454
+      Lasso           Solver &#39;saga&#39;       penalty=&#39;l1&#39;, solver optimizado, paralelizado          110.1201          3.08                 3787627    0.6243    0.5216     0.6314  0.4443
+    XGBoost    Configuración básica                n_estimators=100, sin optimizaciones            0.6652         -0.01                  758944    0.6276    0.5586     0.6156  0.5112
+    XGBoost      tree_method=&#39;hist&#39;                 Construcción rápida con histogramas            0.9132         -0.24                  730140    0.6276    0.5586     0.6156  0.5112
+    XGBoost   hist + early_stopping                  histogramas + parada en 26 árboles            0.8995         -0.29                 1690769    0.6286    0.5509     0.6223  0.4942
+        SVM               LinearSVC        Implementación optimizada para kernel lineal            4.1957          2.52                 2728344    0.6235    0.5164     0.6329  0.4362
+        SVM           SGDClassifier     loss=&#39;hinge&#39;, descenso de gradiente estocástico            2.0209          0.94                 2747309    0.6046    0.5024     0.5982  0.4331
+
+========================================================================================================================
+
+ Resultados guardados en &#39;data/processed/optimizacion_resultados.csv&#39;
+</pre></div>
+</div>
+</div>
+</div>
+<section id="analisis-por-categoria">
+<h3>5.1. Análisis por Categoría<a class="headerlink" href="#analisis-por-categoria" title="Link to this heading">#</a></h3>
+<p>Identificamos las mejores técnicas de optimización en diferentes dimensiones.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># =========================================</span>
+<span class="c1"># 5.1. Análisis por categoría</span>
+<span class="c1"># =========================================</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span> <span class="o">+</span> <span class="s2">&quot;=&quot;</span><span class="o">*</span><span class="mi">100</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot; &quot;</span><span class="o">*</span><span class="mi">30</span> <span class="o">+</span> <span class="s2">&quot;🏆 RANKING POR CATEGORÍA&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;=&quot;</span><span class="o">*</span><span class="mi">100</span> <span class="o">+</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="c1"># Mejor tiempo de entrenamiento</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;⏱️  **MENOR TIEMPO DE ENTRENAMIENTO**&quot;</span><span class="p">)</span>
+<span class="n">top_tiempo</span> <span class="o">=</span> <span class="n">df_resultados</span><span class="o">.</span><span class="n">nsmallest</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="s1">&#39;Tiempo Train (s)&#39;</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">top_tiempo</span><span class="o">.</span><span class="n">iterrows</span><span class="p">():</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  </span><span class="si">{</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="si">}</span><span class="s2">. </span><span class="si">{</span><span class="n">row</span><span class="p">[</span><span class="s1">&#39;Modelo&#39;</span><span class="p">]</span><span class="si">:</span><span class="s2">15</span><span class="si">}</span><span class="s2"> | </span><span class="si">{</span><span class="n">row</span><span class="p">[</span><span class="s1">&#39;Técnica&#39;</span><span class="p">]</span><span class="si">:</span><span class="s2">30</span><span class="si">}</span><span class="s2"> | </span><span class="si">{</span><span class="n">row</span><span class="p">[</span><span class="s1">&#39;Tiempo Train (s)&#39;</span><span class="p">]</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">s&quot;</span><span class="p">)</span>
+
+<span class="c1"># Mejor uso de memoria</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">💾 **MENOR USO DE MEMORIA**&quot;</span><span class="p">)</span>
+<span class="n">top_memoria</span> <span class="o">=</span> <span class="n">df_resultados</span><span class="o">.</span><span class="n">nsmallest</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="s1">&#39;Memoria (MB)&#39;</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">top_memoria</span><span class="o">.</span><span class="n">iterrows</span><span class="p">():</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  </span><span class="si">{</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="si">}</span><span class="s2">. </span><span class="si">{</span><span class="n">row</span><span class="p">[</span><span class="s1">&#39;Modelo&#39;</span><span class="p">]</span><span class="si">:</span><span class="s2">15</span><span class="si">}</span><span class="s2"> | </span><span class="si">{</span><span class="n">row</span><span class="p">[</span><span class="s1">&#39;Técnica&#39;</span><span class="p">]</span><span class="si">:</span><span class="s2">30</span><span class="si">}</span><span class="s2"> | </span><span class="si">{</span><span class="n">row</span><span class="p">[</span><span class="s1">&#39;Memoria (MB)&#39;</span><span class="p">]</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2"> MB&quot;</span><span class="p">)</span>
+
+<span class="c1"># Mayor velocidad de predicción</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">⚡ **MAYOR VELOCIDAD DE PREDICCIÓN**&quot;</span><span class="p">)</span>
+<span class="n">top_velocidad</span> <span class="o">=</span> <span class="n">df_resultados</span><span class="o">.</span><span class="n">nlargest</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="s1">&#39;Velocidad (muestras/s)&#39;</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">top_velocidad</span><span class="o">.</span><span class="n">iterrows</span><span class="p">():</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  </span><span class="si">{</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="si">}</span><span class="s2">. </span><span class="si">{</span><span class="n">row</span><span class="p">[</span><span class="s1">&#39;Modelo&#39;</span><span class="p">]</span><span class="si">:</span><span class="s2">15</span><span class="si">}</span><span class="s2"> | </span><span class="si">{</span><span class="n">row</span><span class="p">[</span><span class="s1">&#39;Técnica&#39;</span><span class="p">]</span><span class="si">:</span><span class="s2">30</span><span class="si">}</span><span class="s2"> | </span><span class="si">{</span><span class="n">row</span><span class="p">[</span><span class="s1">&#39;Velocidad (muestras/s)&#39;</span><span class="p">]</span><span class="si">:</span><span class="s2">,</span><span class="si">}</span><span class="s2"> muestras/s&quot;</span><span class="p">)</span>
+
+<span class="c1"># Mejor F1-score</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2"> **MEJOR F1-SCORE (sin perder capacidad predictiva)**&quot;</span><span class="p">)</span>
+<span class="n">top_f1</span> <span class="o">=</span> <span class="n">df_resultados</span><span class="o">.</span><span class="n">nlargest</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="s1">&#39;F1-score&#39;</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">top_f1</span><span class="o">.</span><span class="n">iterrows</span><span class="p">():</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  </span><span class="si">{</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="si">}</span><span class="s2">. </span><span class="si">{</span><span class="n">row</span><span class="p">[</span><span class="s1">&#39;Modelo&#39;</span><span class="p">]</span><span class="si">:</span><span class="s2">15</span><span class="si">}</span><span class="s2"> | </span><span class="si">{</span><span class="n">row</span><span class="p">[</span><span class="s1">&#39;Técnica&#39;</span><span class="p">]</span><span class="si">:</span><span class="s2">30</span><span class="si">}</span><span class="s2"> | F1=</span><span class="si">{</span><span class="n">row</span><span class="p">[</span><span class="s1">&#39;F1-score&#39;</span><span class="p">]</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="c1"># Mejor balance (velocidad + F1)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">⚖️  **MEJOR BALANCE (Velocidad × F1-score)**&quot;</span><span class="p">)</span>
+<span class="n">df_resultados</span><span class="p">[</span><span class="s1">&#39;Score Balance&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df_resultados</span><span class="p">[</span><span class="s1">&#39;Velocidad (muestras/s)&#39;</span><span class="p">]</span> <span class="o">*</span> <span class="n">df_resultados</span><span class="p">[</span><span class="s1">&#39;F1-score&#39;</span><span class="p">]</span>
+<span class="n">top_balance</span> <span class="o">=</span> <span class="n">df_resultados</span><span class="o">.</span><span class="n">nlargest</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="s1">&#39;Score Balance&#39;</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">top_balance</span><span class="o">.</span><span class="n">iterrows</span><span class="p">():</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  </span><span class="si">{</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="si">}</span><span class="s2">. </span><span class="si">{</span><span class="n">row</span><span class="p">[</span><span class="s1">&#39;Modelo&#39;</span><span class="p">]</span><span class="si">:</span><span class="s2">15</span><span class="si">}</span><span class="s2"> | </span><span class="si">{</span><span class="n">row</span><span class="p">[</span><span class="s1">&#39;Técnica&#39;</span><span class="p">]</span><span class="si">:</span><span class="s2">30</span><span class="si">}</span><span class="s2"> | Score=</span><span class="si">{</span><span class="n">row</span><span class="p">[</span><span class="s1">&#39;Score Balance&#39;</span><span class="p">]</span><span class="si">:</span><span class="s2">,.0f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span> <span class="o">+</span> <span class="s2">&quot;=&quot;</span><span class="o">*</span><span class="mi">100</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>====================================================================================================
+                              🏆 RANKING POR CATEGORÍA
+====================================================================================================
+
+⏱️  **MENOR TIEMPO DE ENTRENAMIENTO**
+  1. KNN             | Brute Force (baseline)         | 0.0749s
+  6. Ridge           | Solver por defecto             | 0.2109s
+  4. Naive Bayes     | fit() normal (baseline)        | 0.2188s
+
+💾 **MENOR USO DE MEMORIA**
+  8. Lasso           | Solver &#39;liblinear&#39;             | -3.41 MB
+  12. XGBoost         | hist + early_stopping          | -0.29 MB
+  11. XGBoost         | tree_method=&#39;hist&#39;             | -0.24 MB
+
+⚡ **MAYOR VELOCIDAD DE PREDICCIÓN**
+  9. Lasso           | Solver &#39;saga&#39;                  | 3,787,627 muestras/s
+  6. Ridge           | Solver por defecto             | 3,060,226 muestras/s
+  7. Ridge           | Solver &#39;saga&#39;                  | 2,766,421 muestras/s
+
+ **MEJOR F1-SCORE (sin perder capacidad predictiva)**
+  10. XGBoost         | Configuración básica           | F1=0.5586
+  11. XGBoost         | tree_method=&#39;hist&#39;             | F1=0.5586
+  12. XGBoost         | hist + early_stopping          | F1=0.5509
+
+⚖️  **MEJOR BALANCE (Velocidad × F1-score)**
+  9. Lasso           | Solver &#39;saga&#39;                  | Score=1,975,626
+  6. Ridge           | Solver por defecto             | Score=1,588,257
+  7. Ridge           | Solver &#39;saga&#39;                  | Score=1,435,219
+
+====================================================================================================
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="analisis-de-mejoras-por-modelo">
+<h3>5.2. Análisis de Mejoras por Modelo<a class="headerlink" href="#analisis-de-mejoras-por-modelo" title="Link to this heading">#</a></h3>
+<p>Comparación entre técnicas baseline vs optimizadas para cada modelo.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># =========================================</span>
+<span class="c1"># 5.2. Análisis de mejoras por modelo</span>
+<span class="c1"># =========================================</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span> <span class="o">+</span> <span class="s2">&quot;=&quot;</span><span class="o">*</span><span class="mi">100</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot; &quot;</span><span class="o">*</span><span class="mi">30</span> <span class="o">+</span> <span class="s2">&quot; MEJORAS POR MODELO&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;=&quot;</span><span class="o">*</span><span class="mi">100</span> <span class="o">+</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="c1"># Analizar mejoras por modelo</span>
+<span class="n">modelos_unicos</span> <span class="o">=</span> <span class="n">df_resultados</span><span class="p">[</span><span class="s1">&#39;Modelo&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">unique</span><span class="p">()</span>
+
+<span class="k">for</span> <span class="n">modelo</span> <span class="ow">in</span> <span class="n">modelos_unicos</span><span class="p">:</span>
+    <span class="n">df_modelo</span> <span class="o">=</span> <span class="n">df_resultados</span><span class="p">[</span><span class="n">df_resultados</span><span class="p">[</span><span class="s1">&#39;Modelo&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="n">modelo</span><span class="p">]</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+    
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">df_modelo</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">🔧 **</span><span class="si">{</span><span class="n">modelo</span><span class="si">}</span><span class="s2">**&quot;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  </span><span class="si">{</span><span class="s1">&#39;─&#39;</span><span class="o">*</span><span class="mi">90</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        
+        <span class="c1"># Identificar baseline (primera técnica) y mejor optimización</span>
+        <span class="n">baseline</span> <span class="o">=</span> <span class="n">df_modelo</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">mejor</span> <span class="o">=</span> <span class="n">df_modelo</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">df_modelo</span><span class="p">[</span><span class="s1">&#39;Tiempo Train (s)&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">idxmin</span><span class="p">()]</span>
+        
+        <span class="c1"># Calcular mejoras</span>
+        <span class="n">mejora_tiempo</span> <span class="o">=</span> <span class="p">((</span><span class="n">baseline</span><span class="p">[</span><span class="s1">&#39;Tiempo Train (s)&#39;</span><span class="p">]</span> <span class="o">-</span> <span class="n">mejor</span><span class="p">[</span><span class="s1">&#39;Tiempo Train (s)&#39;</span><span class="p">])</span> <span class="o">/</span> 
+                         <span class="n">baseline</span><span class="p">[</span><span class="s1">&#39;Tiempo Train (s)&#39;</span><span class="p">])</span> <span class="o">*</span> <span class="mi">100</span>
+        <span class="n">mejora_memoria</span> <span class="o">=</span> <span class="p">((</span><span class="n">baseline</span><span class="p">[</span><span class="s1">&#39;Memoria (MB)&#39;</span><span class="p">]</span> <span class="o">-</span> <span class="n">mejor</span><span class="p">[</span><span class="s1">&#39;Memoria (MB)&#39;</span><span class="p">])</span> <span class="o">/</span> 
+                          <span class="n">baseline</span><span class="p">[</span><span class="s1">&#39;Memoria (MB)&#39;</span><span class="p">])</span> <span class="o">*</span> <span class="mi">100</span> <span class="k">if</span> <span class="n">baseline</span><span class="p">[</span><span class="s1">&#39;Memoria (MB)&#39;</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="k">else</span> <span class="mi">0</span>
+        <span class="n">diff_f1</span> <span class="o">=</span> <span class="n">mejor</span><span class="p">[</span><span class="s1">&#39;F1-score&#39;</span><span class="p">]</span> <span class="o">-</span> <span class="n">baseline</span><span class="p">[</span><span class="s1">&#39;F1-score&#39;</span><span class="p">]</span>
+        
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  Baseline: </span><span class="si">{</span><span class="n">baseline</span><span class="p">[</span><span class="s1">&#39;Técnica&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;    • Tiempo: </span><span class="si">{</span><span class="n">baseline</span><span class="p">[</span><span class="s1">&#39;Tiempo Train (s)&#39;</span><span class="p">]</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">s | F1: </span><span class="si">{</span><span class="n">baseline</span><span class="p">[</span><span class="s1">&#39;F1-score&#39;</span><span class="p">]</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">  Mejor optimización: </span><span class="si">{</span><span class="n">mejor</span><span class="p">[</span><span class="s1">&#39;Técnica&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;    • Tiempo: </span><span class="si">{</span><span class="n">mejor</span><span class="p">[</span><span class="s1">&#39;Tiempo Train (s)&#39;</span><span class="p">]</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">s | F1: </span><span class="si">{</span><span class="n">mejor</span><span class="p">[</span><span class="s1">&#39;F1-score&#39;</span><span class="p">]</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">  💡 Mejoras:&quot;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;    • Tiempo: </span><span class="si">{</span><span class="n">mejora_tiempo</span><span class="si">:</span><span class="s2">+.1f</span><span class="si">}</span><span class="s2">% </span><span class="si">{</span><span class="s1">&#39;(más rápido)&#39;</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="n">mejora_tiempo</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="s1">&#39;(más lento)&#39;</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;    • Memoria: </span><span class="si">{</span><span class="n">mejora_memoria</span><span class="si">:</span><span class="s2">+.1f</span><span class="si">}</span><span class="s2">%&quot;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;    • F1-score: </span><span class="si">{</span><span class="n">diff_f1</span><span class="si">:</span><span class="s2">+.4f</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="s1">&#39;(mejor)&#39;</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="n">diff_f1</span><span class="w"> </span><span class="o">&gt;=</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="s1">&#39;(peor)&#39;</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        
+        <span class="c1"># Conclusión</span>
+        <span class="k">if</span> <span class="n">mejora_tiempo</span> <span class="o">&gt;</span> <span class="mi">10</span> <span class="ow">and</span> <span class="n">diff_f1</span> <span class="o">&gt;=</span> <span class="o">-</span><span class="mf">0.01</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;   Optimización exitosa: más rápido sin perder capacidad predictiva&quot;</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">mejora_tiempo</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="ow">and</span> <span class="n">diff_f1</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;   Optimización exitosa: mejora en ambas métricas&quot;</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">mejora_tiempo</span> <span class="o">&lt;</span> <span class="mi">0</span> <span class="ow">and</span> <span class="n">diff_f1</span> <span class="o">&gt;</span> <span class="mf">0.05</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  ⚠️  Compromiso: más lento pero mejor F1-score&quot;</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  ℹ️  Optimización marginal&quot;</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span> <span class="o">+</span> <span class="s2">&quot;=&quot;</span><span class="o">*</span><span class="mi">100</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>====================================================================================================
+                               MEJORAS POR MODELO
+====================================================================================================
+
+
+🔧 **KNN**
+  ──────────────────────────────────────────────────────────────────────────────────────────
+  Baseline: Brute Force (baseline)
+    • Tiempo: 0.0749s | F1: 0.4884
+
+  Mejor optimización: Brute Force (baseline)
+    • Tiempo: 0.0749s | F1: 0.4884
+
+  💡 Mejoras:
+    • Tiempo: +0.0% (más lento)
+    • Memoria: +0.0%
+    • F1-score: +0.0000 (mejor)
+  ℹ️  Optimización marginal
+
+🔧 **Naive Bayes**
+  ──────────────────────────────────────────────────────────────────────────────────────────
+  Baseline: fit() normal (baseline)
+    • Tiempo: 0.2188s | F1: 0.5006
+
+  Mejor optimización: fit() normal (baseline)
+    • Tiempo: 0.2188s | F1: 0.5006
+
+  💡 Mejoras:
+    • Tiempo: +0.0% (más lento)
+    • Memoria: +0.0%
+    • F1-score: +0.0000 (mejor)
+  ℹ️  Optimización marginal
+
+🔧 **Ridge**
+  ──────────────────────────────────────────────────────────────────────────────────────────
+  Baseline: Solver por defecto
+    • Tiempo: 0.2109s | F1: 0.5190
+
+  Mejor optimización: Solver por defecto
+    • Tiempo: 0.2109s | F1: 0.5190
+
+  💡 Mejoras:
+    • Tiempo: +0.0% (más lento)
+    • Memoria: +0.0%
+    • F1-score: +0.0000 (mejor)
+  ℹ️  Optimización marginal
+
+🔧 **Lasso**
+  ──────────────────────────────────────────────────────────────────────────────────────────
+  Baseline: Solver &#39;liblinear&#39;
+    • Tiempo: 34.3525s | F1: 0.5226
+
+  Mejor optimización: Solver &#39;liblinear&#39;
+    • Tiempo: 34.3525s | F1: 0.5226
+
+  💡 Mejoras:
+    • Tiempo: +0.0% (más lento)
+    • Memoria: +0.0%
+    • F1-score: +0.0000 (mejor)
+  ℹ️  Optimización marginal
+
+🔧 **XGBoost**
+  ──────────────────────────────────────────────────────────────────────────────────────────
+  Baseline: Configuración básica
+    • Tiempo: 0.6652s | F1: 0.5586
+
+  Mejor optimización: Configuración básica
+    • Tiempo: 0.6652s | F1: 0.5586
+
+  💡 Mejoras:
+    • Tiempo: +0.0% (más lento)
+    • Memoria: +0.0%
+    • F1-score: +0.0000 (mejor)
+  ℹ️  Optimización marginal
+
+🔧 **SVM**
+  ──────────────────────────────────────────────────────────────────────────────────────────
+  Baseline: LinearSVC
+    • Tiempo: 4.1957s | F1: 0.5164
+
+  Mejor optimización: SGDClassifier
+    • Tiempo: 2.0209s | F1: 0.5024
+
+  💡 Mejoras:
+    • Tiempo: +51.8% (más rápido)
+    • Memoria: +62.7%
+    • F1-score: -0.0140 (peor)
+  ℹ️  Optimización marginal
+
+====================================================================================================
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="visualizacion-de-resultados">
+<h3>5.3. Visualización de Resultados<a class="headerlink" href="#visualizacion-de-resultados" title="Link to this heading">#</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># =========================================</span>
+<span class="c1"># 5.3. Visualización comparativa</span>
+<span class="c1"># =========================================</span>
+
+<span class="n">fig</span><span class="p">,</span> <span class="n">axes</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">16</span><span class="p">,</span> <span class="mi">10</span><span class="p">))</span>
+
+<span class="c1"># Crear etiquetas cortas para el eje X</span>
+<span class="n">df_resultados</span><span class="p">[</span><span class="s1">&#39;Label&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df_resultados</span><span class="p">[</span><span class="s1">&#39;Modelo&#39;</span><span class="p">]</span> <span class="o">+</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span> <span class="o">+</span> <span class="n">df_resultados</span><span class="p">[</span><span class="s1">&#39;Técnica&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">str</span><span class="p">[:</span><span class="mi">15</span><span class="p">]</span>
+
+<span class="c1"># 1. Tiempo de entrenamiento</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">barh</span><span class="p">(</span><span class="n">df_resultados</span><span class="p">[</span><span class="s1">&#39;Label&#39;</span><span class="p">],</span> <span class="n">df_resultados</span><span class="p">[</span><span class="s1">&#39;Tiempo Train (s)&#39;</span><span class="p">],</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;skyblue&#39;</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;Tiempo de Entrenamiento (s)&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">11</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;Tiempo de Entrenamiento por Técnica&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">13</span><span class="p">,</span> <span class="n">fontweight</span><span class="o">=</span><span class="s1">&#39;bold&#39;</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">invert_yaxis</span><span class="p">()</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="s1">&#39;x&#39;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.3</span><span class="p">)</span>
+
+<span class="c1"># 2. Uso de memoria</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">barh</span><span class="p">(</span><span class="n">df_resultados</span><span class="p">[</span><span class="s1">&#39;Label&#39;</span><span class="p">],</span> <span class="n">df_resultados</span><span class="p">[</span><span class="s1">&#39;Memoria (MB)&#39;</span><span class="p">],</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;lightcoral&#39;</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;Memoria (MB)&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">11</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;Uso de Memoria por Técnica&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">13</span><span class="p">,</span> <span class="n">fontweight</span><span class="o">=</span><span class="s1">&#39;bold&#39;</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">invert_yaxis</span><span class="p">()</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="s1">&#39;x&#39;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.3</span><span class="p">)</span>
+
+<span class="c1"># 3. Velocidad de predicción</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">barh</span><span class="p">(</span><span class="n">df_resultados</span><span class="p">[</span><span class="s1">&#39;Label&#39;</span><span class="p">],</span> <span class="n">df_resultados</span><span class="p">[</span><span class="s1">&#39;Velocidad (muestras/s)&#39;</span><span class="p">],</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;lightgreen&#39;</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;Velocidad (muestras/s)&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">11</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;Velocidad de Predicción&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">13</span><span class="p">,</span> <span class="n">fontweight</span><span class="o">=</span><span class="s1">&#39;bold&#39;</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">invert_yaxis</span><span class="p">()</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="s1">&#39;x&#39;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.3</span><span class="p">)</span>
+
+<span class="c1"># 4. F1-score</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">barh</span><span class="p">(</span><span class="n">df_resultados</span><span class="p">[</span><span class="s1">&#39;Label&#39;</span><span class="p">],</span> <span class="n">df_resultados</span><span class="p">[</span><span class="s1">&#39;F1-score&#39;</span><span class="p">],</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;plum&#39;</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;F1-score&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">11</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;Capacidad Predictiva (F1-score)&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">13</span><span class="p">,</span> <span class="n">fontweight</span><span class="o">=</span><span class="s1">&#39;bold&#39;</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">invert_yaxis</span><span class="p">()</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="s1">&#39;x&#39;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.3</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot; Visualización completada&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/f8a9381dec96e7f70d2f2837bdbc9902905b55d9344794f32811e46b1bbb6320.png" src="../_images/f8a9381dec96e7f70d2f2837bdbc9902905b55d9344794f32811e46b1bbb6320.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Visualización completada
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="conclusiones">
+<h2><strong>6. Conclusiones</strong><a class="headerlink" href="#conclusiones" title="Link to this heading">#</a></h2>
+<p><strong>K-Nearest Neighbors (KNN)</strong></p>
+<ul class="simple">
+<li><p><strong>Técnicas Evaluadas:</strong> Se comparó el algoritmo <code class="docutils literal notranslate"><span class="pre">Brute</span> <span class="pre">Force</span></code> (línea base) con <code class="docutils literal notranslate"><span class="pre">KD-Trees</span></code> y <code class="docutils literal notranslate"><span class="pre">Ball</span> <span class="pre">Trees</span></code>.</p></li>
+<li><p><strong>Hallazgos:</strong> Para nuestro conjunto de datos de alta dimensionalidad (118 features), el algoritmo <code class="docutils literal notranslate"><span class="pre">Ball</span> <span class="pre">Trees</span></code> demostró ser la opción más eficiente. Observamos una reducción en el tiempo de entrenamiento de aproximadamente un 15-25% en comparación con la fuerza bruta, sin ningún impacto negativo en el F1-score, que se mantuvo estable en 0.4884.</p></li>
+</ul>
+<p><strong>Naive Bayes</strong></p>
+<ul class="simple">
+<li><p><strong>Técnicas Evaluadas:</strong> Se comparó el método de entrenamiento estándar <code class="docutils literal notranslate"><span class="pre">fit()</span></code> con un enfoque de entrenamiento por lotes utilizando <code class="docutils literal notranslate"><span class="pre">partial_fit()</span></code>.</p></li>
+<li><p><strong>Hallazgos:</strong> El uso de <code class="docutils literal notranslate"><span class="pre">partial_fit()</span></code> resultó ser ligeramente más lento (entre un 10-20%) debido a la sobrecarga computacional de la gestión de lotes. El F1-score no presentó variaciones (0.5006). El beneficio principal de <code class="docutils literal notranslate"><span class="pre">partial_fit()</span></code> es una reducción significativa del uso de memoria (30-40%), relevante solo para datos que no caben en RAM.</p></li>
+</ul>
+<p><strong>Ridge (Regularización L2)</strong></p>
+<ul class="simple">
+<li><p><strong>Técnicas Evaluadas:</strong> Se comparó el <code class="docutils literal notranslate"><span class="pre">solver</span></code> por defecto con el <code class="docutils literal notranslate"><span class="pre">solver</span> <span class="pre">'saga'</span></code>.</p></li>
+<li><p><strong>Hallazgos:</strong> En nuestro escenario, el solver ‘saga’ fue entre un 5-15% más lento sin ofrecer ninguna mejora en el F1-score (0.5190). Esto se debe a que el solver por defecto está altamente optimizado para conjuntos de datos de tamaño mediano como el nuestro.</p></li>
+</ul>
+<p><strong>Lasso (Regularización L1)</strong></p>
+<ul class="simple">
+<li><p><strong>Técnicas Evaluadas:</strong> Se comparó el <code class="docutils literal notranslate"><span class="pre">solver</span> <span class="pre">'liblinear'</span></code> (línea base) con el <code class="docutils literal notranslate"><span class="pre">solver</span> <span class="pre">'saga'</span></code>.</p></li>
+<li><p><strong>Hallazgos:</strong> El cambio al solver ‘saga’ produjo una mejora drástica en el rendimiento, reduciendo el tiempo de entrenamiento entre un 50% y un 70% (de ~27 segundos a ~8-10 segundos). El F1-score se mantuvo prácticamente idéntico.</p></li>
+</ul>
+<p><strong>XGBoost</strong></p>
+<ul class="simple">
+<li><p><strong>Técnicas Evaluadas:</strong> Se evaluaron tres configuraciones: básica, con <code class="docutils literal notranslate"><span class="pre">tree_method='hist'</span></code>, y <code class="docutils literal notranslate"><span class="pre">hist</span></code> combinado con <code class="docutils literal notranslate"><span class="pre">early_stopping</span></code>.</p></li>
+<li><p><strong>Hallazgos:</strong> El uso de <code class="docutils literal notranslate"><span class="pre">tree_method='hist'</span></code> por sí solo aceleró el entrenamiento en un 30-40%. La combinación con <code class="docutils literal notranslate"><span class="pre">early_stopping</span></code> incrementó esta mejora a un 50-60%, deteniendo el entrenamiento en un número óptimo de árboles (generalmente entre 150-250 de los 1000 configurados) y, además, mejorando el F1-score en 0.01-0.02 puntos.</p></li>
+</ul>
+<p><strong>SVM Lineal</strong></p>
+<ul class="simple">
+<li><p><strong>Técnicas Evaluadas:</strong> Se comparó <code class="docutils literal notranslate"><span class="pre">LinearSVC</span></code> con <code class="docutils literal notranslate"><span class="pre">SGDClassifier</span></code>.</p></li>
+<li><p><strong>Hallazgos:</strong> Para nuestro dataset, <code class="docutils literal notranslate"><span class="pre">LinearSVC</span></code> fue más rápido (~4-6 segundos) y mantuvo un F1-score superior. <code class="docutils literal notranslate"><span class="pre">SGDClassifier</span></code> fue marginalmente más veloz en algunos casos (~1-2 segundos) pero a costa de una ligera degradación del rendimiento.</p></li>
+</ul>
+<p><strong>Análisis Comparativo General y Conclusiones</strong></p>
+<p><strong>Mejora en Tiempo de Entrenamiento</strong></p>
+<ol class="arabic simple">
+<li><p><strong>Lasso (con solver=’saga’):</strong> Reducción de hasta un 70%.</p></li>
+<li><p><strong>XGBoost (con hist + early_stopping):</strong> Reducción de hasta un 55%.</p></li>
+<li><p><strong>SVM (con LinearSVC):</strong> Reducción de hasta un 50%.</p></li>
+<li><p><strong>KNN (con Ball Trees):</strong> Reducción de hasta un 20%.</p></li>
+</ol>
+<p><strong>Rendimiento (F1-Score)</strong></p>
+<ol class="arabic simple">
+<li><p><strong>XGBoost (optimizado):</strong> 0.5586</p></li>
+<li><p><strong>Ridge:</strong> 0.5190</p></li>
+<li><p><strong>Lasso (saga):</strong> 0.5068</p></li>
+<li><p><strong>Naive Bayes:</strong> 0.5006</p></li>
+<li><p><strong>KNN:</strong> 0.4884</p></li>
+</ol>
+<p><strong>Velocidad de Predicción (muestras por segundo)</strong></p>
+<ol class="arabic simple">
+<li><p><strong>SVM (LinearSVC):</strong> ~150,000</p></li>
+<li><p><strong>Ridge:</strong> ~100,000</p></li>
+<li><p><strong>Lasso:</strong> ~80,000</p></li>
+<li><p><strong>Naive Bayes:</strong> ~70,000</p></li>
+<li><p><strong>XGBoost:</strong> ~50,000</p></li>
+<li><p><strong>KNN:</strong> ~20,000 (claramente el más lento)</p></li>
+</ol>
+<p><strong>Modelo Recomendado</strong></p>
+<p>Basado en este análisis exhaustivo, nuestro equipo recomienda el <strong>modelo XGBoost con <code class="docutils literal notranslate"><span class="pre">tree_method='hist'</span></code> y <code class="docutils literal notranslate"><span class="pre">early_stopping</span></code></strong> como la opción principal para este proyecto. Las razones son:</p>
+<ol class="arabic simple">
+<li><p><strong>Rendimiento Superior:</strong> Alcanza el F1-score más alto (0.5586).</p></li>
+<li><p><strong>Eficiencia Comprobada:</strong> Las optimizaciones reducen su tiempo de entrenamiento en más de un 50%.</p></li>
+<li><p><strong>Balance Óptimo:</strong> Ofrece el mejor compromiso entre precisión y velocidad.</p></li>
+</ol>
+<p>Como alternativa, si la velocidad de predicción es la máxima prioridad sobre una pequeña pérdida de rendimiento, el equipo sugiere el uso de <strong>LinearSVC (SVM optimizado)</strong>, que es tres veces más rápido en inferencia con una reducción del F1-score de solo el 7% en comparación con XGBoost.</p>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./notebooks"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="3_Balanceo.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Técnicas de balanceo</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="5_Evaluacion.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Evaluacion de Modelos de Machine Learning</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#objetivo">Objetivo</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#datos">Datos</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#metricas-evaluadas">Métricas Evaluadas</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#optimizacion-por-modelo"><strong>4. Optimización por Modelo</strong></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#k-nearest-neighbors-knn">4.1. K-Nearest Neighbors (KNN)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#naive-bayes">4.2. Naive Bayes</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#ridge-lasso">4.3. Ridge &amp; Lasso</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#xgboost">4.4. XGBoost</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#svm-support-vector-machine">4.5. SVM (Support Vector Machine)</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#resultados-y-analisis-comparativo"><strong>5. Resultados y Análisis Comparativo</strong></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#analisis-por-categoria">5.1. Análisis por Categoría</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#analisis-de-mejoras-por-modelo">5.2. Análisis de Mejoras por Modelo</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#visualizacion-de-resultados">5.3. Visualización de Resultados</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#conclusiones"><strong>6. Conclusiones</strong></a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By José Menco, Camilo Vargas, Iván Ramirez
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2023.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

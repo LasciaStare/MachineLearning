@@ -1,0 +1,1771 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Evaluacion de Modelos de Machine Learning &#8212; Readmission Diabetes Prediction</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="../_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=fa44fd50" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=eba8b062" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.8ecb98da25f57f5357bf6f572d296f466b2cfe2517ffebfabe82451661e28f02.css?v=6644e6bb" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script src="../_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../_static/copybutton.js?v=f281be69"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../_static/togglebutton.js?v=4a39c7ea"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="../_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'notebooks/5_Evaluacion';</script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Validacion Avanzada, Tuning e Interpretabilidad" href="6_Validacion_Tuning.html" />
+    <link rel="prev" title="Optimización de Modelos de Machine Learning" href="4_Optimizacion.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../Introduccion.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../_static/logo.png" class="logo__image only-light" alt="Readmission Diabetes Prediction - Home"/>
+    <script>document.write(`<img src="../_static/logo.png" class="logo__image only-dark" alt="Readmission Diabetes Prediction - Home"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../Introduccion.html">
+                    Predicción de Readmisión Hospitalaria en Pacientes Diabéticos
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Entregable 3</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="1_EDA.html"><strong>EDA</strong></a></li>
+<li class="toctree-l1"><a class="reference internal" href="1_5_Preprocesamiento.html"><strong>Preprocesamiento de Datos</strong></a></li>
+<li class="toctree-l1"><a class="reference internal" href="2_Benchmark.html">Benchmark</a></li>
+
+<li class="toctree-l1"><a class="reference internal" href="3_Balanceo.html">Técnicas de balanceo</a></li>
+<li class="toctree-l1"><a class="reference internal" href="4_Optimizacion.html">Optimización de Modelos de Machine Learning</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Evaluacion de Modelos de Machine Learning</a></li>
+<li class="toctree-l1"><a class="reference internal" href="6_Validacion_Tuning.html">Validacion Avanzada, Tuning e Interpretabilidad</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Modelos pasados</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="Modelos_Logisticos.html"><strong>Modelos de Clasificación: Logístico, Ridge y Lasso</strong></a></li>
+<li class="toctree-l1"><a class="reference internal" href="Modelo_Knn.html"><strong>Modelo Knn</strong></a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/executablebooks/jupyter-book" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/executablebooks/jupyter-book/issues/new?title=Issue%20on%20page%20%2Fnotebooks/5_Evaluacion.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../_sources/notebooks/5_Evaluacion.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Evaluacion de Modelos de Machine Learning</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#objetivo">Objetivo</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#metricas-de-evaluacion">Metricas de Evaluacion</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#datos">Datos</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#evaluacion-individual-de-modelos">Evaluacion Individual de Modelos</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#k-nearest-neighbors-knn">4.1. K-Nearest Neighbors (KNN)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#naive-bayes">4.2. Naive Bayes</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#ridge-classifier">4.3. Ridge Classifier</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#lasso-regresion-logistica-l1">4.4. Lasso (Regresion Logistica L1)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#regresion-logistica-l2-ridge">4.5. Regresion Logistica L2 (Ridge)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#regresion-logistica-l1-lasso-alternativo">4.6. Regresion Logistica L1 (Lasso alternativo)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#arbol-de-decision">4.7. Arbol de Decision</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#random-forest">4.8. Random Forest</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#xgboost">4.9. XGBoost</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#svm-lineal">4.10. SVM Lineal</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#tabla-resumen-de-metricas">Tabla Resumen de Metricas</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#comparacion-visual-de-metricas">Comparacion Visual de Metricas</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#justificacion-de-la-metrica-principal">Justificacion de la Metrica Principal</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#analisis-de-metricas-de-evaluacion"><strong>Análisis de Métricas de Evaluación</strong></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#metrica-principal-seleccionada-f1-score"><strong>Métrica Principal Seleccionada: F1-Score</strong></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#metricas-secundarias"><strong>Métricas Secundarias</strong></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#conclusion-de-la-evaluacion"><strong>Conclusión de la Evaluación</strong></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#resultados-del-mejor-modelo-seleccionado"><strong>Resultados del Mejor Modelo Seleccionado</strong></a></li>
+</ul>
+</li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="evaluacion-de-modelos-de-machine-learning">
+<h1>Evaluacion de Modelos de Machine Learning<a class="headerlink" href="#evaluacion-de-modelos-de-machine-learning" title="Link to this heading">#</a></h1>
+<p>En este notebook realizamos la evaluacion completa de 10 modelos de clasificacion entrenados con datos preprocesados de pacientes diabeticos.</p>
+<hr class="docutils" />
+<section id="objetivo">
+<h2>Objetivo<a class="headerlink" href="#objetivo" title="Link to this heading">#</a></h2>
+<p>Evaluar el desempeno de los siguientes modelos:</p>
+<ol class="arabic simple">
+<li><p><strong>K-Nearest Neighbors (KNN)</strong></p></li>
+<li><p><strong>Naive Bayes</strong></p></li>
+<li><p><strong>Regresion Logistica con L1 (Lasso)</strong></p></li>
+<li><p><strong>Regresion Logistica con L2 (Ridge)</strong></p></li>
+<li><p><strong>Ridge Classifier</strong></p></li>
+<li><p><strong>Lasso (LogReg L1-Saga optimizado)</strong></p></li>
+<li><p><strong>Arbol de Decision</strong></p></li>
+<li><p><strong>Random Forest</strong></p></li>
+<li><p><strong>XGBoost</strong></p></li>
+<li><p><strong>SVM Lineal</strong></p></li>
+</ol>
+</section>
+<hr class="docutils" />
+<section id="metricas-de-evaluacion">
+<h2>Metricas de Evaluacion<a class="headerlink" href="#metricas-de-evaluacion" title="Link to this heading">#</a></h2>
+<p>Para cada modelo presentamos:</p>
+<ul class="simple">
+<li><p><strong>Matriz de Confusion:</strong> Visualizacion de TP, TN, FP, FN</p></li>
+<li><p><strong>Curva ROC y AUC:</strong> Capacidad de discriminacion del modelo</p></li>
+<li><p><strong>Tabla de Metricas:</strong> Accuracy, Precision, Recall, F1-score, AUC</p></li>
+<li><p><strong>Justificacion de Metrica Principal:</strong> Seleccion de la metrica mas relevante para el problema</p></li>
+</ul>
+</section>
+<hr class="docutils" />
+<section id="datos">
+<h2>Datos<a class="headerlink" href="#datos" title="Link to this heading">#</a></h2>
+<p>Utilizamos los <strong>datos preprocesados</strong> de <code class="docutils literal notranslate"><span class="pre">../data/processed/</span></code>:</p>
+<ul class="simple">
+<li><p>Ya escalados con StandardScaler</p></li>
+<li><p>Ya codificados (One-Hot Encoding)</p></li>
+<li><p>Train balanceado con SMOTE</p></li>
+<li><p>Sin valores faltantes</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># =========================================</span>
+<span class="c1"># 1. Importar librerias necesarias</span>
+<span class="c1"># =========================================</span>
+
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span>
+<span class="kn">import</span> <span class="nn">warnings</span>
+
+<span class="c1"># Modelos de clasificacion</span>
+<span class="kn">from</span> <span class="nn">sklearn.neighbors</span> <span class="kn">import</span> <span class="n">KNeighborsClassifier</span>
+<span class="kn">from</span> <span class="nn">sklearn.naive_bayes</span> <span class="kn">import</span> <span class="n">GaussianNB</span>
+<span class="kn">from</span> <span class="nn">sklearn.linear_model</span> <span class="kn">import</span> <span class="n">LogisticRegression</span><span class="p">,</span> <span class="n">RidgeClassifier</span>
+<span class="kn">from</span> <span class="nn">sklearn.tree</span> <span class="kn">import</span> <span class="n">DecisionTreeClassifier</span>
+<span class="kn">from</span> <span class="nn">sklearn.ensemble</span> <span class="kn">import</span> <span class="n">RandomForestClassifier</span>
+<span class="kn">from</span> <span class="nn">sklearn.svm</span> <span class="kn">import</span> <span class="n">LinearSVC</span>
+<span class="kn">from</span> <span class="nn">xgboost</span> <span class="kn">import</span> <span class="n">XGBClassifier</span>
+
+<span class="c1"># Metricas</span>
+<span class="kn">from</span> <span class="nn">sklearn.metrics</span> <span class="kn">import</span> <span class="p">(</span>
+    <span class="n">accuracy_score</span><span class="p">,</span> <span class="n">precision_score</span><span class="p">,</span> <span class="n">recall_score</span><span class="p">,</span> <span class="n">f1_score</span><span class="p">,</span>
+    <span class="n">roc_auc_score</span><span class="p">,</span> <span class="n">roc_curve</span><span class="p">,</span> <span class="n">confusion_matrix</span>
+<span class="p">)</span>
+
+<span class="n">warnings</span><span class="o">.</span><span class="n">filterwarnings</span><span class="p">(</span><span class="s1">&#39;ignore&#39;</span><span class="p">)</span>
+
+<span class="c1"># Configuracion de visualizacion</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">style</span><span class="o">.</span><span class="n">use</span><span class="p">(</span><span class="s1">&#39;default&#39;</span><span class="p">)</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">set_palette</span><span class="p">(</span><span class="s2">&quot;pastel&quot;</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Librerias importadas correctamente&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Librerias importadas correctamente
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># =========================================</span>
+<span class="c1"># 2. Cargar datos preprocesados</span>
+<span class="c1"># =========================================</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Cargando datos procesados de &#39;../data/processed/&#39;...</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="c1"># Cargar datos de entrenamiento (BALANCEADOS con SMOTE)</span>
+<span class="n">X_train</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;../data/processed/X_train.csv&#39;</span><span class="p">)</span>
+<span class="n">y_train</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;../data/processed/y_train.csv&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">values</span><span class="o">.</span><span class="n">ravel</span><span class="p">()</span>
+
+<span class="c1"># Cargar datos de validacion (SIN balancear)</span>
+<span class="n">X_val</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;../data/processed/X_val.csv&#39;</span><span class="p">)</span>
+<span class="n">y_val</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;../data/processed/y_val.csv&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">values</span><span class="o">.</span><span class="n">ravel</span><span class="p">()</span>
+
+<span class="c1"># Cargar datos de test (SIN balancear)</span>
+<span class="n">X_test</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;../data/processed/X_test.csv&#39;</span><span class="p">)</span>
+<span class="n">y_test</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;../data/processed/y_test.csv&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">values</span><span class="o">.</span><span class="n">ravel</span><span class="p">()</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Datos cargados exitosamente</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="c1"># Informacion de los datos</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;=&quot;</span><span class="o">*</span><span class="mi">60</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot; &quot;</span><span class="o">*</span><span class="mi">15</span> <span class="o">+</span> <span class="s2">&quot;INFORMACION DE LOS DATOS&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;=&quot;</span><span class="o">*</span><span class="mi">60</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Dimensiones:&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  Train:      </span><span class="si">{</span><span class="n">X_train</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="si">:</span><span class="s2">&gt;7,</span><span class="si">}</span><span class="s2"> muestras × </span><span class="si">{</span><span class="n">X_train</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="si">:</span><span class="s2">&gt;3</span><span class="si">}</span><span class="s2"> features&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  Validation: </span><span class="si">{</span><span class="n">X_val</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="si">:</span><span class="s2">&gt;7,</span><span class="si">}</span><span class="s2"> muestras × </span><span class="si">{</span><span class="n">X_val</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="si">:</span><span class="s2">&gt;3</span><span class="si">}</span><span class="s2"> features&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  Test:       </span><span class="si">{</span><span class="n">X_test</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="si">:</span><span class="s2">&gt;7,</span><span class="si">}</span><span class="s2"> muestras × </span><span class="si">{</span><span class="n">X_test</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="si">:</span><span class="s2">&gt;3</span><span class="si">}</span><span class="s2"> features&quot;</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Balance de clases (Test - datos reales):&quot;</span><span class="p">)</span>
+<span class="n">test_counts</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">y_test</span><span class="p">)</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  Clase 0: </span><span class="si">{</span><span class="n">test_counts</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="si">:</span><span class="s2">&gt;7,</span><span class="si">}</span><span class="s2"> (</span><span class="si">{</span><span class="n">test_counts</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">/</span><span class="nb">len</span><span class="p">(</span><span class="n">y_test</span><span class="p">)</span><span class="o">*</span><span class="mi">100</span><span class="si">:</span><span class="s2">&gt;5.1f</span><span class="si">}</span><span class="s2">%)&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  Clase 1: </span><span class="si">{</span><span class="n">test_counts</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="si">:</span><span class="s2">&gt;7,</span><span class="si">}</span><span class="s2"> (</span><span class="si">{</span><span class="n">test_counts</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">/</span><span class="nb">len</span><span class="p">(</span><span class="n">y_test</span><span class="p">)</span><span class="o">*</span><span class="mi">100</span><span class="si">:</span><span class="s2">&gt;5.1f</span><span class="si">}</span><span class="s2">%)&quot;</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span> <span class="o">+</span> <span class="s2">&quot;=&quot;</span><span class="o">*</span><span class="mi">60</span><span class="p">)</span>
+
+<span class="c1"># Convertir a arrays de NumPy</span>
+<span class="n">X_train_array</span> <span class="o">=</span> <span class="n">X_train</span><span class="o">.</span><span class="n">values</span>
+<span class="n">X_test_array</span> <span class="o">=</span> <span class="n">X_test</span><span class="o">.</span><span class="n">values</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Cargando datos procesados de &#39;data/processed/&#39;...
+
+Datos cargados exitosamente
+
+============================================================
+               INFORMACION DE LOS DATOS
+============================================================
+
+Dimensiones:
+  Train:       71,236 muestras × 113 features
+  Validation:  15,265 muestras × 113 features
+  Test:        15,265 muestras × 113 features
+
+Balance de clases (Test - datos reales):
+  Clase 0:   8,230 ( 53.9%)
+  Clase 1:   7,035 ( 46.1%)
+
+============================================================
+Datos cargados exitosamente
+
+============================================================
+               INFORMACION DE LOS DATOS
+============================================================
+
+Dimensiones:
+  Train:       71,236 muestras × 113 features
+  Validation:  15,265 muestras × 113 features
+  Test:        15,265 muestras × 113 features
+
+Balance de clases (Test - datos reales):
+  Clase 0:   8,230 ( 53.9%)
+  Clase 1:   7,035 ( 46.1%)
+
+============================================================
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># =========================================</span>
+<span class="c1"># 3. Funcion de evaluacion completa</span>
+<span class="c1"># =========================================</span>
+
+<span class="c1"># Lista para almacenar resultados</span>
+<span class="n">resultados_evaluacion</span> <span class="o">=</span> <span class="p">[]</span>
+
+<span class="k">def</span> <span class="nf">evaluar_modelo_completo</span><span class="p">(</span><span class="n">nombre</span><span class="p">,</span> <span class="n">modelo</span><span class="p">,</span> <span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">X_test</span><span class="p">,</span> <span class="n">y_test</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Evaluamos un modelo con metricas completas y visualizaciones.</span>
+<span class="sd">    </span>
+<span class="sd">    Args:</span>
+<span class="sd">        nombre: Nombre del modelo</span>
+<span class="sd">        modelo: Instancia del modelo (sin entrenar)</span>
+<span class="sd">        X_train, y_train: Datos de entrenamiento</span>
+<span class="sd">        X_test, y_test: Datos de test</span>
+<span class="sd">    </span>
+<span class="sd">    Retorna:</span>
+<span class="sd">        Diccionario con todas las metricas calculadas</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="si">{</span><span class="s1">&#39;=&#39;</span><span class="o">*</span><span class="mi">80</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;EVALUANDO: </span><span class="si">{</span><span class="n">nombre</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="s1">&#39;=&#39;</span><span class="o">*</span><span class="mi">80</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    
+    <span class="c1"># 1. ENTRENAMIENTO</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Entrenando modelo...&quot;</span><span class="p">)</span>
+    <span class="n">modelo</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Modelo entrenado correctamente&quot;</span><span class="p">)</span>
+    
+    <span class="c1"># 2. PREDICCIONES</span>
+    <span class="n">y_pred</span> <span class="o">=</span> <span class="n">modelo</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_test</span><span class="p">)</span>
+    
+    <span class="c1"># Obtener probabilidades o scores para ROC</span>
+    <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">modelo</span><span class="p">,</span> <span class="s1">&#39;predict_proba&#39;</span><span class="p">):</span>
+        <span class="n">y_pred_proba</span> <span class="o">=</span> <span class="n">modelo</span><span class="o">.</span><span class="n">predict_proba</span><span class="p">(</span><span class="n">X_test</span><span class="p">)[:,</span> <span class="mi">1</span><span class="p">]</span>
+    <span class="k">elif</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">modelo</span><span class="p">,</span> <span class="s1">&#39;decision_function&#39;</span><span class="p">):</span>
+        <span class="n">y_pred_proba</span> <span class="o">=</span> <span class="n">modelo</span><span class="o">.</span><span class="n">decision_function</span><span class="p">(</span><span class="n">X_test</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">y_pred_proba</span> <span class="o">=</span> <span class="n">y_pred</span>
+    
+    <span class="c1"># 3. CALCULAR METRICAS</span>
+    <span class="n">accuracy</span> <span class="o">=</span> <span class="n">accuracy_score</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">)</span>
+    <span class="n">precision</span> <span class="o">=</span> <span class="n">precision_score</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">,</span> <span class="n">zero_division</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+    <span class="n">recall</span> <span class="o">=</span> <span class="n">recall_score</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">,</span> <span class="n">zero_division</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+    <span class="n">f1</span> <span class="o">=</span> <span class="n">f1_score</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">,</span> <span class="n">zero_division</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+    
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">auc</span> <span class="o">=</span> <span class="n">roc_auc_score</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">y_pred_proba</span><span class="p">)</span>
+    <span class="k">except</span><span class="p">:</span>
+        <span class="n">auc</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span>
+    
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Metricas calculadas:&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  Accuracy:  </span><span class="si">{</span><span class="n">accuracy</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  Precision: </span><span class="si">{</span><span class="n">precision</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  Recall:    </span><span class="si">{</span><span class="n">recall</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  F1-score:  </span><span class="si">{</span><span class="n">f1</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">np</span><span class="o">.</span><span class="n">isnan</span><span class="p">(</span><span class="n">auc</span><span class="p">):</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  AUC:       </span><span class="si">{</span><span class="n">auc</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  AUC:       N/A&quot;</span><span class="p">)</span>
+    
+    <span class="c1"># 4. MATRIZ DE CONFUSION</span>
+    <span class="n">cm</span> <span class="o">=</span> <span class="n">confusion_matrix</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">)</span>
+    <span class="n">tn</span><span class="p">,</span> <span class="n">fp</span><span class="p">,</span> <span class="n">fn</span><span class="p">,</span> <span class="n">tp</span> <span class="o">=</span> <span class="n">cm</span><span class="o">.</span><span class="n">ravel</span><span class="p">()</span>
+    
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Matriz de Confusion:&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  TN=</span><span class="si">{</span><span class="n">tn</span><span class="si">:</span><span class="s2">&gt;4</span><span class="si">}</span><span class="s2">  FP=</span><span class="si">{</span><span class="n">fp</span><span class="si">:</span><span class="s2">&gt;4</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  FN=</span><span class="si">{</span><span class="n">fn</span><span class="si">:</span><span class="s2">&gt;4</span><span class="si">}</span><span class="s2">  TP=</span><span class="si">{</span><span class="n">tp</span><span class="si">:</span><span class="s2">&gt;4</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    
+    <span class="c1"># Visualizar Matriz de Confusion</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">6</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span>
+    <span class="n">sns</span><span class="o">.</span><span class="n">heatmap</span><span class="p">(</span><span class="n">cm</span><span class="p">,</span> <span class="n">annot</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">fmt</span><span class="o">=</span><span class="s1">&#39;d&#39;</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;Blues&#39;</span><span class="p">,</span> <span class="n">cbar</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+                <span class="n">xticklabels</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;No Readmitido&#39;</span><span class="p">,</span> <span class="s1">&#39;Readmitido&#39;</span><span class="p">],</span> 
+                <span class="n">yticklabels</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;No Readmitido&#39;</span><span class="p">,</span> <span class="s1">&#39;Readmitido&#39;</span><span class="p">])</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Matriz de Confusion: </span><span class="si">{</span><span class="n">nombre</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">13</span><span class="p">,</span> <span class="n">fontweight</span><span class="o">=</span><span class="s1">&#39;bold&#39;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Valores Reales&#39;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Predicciones&#39;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+    
+    <span class="c1"># 5. CURVA ROC</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">np</span><span class="o">.</span><span class="n">isnan</span><span class="p">(</span><span class="n">auc</span><span class="p">):</span>
+        <span class="n">fpr</span><span class="p">,</span> <span class="n">tpr</span><span class="p">,</span> <span class="n">thresholds</span> <span class="o">=</span> <span class="n">roc_curve</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">y_pred_proba</span><span class="p">)</span>
+        
+        <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">7</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">fpr</span><span class="p">,</span> <span class="n">tpr</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">nombre</span><span class="si">}</span><span class="s1"> (AUC = </span><span class="si">{</span><span class="n">auc</span><span class="si">:</span><span class="s1">.4f</span><span class="si">}</span><span class="s1">)&#39;</span><span class="p">)</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="s1">&#39;r--&#39;</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Clasificador Aleatorio&#39;</span><span class="p">)</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">xlim</span><span class="p">([</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">])</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">ylim</span><span class="p">([</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">1.05</span><span class="p">])</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Tasa de Falsos Positivos (FPR)&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">11</span><span class="p">)</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Tasa de Verdaderos Positivos (TPR)&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">11</span><span class="p">)</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Curva ROC: </span><span class="si">{</span><span class="n">nombre</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">13</span><span class="p">,</span> <span class="n">fontweight</span><span class="o">=</span><span class="s1">&#39;bold&#39;</span><span class="p">)</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="s2">&quot;lower right&quot;</span><span class="p">)</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="n">alpha</span><span class="o">=</span><span class="mf">0.3</span><span class="p">)</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+    
+    <span class="c1"># 6. INTERPRETACION</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Interpretacion:&quot;</span><span class="p">)</span>
+    
+    <span class="c1"># Analisis de Precision y Recall</span>
+    <span class="k">if</span> <span class="n">precision</span> <span class="o">&gt;</span> <span class="mf">0.7</span> <span class="ow">and</span> <span class="n">recall</span> <span class="o">&gt;</span> <span class="mf">0.7</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  - El modelo muestra buen equilibrio entre precision y recall&quot;</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="n">precision</span> <span class="o">&gt;</span> <span class="n">recall</span> <span class="o">+</span> <span class="mf">0.1</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  - El modelo es conservador: prioriza precision sobre recall&quot;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  - Predice readmision solo cuando tiene alta confianza&quot;</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="n">recall</span> <span class="o">&gt;</span> <span class="n">precision</span> <span class="o">+</span> <span class="mf">0.1</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  - El modelo es sensible: prioriza recall sobre precision&quot;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  - Detecta mas casos de readmision pero con mas falsos positivos&quot;</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  - El modelo muestra desempeno moderado en ambas metricas&quot;</span><span class="p">)</span>
+    
+    <span class="c1"># Analisis de F1-score</span>
+    <span class="k">if</span> <span class="n">f1</span> <span class="o">&gt;</span> <span class="mf">0.7</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  - F1-score alto (</span><span class="si">{</span><span class="n">f1</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">) indica buen balance predictivo&quot;</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="n">f1</span> <span class="o">&gt;</span> <span class="mf">0.5</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  - F1-score moderado (</span><span class="si">{</span><span class="n">f1</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">) sugiere capacidad predictiva aceptable&quot;</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  - F1-score bajo (</span><span class="si">{</span><span class="n">f1</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">) indica limitaciones en la prediccion&quot;</span><span class="p">)</span>
+    
+    <span class="c1"># Analisis de AUC</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">np</span><span class="o">.</span><span class="n">isnan</span><span class="p">(</span><span class="n">auc</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">auc</span> <span class="o">&gt;</span> <span class="mf">0.8</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  - AUC excelente (</span><span class="si">{</span><span class="n">auc</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">): alta capacidad de discriminacion&quot;</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">auc</span> <span class="o">&gt;</span> <span class="mf">0.7</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  - AUC bueno (</span><span class="si">{</span><span class="n">auc</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">): capacidad de discriminacion aceptable&quot;</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">auc</span> <span class="o">&gt;</span> <span class="mf">0.6</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  - AUC moderado (</span><span class="si">{</span><span class="n">auc</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">): discriminacion limitada&quot;</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  - AUC bajo (</span><span class="si">{</span><span class="n">auc</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">): poca capacidad de discriminacion&quot;</span><span class="p">)</span>
+    
+    <span class="c1"># Guardar resultados</span>
+    <span class="n">resultado</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s1">&#39;Modelo&#39;</span><span class="p">:</span> <span class="n">nombre</span><span class="p">,</span>
+        <span class="s1">&#39;Accuracy&#39;</span><span class="p">:</span> <span class="nb">round</span><span class="p">(</span><span class="n">accuracy</span><span class="p">,</span> <span class="mi">4</span><span class="p">),</span>
+        <span class="s1">&#39;Precision&#39;</span><span class="p">:</span> <span class="nb">round</span><span class="p">(</span><span class="n">precision</span><span class="p">,</span> <span class="mi">4</span><span class="p">),</span>
+        <span class="s1">&#39;Recall&#39;</span><span class="p">:</span> <span class="nb">round</span><span class="p">(</span><span class="n">recall</span><span class="p">,</span> <span class="mi">4</span><span class="p">),</span>
+        <span class="s1">&#39;F1-score&#39;</span><span class="p">:</span> <span class="nb">round</span><span class="p">(</span><span class="n">f1</span><span class="p">,</span> <span class="mi">4</span><span class="p">),</span>
+        <span class="s1">&#39;AUC&#39;</span><span class="p">:</span> <span class="nb">round</span><span class="p">(</span><span class="n">auc</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span> <span class="k">if</span> <span class="ow">not</span> <span class="n">np</span><span class="o">.</span><span class="n">isnan</span><span class="p">(</span><span class="n">auc</span><span class="p">)</span> <span class="k">else</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span><span class="p">,</span>
+        <span class="s1">&#39;TN&#39;</span><span class="p">:</span> <span class="nb">int</span><span class="p">(</span><span class="n">tn</span><span class="p">),</span>
+        <span class="s1">&#39;FP&#39;</span><span class="p">:</span> <span class="nb">int</span><span class="p">(</span><span class="n">fp</span><span class="p">),</span>
+        <span class="s1">&#39;FN&#39;</span><span class="p">:</span> <span class="nb">int</span><span class="p">(</span><span class="n">fn</span><span class="p">),</span>
+        <span class="s1">&#39;TP&#39;</span><span class="p">:</span> <span class="nb">int</span><span class="p">(</span><span class="n">tp</span><span class="p">)</span>
+    <span class="p">}</span>
+    
+    <span class="n">resultados_evaluacion</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">resultado</span><span class="p">)</span>
+    
+    <span class="k">return</span> <span class="n">resultado</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Funcion de evaluacion definida correctamente&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Funcion de evaluacion definida correctamente
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="evaluacion-individual-de-modelos">
+<h2>Evaluacion Individual de Modelos<a class="headerlink" href="#evaluacion-individual-de-modelos" title="Link to this heading">#</a></h2>
+<p>A continuacion evaluamos cada uno de los 10 modelos con las tecnicas optimizadas identificadas en el notebook de Optimizacion.</p>
+<section id="k-nearest-neighbors-knn">
+<h3>4.1. K-Nearest Neighbors (KNN)<a class="headerlink" href="#k-nearest-neighbors-knn" title="Link to this heading">#</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># KNN con Ball Trees (optimizado para alta dimensionalidad)</span>
+<span class="n">knn_model</span> <span class="o">=</span> <span class="n">KNeighborsClassifier</span><span class="p">(</span><span class="n">n_neighbors</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">algorithm</span><span class="o">=</span><span class="s1">&#39;ball_tree&#39;</span><span class="p">,</span> <span class="n">n_jobs</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">evaluar_modelo_completo</span><span class="p">(</span><span class="s2">&quot;KNN&quot;</span><span class="p">,</span> <span class="n">knn_model</span><span class="p">,</span> <span class="n">X_train_array</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">X_test_array</span><span class="p">,</span> <span class="n">y_test</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>================================================================================
+EVALUANDO: KNN
+================================================================================
+
+Entrenando modelo...
+Modelo entrenado correctamente
+Modelo entrenado correctamente
+
+Metricas calculadas:
+  Accuracy:  0.5585
+  Precision: 0.5237
+  Recall:    0.4631
+  F1-score:  0.4916
+  AUC:       0.5730
+
+Matriz de Confusion:
+  TN=5267  FP=2963
+  FN=3777  TP=3258
+
+Metricas calculadas:
+  Accuracy:  0.5585
+  Precision: 0.5237
+  Recall:    0.4631
+  F1-score:  0.4916
+  AUC:       0.5730
+
+Matriz de Confusion:
+  TN=5267  FP=2963
+  FN=3777  TP=3258
+</pre></div>
+</div>
+<img alt="../_images/8d30ea7c75aa423d57be6e9093e63ee8b371839ff87a1e3762c920aa1ac5ec39.png" src="../_images/8d30ea7c75aa423d57be6e9093e63ee8b371839ff87a1e3762c920aa1ac5ec39.png" />
+<img alt="../_images/2422715fbf4b0fb890e70840a3566787786f2cc13f88092bbdb9b926f9340c68.png" src="../_images/2422715fbf4b0fb890e70840a3566787786f2cc13f88092bbdb9b926f9340c68.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Interpretacion:
+  - El modelo muestra desempeno moderado en ambas metricas
+  - F1-score bajo (0.4916) indica limitaciones en la prediccion
+  - AUC bajo (0.5730): poca capacidad de discriminacion
+</pre></div>
+</div>
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>{&#39;Modelo&#39;: &#39;KNN&#39;,
+ &#39;Accuracy&#39;: 0.5585,
+ &#39;Precision&#39;: 0.5237,
+ &#39;Recall&#39;: 0.4631,
+ &#39;F1-score&#39;: 0.4916,
+ &#39;AUC&#39;: np.float64(0.573),
+ &#39;TN&#39;: 5267,
+ &#39;FP&#39;: 2963,
+ &#39;FN&#39;: 3777,
+ &#39;TP&#39;: 3258}
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="naive-bayes">
+<h3>4.2. Naive Bayes<a class="headerlink" href="#naive-bayes" title="Link to this heading">#</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Naive Bayes (GaussianNB)</span>
+<span class="n">nb_model</span> <span class="o">=</span> <span class="n">GaussianNB</span><span class="p">()</span>
+<span class="n">evaluar_modelo_completo</span><span class="p">(</span><span class="s2">&quot;Naive Bayes&quot;</span><span class="p">,</span> <span class="n">nb_model</span><span class="p">,</span> <span class="n">X_train_array</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">X_test_array</span><span class="p">,</span> <span class="n">y_test</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>================================================================================
+EVALUANDO: Naive Bayes
+================================================================================
+
+Entrenando modelo...
+Modelo entrenado correctamente
+
+Metricas calculadas:
+  Accuracy:  0.6012
+  Precision: 0.5906
+  Recall:    0.4388
+  F1-score:  0.5035
+  AUC:       0.6255
+
+Matriz de Confusion:
+  TN=6090  FP=2140
+  FN=3948  TP=3087
+Modelo entrenado correctamente
+
+Metricas calculadas:
+  Accuracy:  0.6012
+  Precision: 0.5906
+  Recall:    0.4388
+  F1-score:  0.5035
+  AUC:       0.6255
+
+Matriz de Confusion:
+  TN=6090  FP=2140
+  FN=3948  TP=3087
+</pre></div>
+</div>
+<img alt="../_images/8e5ebd78ee5cce06725012c7ac18780e6c7fad4d56fbecb4d470c856db45dc8a.png" src="../_images/8e5ebd78ee5cce06725012c7ac18780e6c7fad4d56fbecb4d470c856db45dc8a.png" />
+<img alt="../_images/7ae3456aa047f26b13383fb79eb751a6c3b45cb544f89676b0f45fc1d87e64fa.png" src="../_images/7ae3456aa047f26b13383fb79eb751a6c3b45cb544f89676b0f45fc1d87e64fa.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Interpretacion:
+  - El modelo es conservador: prioriza precision sobre recall
+  - Predice readmision solo cuando tiene alta confianza
+  - F1-score moderado (0.5035) sugiere capacidad predictiva aceptable
+  - AUC moderado (0.6255): discriminacion limitada
+</pre></div>
+</div>
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>{&#39;Modelo&#39;: &#39;Naive Bayes&#39;,
+ &#39;Accuracy&#39;: 0.6012,
+ &#39;Precision&#39;: 0.5906,
+ &#39;Recall&#39;: 0.4388,
+ &#39;F1-score&#39;: 0.5035,
+ &#39;AUC&#39;: np.float64(0.6255),
+ &#39;TN&#39;: 6090,
+ &#39;FP&#39;: 2140,
+ &#39;FN&#39;: 3948,
+ &#39;TP&#39;: 3087}
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="ridge-classifier">
+<h3>4.3. Ridge Classifier<a class="headerlink" href="#ridge-classifier" title="Link to this heading">#</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Ridge con solver &#39;saga&#39; (optimizado)</span>
+<span class="n">ridge_model</span> <span class="o">=</span> <span class="n">RidgeClassifier</span><span class="p">(</span><span class="n">alpha</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">solver</span><span class="o">=</span><span class="s1">&#39;saga&#39;</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
+<span class="n">evaluar_modelo_completo</span><span class="p">(</span><span class="s2">&quot;Ridge&quot;</span><span class="p">,</span> <span class="n">ridge_model</span><span class="p">,</span> <span class="n">X_train_array</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">X_test_array</span><span class="p">,</span> <span class="n">y_test</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>================================================================================
+EVALUANDO: Ridge
+================================================================================
+
+Entrenando modelo...
+Modelo entrenado correctamente
+
+Metricas calculadas:
+  Accuracy:  0.6271
+  Precision: 0.6403
+  Recall:    0.4357
+  F1-score:  0.5185
+  AUC:       0.6714
+
+Matriz de Confusion:
+  TN=6508  FP=1722
+  FN=3970  TP=3065
+Modelo entrenado correctamente
+
+Metricas calculadas:
+  Accuracy:  0.6271
+  Precision: 0.6403
+  Recall:    0.4357
+  F1-score:  0.5185
+  AUC:       0.6714
+
+Matriz de Confusion:
+  TN=6508  FP=1722
+  FN=3970  TP=3065
+</pre></div>
+</div>
+<img alt="../_images/b7461a18b7ba346ce4de0692673fce98e654fb41c30bd7a53585a750b4325436.png" src="../_images/b7461a18b7ba346ce4de0692673fce98e654fb41c30bd7a53585a750b4325436.png" />
+<img alt="../_images/0c1de47d8237dfa020b3b9c7e924f6048d59fed86468b189a02730cc1501fd15.png" src="../_images/0c1de47d8237dfa020b3b9c7e924f6048d59fed86468b189a02730cc1501fd15.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Interpretacion:
+  - El modelo es conservador: prioriza precision sobre recall
+  - Predice readmision solo cuando tiene alta confianza
+  - F1-score moderado (0.5185) sugiere capacidad predictiva aceptable
+  - AUC moderado (0.6714): discriminacion limitada
+</pre></div>
+</div>
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>{&#39;Modelo&#39;: &#39;Ridge&#39;,
+ &#39;Accuracy&#39;: 0.6271,
+ &#39;Precision&#39;: 0.6403,
+ &#39;Recall&#39;: 0.4357,
+ &#39;F1-score&#39;: 0.5185,
+ &#39;AUC&#39;: np.float64(0.6714),
+ &#39;TN&#39;: 6508,
+ &#39;FP&#39;: 1722,
+ &#39;FN&#39;: 3970,
+ &#39;TP&#39;: 3065}
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="lasso-regresion-logistica-l1">
+<h3>4.4. Lasso (Regresion Logistica L1)<a class="headerlink" href="#lasso-regresion-logistica-l1" title="Link to this heading">#</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Lasso con solver &#39;saga&#39; (optimizado)</span>
+<span class="n">lasso_model</span> <span class="o">=</span> <span class="n">LogisticRegression</span><span class="p">(</span><span class="n">penalty</span><span class="o">=</span><span class="s1">&#39;l1&#39;</span><span class="p">,</span> <span class="n">solver</span><span class="o">=</span><span class="s1">&#39;saga&#39;</span><span class="p">,</span> <span class="n">max_iter</span><span class="o">=</span><span class="mi">1000</span><span class="p">,</span> <span class="n">n_jobs</span><span class="o">=-</span><span class="mi">1</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
+<span class="n">evaluar_modelo_completo</span><span class="p">(</span><span class="s2">&quot;Lasso&quot;</span><span class="p">,</span> <span class="n">lasso_model</span><span class="p">,</span> <span class="n">X_train_array</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">X_test_array</span><span class="p">,</span> <span class="n">y_test</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>================================================================================
+EVALUANDO: Lasso
+================================================================================
+
+Entrenando modelo...
+Modelo entrenado correctamente
+
+Metricas calculadas:
+  Accuracy:  0.6298
+  Precision: 0.6432
+  Recall:    0.4418
+  F1-score:  0.5238
+  AUC:       0.6740
+
+Matriz de Confusion:
+  TN=6506  FP=1724
+  FN=3927  TP=3108
+Modelo entrenado correctamente
+
+Metricas calculadas:
+  Accuracy:  0.6298
+  Precision: 0.6432
+  Recall:    0.4418
+  F1-score:  0.5238
+  AUC:       0.6740
+
+Matriz de Confusion:
+  TN=6506  FP=1724
+  FN=3927  TP=3108
+</pre></div>
+</div>
+<img alt="../_images/d8ff00eb2b0c021abf8bc82fa75c28fd0f80db38c0144d3013cba8ca5dc93cda.png" src="../_images/d8ff00eb2b0c021abf8bc82fa75c28fd0f80db38c0144d3013cba8ca5dc93cda.png" />
+<img alt="../_images/f34f514572c11afe095ac7d2df0a9f12de0085b484235ad9ed085528f3669a13.png" src="../_images/f34f514572c11afe095ac7d2df0a9f12de0085b484235ad9ed085528f3669a13.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Interpretacion:
+  - El modelo es conservador: prioriza precision sobre recall
+  - Predice readmision solo cuando tiene alta confianza
+  - F1-score moderado (0.5238) sugiere capacidad predictiva aceptable
+  - AUC moderado (0.6740): discriminacion limitada
+</pre></div>
+</div>
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>{&#39;Modelo&#39;: &#39;Lasso&#39;,
+ &#39;Accuracy&#39;: 0.6298,
+ &#39;Precision&#39;: 0.6432,
+ &#39;Recall&#39;: 0.4418,
+ &#39;F1-score&#39;: 0.5238,
+ &#39;AUC&#39;: np.float64(0.674),
+ &#39;TN&#39;: 6506,
+ &#39;FP&#39;: 1724,
+ &#39;FN&#39;: 3927,
+ &#39;TP&#39;: 3108}
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="regresion-logistica-l2-ridge">
+<h3>4.5. Regresion Logistica L2 (Ridge)<a class="headerlink" href="#regresion-logistica-l2-ridge" title="Link to this heading">#</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Regresion Logistica L2</span>
+<span class="n">logreg_l2_model</span> <span class="o">=</span> <span class="n">LogisticRegression</span><span class="p">(</span><span class="n">penalty</span><span class="o">=</span><span class="s1">&#39;l2&#39;</span><span class="p">,</span> <span class="n">solver</span><span class="o">=</span><span class="s1">&#39;saga&#39;</span><span class="p">,</span> <span class="n">max_iter</span><span class="o">=</span><span class="mi">1000</span><span class="p">,</span> <span class="n">n_jobs</span><span class="o">=-</span><span class="mi">1</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
+<span class="n">evaluar_modelo_completo</span><span class="p">(</span><span class="s2">&quot;LogReg L2&quot;</span><span class="p">,</span> <span class="n">logreg_l2_model</span><span class="p">,</span> <span class="n">X_train_array</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">X_test_array</span><span class="p">,</span> <span class="n">y_test</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>================================================================================
+EVALUANDO: LogReg L2
+================================================================================
+
+Entrenando modelo...
+Modelo entrenado correctamente
+
+Metricas calculadas:
+  Accuracy:  0.6298
+  Precision: 0.6431
+  Recall:    0.4421
+  F1-score:  0.5240
+  AUC:       0.6740
+
+Matriz de Confusion:
+  TN=6504  FP=1726
+  FN=3925  TP=3110
+Modelo entrenado correctamente
+
+Metricas calculadas:
+  Accuracy:  0.6298
+  Precision: 0.6431
+  Recall:    0.4421
+  F1-score:  0.5240
+  AUC:       0.6740
+
+Matriz de Confusion:
+  TN=6504  FP=1726
+  FN=3925  TP=3110
+</pre></div>
+</div>
+<img alt="../_images/c26820b8ff2ae3744463f3a64ff1be49f76fcc057b469428837789dba5ff1d96.png" src="../_images/c26820b8ff2ae3744463f3a64ff1be49f76fcc057b469428837789dba5ff1d96.png" />
+<img alt="../_images/3b60ebb1892f7a29ecf7a7b163fdd749737b56771d46aaf7e0f289cae538c137.png" src="../_images/3b60ebb1892f7a29ecf7a7b163fdd749737b56771d46aaf7e0f289cae538c137.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Interpretacion:
+  - El modelo es conservador: prioriza precision sobre recall
+  - Predice readmision solo cuando tiene alta confianza
+  - F1-score moderado (0.5240) sugiere capacidad predictiva aceptable
+  - AUC moderado (0.6740): discriminacion limitada
+</pre></div>
+</div>
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>{&#39;Modelo&#39;: &#39;LogReg L2&#39;,
+ &#39;Accuracy&#39;: 0.6298,
+ &#39;Precision&#39;: 0.6431,
+ &#39;Recall&#39;: 0.4421,
+ &#39;F1-score&#39;: 0.524,
+ &#39;AUC&#39;: np.float64(0.674),
+ &#39;TN&#39;: 6504,
+ &#39;FP&#39;: 1726,
+ &#39;FN&#39;: 3925,
+ &#39;TP&#39;: 3110}
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="regresion-logistica-l1-lasso-alternativo">
+<h3>4.6. Regresion Logistica L1 (Lasso alternativo)<a class="headerlink" href="#regresion-logistica-l1-lasso-alternativo" title="Link to this heading">#</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Regresion Logistica L1 con solver liblinear</span>
+<span class="n">logreg_l1_model</span> <span class="o">=</span> <span class="n">LogisticRegression</span><span class="p">(</span><span class="n">penalty</span><span class="o">=</span><span class="s1">&#39;l1&#39;</span><span class="p">,</span> <span class="n">solver</span><span class="o">=</span><span class="s1">&#39;liblinear&#39;</span><span class="p">,</span> <span class="n">max_iter</span><span class="o">=</span><span class="mi">1000</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
+<span class="n">evaluar_modelo_completo</span><span class="p">(</span><span class="s2">&quot;LogReg L1&quot;</span><span class="p">,</span> <span class="n">logreg_l1_model</span><span class="p">,</span> <span class="n">X_train_array</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">X_test_array</span><span class="p">,</span> <span class="n">y_test</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>================================================================================
+EVALUANDO: LogReg L1
+================================================================================
+
+Entrenando modelo...
+Modelo entrenado correctamente
+
+Metricas calculadas:
+  Accuracy:  0.6297
+  Precision: 0.6429
+  Recall:    0.4422
+  F1-score:  0.5240
+  AUC:       0.6740
+
+Matriz de Confusion:
+  TN=6502  FP=1728
+  FN=3924  TP=3111
+Modelo entrenado correctamente
+
+Metricas calculadas:
+  Accuracy:  0.6297
+  Precision: 0.6429
+  Recall:    0.4422
+  F1-score:  0.5240
+  AUC:       0.6740
+
+Matriz de Confusion:
+  TN=6502  FP=1728
+  FN=3924  TP=3111
+</pre></div>
+</div>
+<img alt="../_images/c5cb79d3ce72b582db27bf145927ccd24a91721b8acaac12db2c337af74786cf.png" src="../_images/c5cb79d3ce72b582db27bf145927ccd24a91721b8acaac12db2c337af74786cf.png" />
+<img alt="../_images/63d178097cb46d5b9817966d7a6717a473c90114590ce928209f211e261629f6.png" src="../_images/63d178097cb46d5b9817966d7a6717a473c90114590ce928209f211e261629f6.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Interpretacion:
+  - El modelo es conservador: prioriza precision sobre recall
+  - Predice readmision solo cuando tiene alta confianza
+  - F1-score moderado (0.5240) sugiere capacidad predictiva aceptable
+  - AUC moderado (0.6740): discriminacion limitada
+</pre></div>
+</div>
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>{&#39;Modelo&#39;: &#39;LogReg L1&#39;,
+ &#39;Accuracy&#39;: 0.6297,
+ &#39;Precision&#39;: 0.6429,
+ &#39;Recall&#39;: 0.4422,
+ &#39;F1-score&#39;: 0.524,
+ &#39;AUC&#39;: np.float64(0.674),
+ &#39;TN&#39;: 6502,
+ &#39;FP&#39;: 1728,
+ &#39;FN&#39;: 3924,
+ &#39;TP&#39;: 3111}
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="arbol-de-decision">
+<h3>4.7. Arbol de Decision<a class="headerlink" href="#arbol-de-decision" title="Link to this heading">#</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Arbol de Decision</span>
+<span class="n">dt_model</span> <span class="o">=</span> <span class="n">DecisionTreeClassifier</span><span class="p">(</span><span class="n">max_depth</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
+<span class="n">evaluar_modelo_completo</span><span class="p">(</span><span class="s2">&quot;Arbol Decision&quot;</span><span class="p">,</span> <span class="n">dt_model</span><span class="p">,</span> <span class="n">X_train_array</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">X_test_array</span><span class="p">,</span> <span class="n">y_test</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>================================================================================
+EVALUANDO: Arbol Decision
+================================================================================
+
+Entrenando modelo...
+Modelo entrenado correctamente
+
+Metricas calculadas:
+  Accuracy:  0.6203
+  Precision: 0.6204
+  Recall:    0.4537
+  F1-score:  0.5241
+  AUC:       0.6557
+
+Matriz de Confusion:
+  TN=6277  FP=1953
+  FN=3843  TP=3192
+Modelo entrenado correctamente
+
+Metricas calculadas:
+  Accuracy:  0.6203
+  Precision: 0.6204
+  Recall:    0.4537
+  F1-score:  0.5241
+  AUC:       0.6557
+
+Matriz de Confusion:
+  TN=6277  FP=1953
+  FN=3843  TP=3192
+</pre></div>
+</div>
+<img alt="../_images/456071584fa115be8365fcf99080596ad4a172532758b9837fd30c0fc00eb530.png" src="../_images/456071584fa115be8365fcf99080596ad4a172532758b9837fd30c0fc00eb530.png" />
+<img alt="../_images/7731bdec5c74f2ed39896ba6de7c2a155fe84a243af45ddaf639eb3486c276ca.png" src="../_images/7731bdec5c74f2ed39896ba6de7c2a155fe84a243af45ddaf639eb3486c276ca.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Interpretacion:
+  - El modelo es conservador: prioriza precision sobre recall
+  - Predice readmision solo cuando tiene alta confianza
+  - F1-score moderado (0.5241) sugiere capacidad predictiva aceptable
+  - AUC moderado (0.6557): discriminacion limitada
+</pre></div>
+</div>
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>{&#39;Modelo&#39;: &#39;Arbol Decision&#39;,
+ &#39;Accuracy&#39;: 0.6203,
+ &#39;Precision&#39;: 0.6204,
+ &#39;Recall&#39;: 0.4537,
+ &#39;F1-score&#39;: 0.5241,
+ &#39;AUC&#39;: np.float64(0.6557),
+ &#39;TN&#39;: 6277,
+ &#39;FP&#39;: 1953,
+ &#39;FN&#39;: 3843,
+ &#39;TP&#39;: 3192}
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="random-forest">
+<h3>4.8. Random Forest<a class="headerlink" href="#random-forest" title="Link to this heading">#</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Random Forest</span>
+<span class="n">rf_model</span> <span class="o">=</span> <span class="n">RandomForestClassifier</span><span class="p">(</span><span class="n">n_estimators</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">,</span> <span class="n">n_jobs</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">evaluar_modelo_completo</span><span class="p">(</span><span class="s2">&quot;Random Forest&quot;</span><span class="p">,</span> <span class="n">rf_model</span><span class="p">,</span> <span class="n">X_train_array</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">X_test_array</span><span class="p">,</span> <span class="n">y_test</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>================================================================================
+EVALUANDO: Random Forest
+================================================================================
+
+Entrenando modelo...
+Modelo entrenado correctamente
+Modelo entrenado correctamente
+
+Metricas calculadas:
+  Accuracy:  0.6292
+  Precision: 0.6194
+  Recall:    0.5066
+  F1-score:  0.5574
+  AUC:       0.6720
+
+Matriz de Confusion:
+  TN=6040  FP=2190
+  FN=3471  TP=3564
+
+Metricas calculadas:
+  Accuracy:  0.6292
+  Precision: 0.6194
+  Recall:    0.5066
+  F1-score:  0.5574
+  AUC:       0.6720
+
+Matriz de Confusion:
+  TN=6040  FP=2190
+  FN=3471  TP=3564
+</pre></div>
+</div>
+<img alt="../_images/8cb3c66f4e2bc1a9a8d88e9e0e81219f02a4b3ef51da12d6ea4f44095ff09c64.png" src="../_images/8cb3c66f4e2bc1a9a8d88e9e0e81219f02a4b3ef51da12d6ea4f44095ff09c64.png" />
+<img alt="../_images/690d74cbf9037439a55b8bc90d804df7965192adfe2fcf0dc92c98b7bbf5f31b.png" src="../_images/690d74cbf9037439a55b8bc90d804df7965192adfe2fcf0dc92c98b7bbf5f31b.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Interpretacion:
+  - El modelo es conservador: prioriza precision sobre recall
+  - Predice readmision solo cuando tiene alta confianza
+  - F1-score moderado (0.5574) sugiere capacidad predictiva aceptable
+  - AUC moderado (0.6720): discriminacion limitada
+</pre></div>
+</div>
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>{&#39;Modelo&#39;: &#39;Random Forest&#39;,
+ &#39;Accuracy&#39;: 0.6292,
+ &#39;Precision&#39;: 0.6194,
+ &#39;Recall&#39;: 0.5066,
+ &#39;F1-score&#39;: 0.5574,
+ &#39;AUC&#39;: np.float64(0.672),
+ &#39;TN&#39;: 6040,
+ &#39;FP&#39;: 2190,
+ &#39;FN&#39;: 3471,
+ &#39;TP&#39;: 3564}
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="xgboost">
+<h3>4.9. XGBoost<a class="headerlink" href="#xgboost" title="Link to this heading">#</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># XGBoost con tree_method=&#39;hist&#39; (optimizado)</span>
+<span class="n">xgb_model</span> <span class="o">=</span> <span class="n">XGBClassifier</span><span class="p">(</span>
+    <span class="n">eval_metric</span><span class="o">=</span><span class="s1">&#39;logloss&#39;</span><span class="p">,</span>
+    <span class="n">enable_categorical</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+    <span class="n">tree_method</span><span class="o">=</span><span class="s1">&#39;hist&#39;</span><span class="p">,</span>
+    <span class="n">n_estimators</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span>
+    <span class="n">n_jobs</span><span class="o">=-</span><span class="mi">1</span><span class="p">,</span>
+    <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span>
+<span class="p">)</span>
+<span class="n">evaluar_modelo_completo</span><span class="p">(</span><span class="s2">&quot;XGBoost&quot;</span><span class="p">,</span> <span class="n">xgb_model</span><span class="p">,</span> <span class="n">X_train_array</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">X_test_array</span><span class="p">,</span> <span class="n">y_test</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>================================================================================
+EVALUANDO: XGBoost
+================================================================================
+
+Entrenando modelo...
+Modelo entrenado correctamente
+
+Metricas calculadas:
+  Accuracy:  0.6341
+  Precision: 0.6229
+  Recall:    0.5224
+  F1-score:  0.5682
+  AUC:       0.6787
+
+Matriz de Confusion:
+  TN=6005  FP=2225
+  FN=3360  TP=3675
+Modelo entrenado correctamente
+
+Metricas calculadas:
+  Accuracy:  0.6341
+  Precision: 0.6229
+  Recall:    0.5224
+  F1-score:  0.5682
+  AUC:       0.6787
+
+Matriz de Confusion:
+  TN=6005  FP=2225
+  FN=3360  TP=3675
+</pre></div>
+</div>
+<img alt="../_images/dea2a65d3c3120229de4315b747d67678c3c596025b51925dc3f855e831db034.png" src="../_images/dea2a65d3c3120229de4315b747d67678c3c596025b51925dc3f855e831db034.png" />
+<img alt="../_images/6601e0895a68800afab1e1c1fbe4973d93e9887c941e40156cd6b67ba8d73fdb.png" src="../_images/6601e0895a68800afab1e1c1fbe4973d93e9887c941e40156cd6b67ba8d73fdb.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Interpretacion:
+  - El modelo es conservador: prioriza precision sobre recall
+  - Predice readmision solo cuando tiene alta confianza
+  - F1-score moderado (0.5682) sugiere capacidad predictiva aceptable
+  - AUC moderado (0.6787): discriminacion limitada
+</pre></div>
+</div>
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>{&#39;Modelo&#39;: &#39;XGBoost&#39;,
+ &#39;Accuracy&#39;: 0.6341,
+ &#39;Precision&#39;: 0.6229,
+ &#39;Recall&#39;: 0.5224,
+ &#39;F1-score&#39;: 0.5682,
+ &#39;AUC&#39;: np.float64(0.6787),
+ &#39;TN&#39;: 6005,
+ &#39;FP&#39;: 2225,
+ &#39;FN&#39;: 3360,
+ &#39;TP&#39;: 3675}
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="svm-lineal">
+<h3>4.10. SVM Lineal<a class="headerlink" href="#svm-lineal" title="Link to this heading">#</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># SVM Lineal (LinearSVC optimizado)</span>
+<span class="n">svm_model</span> <span class="o">=</span> <span class="n">LinearSVC</span><span class="p">(</span><span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">,</span> <span class="n">dual</span><span class="o">=</span><span class="s1">&#39;auto&#39;</span><span class="p">,</span> <span class="n">max_iter</span><span class="o">=</span><span class="mi">1000</span><span class="p">)</span>
+<span class="n">evaluar_modelo_completo</span><span class="p">(</span><span class="s2">&quot;SVM Lineal&quot;</span><span class="p">,</span> <span class="n">svm_model</span><span class="p">,</span> <span class="n">X_train_array</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">X_test_array</span><span class="p">,</span> <span class="n">y_test</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>================================================================================
+EVALUANDO: SVM Lineal
+================================================================================
+
+Entrenando modelo...
+Modelo entrenado correctamente
+
+Metricas calculadas:
+  Accuracy:  0.6290
+  Precision: 0.6444
+  Recall:    0.4351
+  F1-score:  0.5195
+  AUC:       0.6732
+
+Matriz de Confusion:
+  TN=6541  FP=1689
+  FN=3974  TP=3061
+Modelo entrenado correctamente
+
+Metricas calculadas:
+  Accuracy:  0.6290
+  Precision: 0.6444
+  Recall:    0.4351
+  F1-score:  0.5195
+  AUC:       0.6732
+
+Matriz de Confusion:
+  TN=6541  FP=1689
+  FN=3974  TP=3061
+</pre></div>
+</div>
+<img alt="../_images/f597afdab82bd46a723d2f2ac4edc39ad2ce5bb6a75e71d33349df71e3c62164.png" src="../_images/f597afdab82bd46a723d2f2ac4edc39ad2ce5bb6a75e71d33349df71e3c62164.png" />
+<img alt="../_images/39872b339a8e21da8a95c35f255dd5675ab62195f7462faec844bbb61e425589.png" src="../_images/39872b339a8e21da8a95c35f255dd5675ab62195f7462faec844bbb61e425589.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Interpretacion:
+  - El modelo es conservador: prioriza precision sobre recall
+  - Predice readmision solo cuando tiene alta confianza
+  - F1-score moderado (0.5195) sugiere capacidad predictiva aceptable
+  - AUC moderado (0.6732): discriminacion limitada
+</pre></div>
+</div>
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>{&#39;Modelo&#39;: &#39;SVM Lineal&#39;,
+ &#39;Accuracy&#39;: 0.629,
+ &#39;Precision&#39;: 0.6444,
+ &#39;Recall&#39;: 0.4351,
+ &#39;F1-score&#39;: 0.5195,
+ &#39;AUC&#39;: np.float64(0.6732),
+ &#39;TN&#39;: 6541,
+ &#39;FP&#39;: 1689,
+ &#39;FN&#39;: 3974,
+ &#39;TP&#39;: 3061}
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="tabla-resumen-de-metricas">
+<h2>Tabla Resumen de Metricas<a class="headerlink" href="#tabla-resumen-de-metricas" title="Link to this heading">#</a></h2>
+<p>A continuacion presentamos la tabla consolidada con todas las metricas de evaluacion.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># =========================================</span>
+<span class="c1"># 5. Tabla resumen de metricas</span>
+<span class="c1"># =========================================</span>
+
+<span class="c1"># Crear DataFrame con todos los resultados</span>
+<span class="n">df_metricas</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">resultados_evaluacion</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span> <span class="o">+</span> <span class="s2">&quot;=&quot;</span><span class="o">*</span><span class="mi">100</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot; &quot;</span><span class="o">*</span><span class="mi">30</span> <span class="o">+</span> <span class="s2">&quot;TABLA DE METRICAS - CLASIFICACION&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;=&quot;</span><span class="o">*</span><span class="mi">100</span> <span class="o">+</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="c1"># Mostrar tabla ordenada por F1-score</span>
+<span class="n">df_display</span> <span class="o">=</span> <span class="n">df_metricas</span><span class="p">[[</span><span class="s1">&#39;Modelo&#39;</span><span class="p">,</span> <span class="s1">&#39;Accuracy&#39;</span><span class="p">,</span> <span class="s1">&#39;Precision&#39;</span><span class="p">,</span> <span class="s1">&#39;Recall&#39;</span><span class="p">,</span> <span class="s1">&#39;F1-score&#39;</span><span class="p">,</span> <span class="s1">&#39;AUC&#39;</span><span class="p">]]</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+<span class="n">df_display</span> <span class="o">=</span> <span class="n">df_display</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="n">by</span><span class="o">=</span><span class="s1">&#39;F1-score&#39;</span><span class="p">,</span> <span class="n">ascending</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+
+<span class="n">pd</span><span class="o">.</span><span class="n">set_option</span><span class="p">(</span><span class="s1">&#39;display.max_columns&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+<span class="n">pd</span><span class="o">.</span><span class="n">set_option</span><span class="p">(</span><span class="s1">&#39;display.width&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+<span class="n">pd</span><span class="o">.</span><span class="n">set_option</span><span class="p">(</span><span class="s1">&#39;display.precision&#39;</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">df_display</span><span class="o">.</span><span class="n">to_string</span><span class="p">(</span><span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">))</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span> <span class="o">+</span> <span class="s2">&quot;=&quot;</span><span class="o">*</span><span class="mi">100</span><span class="p">)</span>
+
+<span class="c1"># Guardar resultados</span>
+<span class="n">df_metricas</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="s1">&#39;../data/processed/evaluacion_metricas.csv&#39;</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Resultados guardados en &#39;../data/processed/evaluacion_metricas.csv&#39;&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>====================================================================================================
+                              TABLA DE METRICAS - CLASIFICACION
+====================================================================================================
+
+        Modelo  Accuracy  Precision  Recall  F1-score    AUC
+       XGBoost    0.6341     0.6229  0.5224    0.5682 0.6787
+ Random Forest    0.6292     0.6194  0.5066    0.5574 0.6720
+Arbol Decision    0.6203     0.6204  0.4537    0.5241 0.6557
+     LogReg L1    0.6297     0.6429  0.4422    0.5240 0.6740
+     LogReg L2    0.6298     0.6431  0.4421    0.5240 0.6740
+         Lasso    0.6298     0.6432  0.4418    0.5238 0.6740
+    SVM Lineal    0.6290     0.6444  0.4351    0.5195 0.6732
+         Ridge    0.6271     0.6403  0.4357    0.5185 0.6714
+   Naive Bayes    0.6012     0.5906  0.4388    0.5035 0.6255
+           KNN    0.5585     0.5237  0.4631    0.4916 0.5730
+
+====================================================================================================
+
+Resultados guardados en &#39;data/processed/evaluacion_metricas.csv&#39;
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="comparacion-visual-de-metricas">
+<h2>Comparacion Visual de Metricas<a class="headerlink" href="#comparacion-visual-de-metricas" title="Link to this heading">#</a></h2>
+<p>Visualizamos las metricas clave para facilitar la comparacion entre modelos.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># =========================================</span>
+<span class="c1"># 6. Visualizacion comparativa de metricas</span>
+<span class="c1"># =========================================</span>
+
+<span class="n">fig</span><span class="p">,</span> <span class="n">axes</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">15</span><span class="p">,</span> <span class="mi">10</span><span class="p">))</span>
+
+<span class="c1"># Ordenar por F1-score para todas las visualizaciones</span>
+<span class="n">df_sorted</span> <span class="o">=</span> <span class="n">df_metricas</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="n">by</span><span class="o">=</span><span class="s1">&#39;F1-score&#39;</span><span class="p">,</span> <span class="n">ascending</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="c1"># 1. Accuracy</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">barh</span><span class="p">(</span><span class="n">df_sorted</span><span class="p">[</span><span class="s1">&#39;Modelo&#39;</span><span class="p">],</span> <span class="n">df_sorted</span><span class="p">[</span><span class="s1">&#39;Accuracy&#39;</span><span class="p">],</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;steelblue&#39;</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;Accuracy&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">11</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;Accuracy por Modelo&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">13</span><span class="p">,</span> <span class="n">fontweight</span><span class="o">=</span><span class="s1">&#39;bold&#39;</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_xlim</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">])</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="s1">&#39;x&#39;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.3</span><span class="p">)</span>
+
+<span class="c1"># 2. Precision</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">barh</span><span class="p">(</span><span class="n">df_sorted</span><span class="p">[</span><span class="s1">&#39;Modelo&#39;</span><span class="p">],</span> <span class="n">df_sorted</span><span class="p">[</span><span class="s1">&#39;Precision&#39;</span><span class="p">],</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;coral&#39;</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;Precision&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">11</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;Precision por Modelo&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">13</span><span class="p">,</span> <span class="n">fontweight</span><span class="o">=</span><span class="s1">&#39;bold&#39;</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_xlim</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">])</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="s1">&#39;x&#39;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.3</span><span class="p">)</span>
+
+<span class="c1"># 3. Recall</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">barh</span><span class="p">(</span><span class="n">df_sorted</span><span class="p">[</span><span class="s1">&#39;Modelo&#39;</span><span class="p">],</span> <span class="n">df_sorted</span><span class="p">[</span><span class="s1">&#39;Recall&#39;</span><span class="p">],</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;mediumseagreen&#39;</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;Recall&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">11</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;Recall por Modelo&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">13</span><span class="p">,</span> <span class="n">fontweight</span><span class="o">=</span><span class="s1">&#39;bold&#39;</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_xlim</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">])</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="s1">&#39;x&#39;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.3</span><span class="p">)</span>
+
+<span class="c1"># 4. F1-score</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">barh</span><span class="p">(</span><span class="n">df_sorted</span><span class="p">[</span><span class="s1">&#39;Modelo&#39;</span><span class="p">],</span> <span class="n">df_sorted</span><span class="p">[</span><span class="s1">&#39;F1-score&#39;</span><span class="p">],</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;plum&#39;</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;F1-score&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">11</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;F1-score por Modelo&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">13</span><span class="p">,</span> <span class="n">fontweight</span><span class="o">=</span><span class="s1">&#39;bold&#39;</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_xlim</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">])</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="s1">&#39;x&#39;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.3</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Visualizacion completada&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/82f5cce88b2c17df01415ca54414c072212ddca359b8e6a05e622f2c192864f3.png" src="../_images/82f5cce88b2c17df01415ca54414c072212ddca359b8e6a05e622f2c192864f3.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Visualizacion completada
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="justificacion-de-la-metrica-principal">
+<h2>Justificacion de la Metrica Principal<a class="headerlink" href="#justificacion-de-la-metrica-principal" title="Link to this heading">#</a></h2>
+<section id="analisis-de-metricas-de-evaluacion">
+<h3><strong>Análisis de Métricas de Evaluación</strong><a class="headerlink" href="#analisis-de-metricas-de-evaluacion" title="Link to this heading">#</a></h3>
+<p>Para seleccionar la métrica más adecuada, nuestro equipo ha evaluado las siguientes opciones:</p>
+<ul class="simple">
+<li><p><strong>Accuracy (Exactitud):</strong></p>
+<ul>
+<li><p><em>Definición:</em> Mide el porcentaje total de predicciones correctas.</p></li>
+<li><p><em>Limitación:</em> Puede ser una métrica engañosa en conjuntos de datos con desbalance de clases, como es nuestro caso, donde el número de pacientes no readmitidos es significativamente mayor. Por esta razón, no la consideramos una métrica principal.</p></li>
+</ul>
+</li>
+<li><p><strong>Precision (Precisión):</strong></p>
+<ul>
+<li><p><em>Definición:</em> De los pacientes que nuestro modelo predice como “readmitidos”, ¿qué porcentaje realmente lo fue? (<code class="docutils literal notranslate"><span class="pre">TP</span> <span class="pre">/</span> <span class="pre">(TP</span> <span class="pre">+</span> <span class="pre">FP)</span></code>).</p></li>
+<li><p><em>Relevancia:</em> Es crucial cuando el coste de los <strong>falsos positivos</strong> es alto. Una alta precisión significa que nuestras alertas de riesgo son fiables, minimizando intervenciones innecesarias en pacientes que no lo necesitan.</p></li>
+</ul>
+</li>
+<li><p><strong>Recall (Sensibilidad):</strong></p>
+<ul>
+<li><p><em>Definición:</em> De todos los pacientes que realmente fueron readmitidos, ¿qué porcentaje fuimos capaces de identificar? (<code class="docutils literal notranslate"><span class="pre">TP</span> <span class="pre">/</span> <span class="pre">(TP</span> <span class="pre">+</span> <span class="pre">FN)</span></code>).</p></li>
+<li><p><em>Relevancia:</em> Es fundamental cuando el coste de los <strong>falsos negativos</strong> es alto. Un alto recall asegura que detectamos a la mayoría de los pacientes en riesgo, lo que permite aplicar intervenciones preventivas de manera efectiva.</p></li>
+</ul>
+</li>
+<li><p><strong>F1-Score:</strong></p>
+<ul>
+<li><p><em>Definición:</em> Es la media armónica entre Precision y Recall (<code class="docutils literal notranslate"><span class="pre">2</span> <span class="pre">*</span> <span class="pre">(Precision</span> <span class="pre">*</span> <span class="pre">Recall)</span> <span class="pre">/</span> <span class="pre">(Precision</span> <span class="pre">+</span> <span class="pre">Recall)</span></code>).</p></li>
+<li><p><em>Relevancia:</em> Es ideal para escenarios donde se necesita un equilibrio entre minimizar falsos positivos (Precision) y minimizar falsos negativos (Recall). Dado nuestro contexto clínico, este balance es exactamente lo que buscamos.</p></li>
+</ul>
+</li>
+<li><p><strong>AUC (Área Bajo la Curva ROC):</strong></p>
+<ul>
+<li><p><em>Definición:</em> Mide la capacidad general del modelo para discriminar entre la clase positiva y la negativa, independientemente del umbral de clasificación.</p></li>
+<li><p><em>Relevancia:</em> Es muy útil para comparar el poder discriminatorio intrínseco de diferentes modelos.</p></li>
+</ul>
+</li>
+</ul>
+</section>
+<section id="metrica-principal-seleccionada-f1-score">
+<h3><strong>Métrica Principal Seleccionada: F1-Score</strong><a class="headerlink" href="#metrica-principal-seleccionada-f1-score" title="Link to this heading">#</a></h3>
+<p>Tras un análisis detallado, <strong>el equipo ha seleccionado el F1-Score como la métrica principal</strong> para la optimización y selección del modelo final.</p>
+<p><strong>Justificación:</strong></p>
+<ol class="arabic simple">
+<li><p><strong>Equilibrio entre Consecuencias Clínicas:</strong> En el ámbito médico, tanto los falsos positivos como los falsos negativos tienen implicaciones significativas.</p>
+<ul class="simple">
+<li><p><strong>Falsos Negativos (Bajo Recall):</strong> No identificar a un paciente que será readmitido implica perder una oportunidad crítica de intervención preventiva.</p></li>
+<li><p><strong>Falsos Positivos (Baja Precisión):</strong> Alertar innecesariamente sobre un paciente implica un uso ineficiente de recursos y puede generar preocupación innecesaria.</p></li>
+<li><p>El F1-Score penaliza a los modelos que se decantan excesivamente por uno de estos extremos, promoviendo un equilibrio pragmático.</p></li>
+</ul>
+</li>
+<li><p><strong>Robustez ante el Desbalance de Clases:</strong> A diferencia del Accuracy, el F1-Score es una métrica mucho más informativa en datasets desbalanceados, ya que se centra exclusivamente en el rendimiento sobre la clase minoritaria (pacientes readmitidos), que es la de mayor interés.</p></li>
+<li><p><strong>Interpretabilidad y Comparabilidad:</strong> Un F1-Score alto indica que el modelo es eficaz tanto en la identificación de casos positivos como en la fiabilidad de sus predicciones. Esto facilita la comparación directa y justa entre diferentes arquitecturas de modelos.</p></li>
+</ol>
+</section>
+<section id="metricas-secundarias">
+<h3><strong>Métricas Secundarias</strong><a class="headerlink" href="#metricas-secundarias" title="Link to this heading">#</a></h3>
+<p>Aunque el F1-Score es nuestra guía principal, complementamos nuestra evaluación con:</p>
+<ul class="simple">
+<li><p><strong>AUC:</strong> para medir la capacidad de discriminación general.</p></li>
+<li><p><strong>Recall:</strong> para asegurar que nuestra tasa de detección de pacientes en riesgo es aceptable.</p></li>
+<li><p><strong>Precision:</strong> para controlar el volumen de falsas alarmas.</p></li>
+</ul>
+</section>
+<section id="conclusion-de-la-evaluacion">
+<h3><strong>Conclusión de la Evaluación</strong><a class="headerlink" href="#conclusion-de-la-evaluacion" title="Link to this heading">#</a></h3>
+<p>Utilizamos el F1-Score como el criterio primario para la selección del modelo, mientras que el análisis de AUC, Recall y Precision nos proporciona una visión integral de su comportamiento, asegurando que el modelo seleccionado no solo es estadísticamente robusto, sino también clínicamente útil.</p>
+</section>
+<hr class="docutils" />
+<section id="resultados-del-mejor-modelo-seleccionado">
+<h3><strong>Resultados del Mejor Modelo Seleccionado</strong><a class="headerlink" href="#resultados-del-mejor-modelo-seleccionado" title="Link to this heading">#</a></h3>
+<p>Tras la fase de experimentación y optimización, el modelo que ha demostrado el mejor rendimiento según nuestra métrica principal es:</p>
+<ul class="simple">
+<li><p><strong>Modelo:</strong> XGBoost</p></li>
+<li><p><strong>F1-Score:</strong> <code class="docutils literal notranslate"><span class="pre">0.5682</span></code></p></li>
+<li><p><strong>Precision:</strong> <code class="docutils literal notranslate"><span class="pre">0.6229</span></code></p></li>
+<li><p><strong>Recall:</strong> <code class="docutils literal notranslate"><span class="pre">0.5224</span></code></p></li>
+<li><p><strong>AUC:</strong> <code class="docutils literal notranslate"><span class="pre">0.6787</span></code></p></li>
+</ul>
+</section>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./notebooks"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="4_Optimizacion.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Optimización de Modelos de Machine Learning</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="6_Validacion_Tuning.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Validacion Avanzada, Tuning e Interpretabilidad</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#objetivo">Objetivo</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#metricas-de-evaluacion">Metricas de Evaluacion</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#datos">Datos</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#evaluacion-individual-de-modelos">Evaluacion Individual de Modelos</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#k-nearest-neighbors-knn">4.1. K-Nearest Neighbors (KNN)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#naive-bayes">4.2. Naive Bayes</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#ridge-classifier">4.3. Ridge Classifier</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#lasso-regresion-logistica-l1">4.4. Lasso (Regresion Logistica L1)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#regresion-logistica-l2-ridge">4.5. Regresion Logistica L2 (Ridge)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#regresion-logistica-l1-lasso-alternativo">4.6. Regresion Logistica L1 (Lasso alternativo)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#arbol-de-decision">4.7. Arbol de Decision</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#random-forest">4.8. Random Forest</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#xgboost">4.9. XGBoost</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#svm-lineal">4.10. SVM Lineal</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#tabla-resumen-de-metricas">Tabla Resumen de Metricas</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#comparacion-visual-de-metricas">Comparacion Visual de Metricas</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#justificacion-de-la-metrica-principal">Justificacion de la Metrica Principal</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#analisis-de-metricas-de-evaluacion"><strong>Análisis de Métricas de Evaluación</strong></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#metrica-principal-seleccionada-f1-score"><strong>Métrica Principal Seleccionada: F1-Score</strong></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#metricas-secundarias"><strong>Métricas Secundarias</strong></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#conclusion-de-la-evaluacion"><strong>Conclusión de la Evaluación</strong></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#resultados-del-mejor-modelo-seleccionado"><strong>Resultados del Mejor Modelo Seleccionado</strong></a></li>
+</ul>
+</li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By José Menco, Camilo Vargas, Iván Ramirez
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2023.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>
