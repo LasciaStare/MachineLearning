@@ -6,3 +6,5 @@ root: EDA
 chapters:
 - file: Modelos_Logisticos
 - file: Modelo_Knn
+- file: Benchmark
+- file: Balanceo
