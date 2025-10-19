@@ -2,9 +2,18 @@
 # Learn more at https://jupyterbook.org/customize/toc.html
 
 format: jb-book
-root: EDA
-chapters:
-- file: Modelos_Logisticos
-- file: Modelo_Knn
-- file: Benchmark
-- file: Balanceo
+root: Introduccion
+parts:
+  - caption: Entregable 3
+    chapters:
+      - file: notebooks/1_EDA
+      - file: notebooks/1_5_Preprocesamiento
+      - file: notebooks/2_Benchmark
+      - file: notebooks/3_Balanceo
+      - file: notebooks/4_Optimizacion
+      - file: notebooks/5_Evaluacion
+      - file: notebooks/6_Validacion_Tuning
+  - caption: Modelos pasados
+    chapters:
+      - file: notebooks/Modelos_Logisticos
+      - file: notebooks/Modelo_Knn
