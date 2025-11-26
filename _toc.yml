@@ -4,7 +4,7 @@
 format: jb-book
 root: Introduccion
 parts:
-  - caption: Entregable 3
+  - caption: Entregable 4
     chapters:
       - file: notebooks/1_EDA
       - file: notebooks/1_5_Preprocesamiento
@@ -13,6 +13,9 @@ parts:
       - file: notebooks/4_Optimizacion
       - file: notebooks/5_Evaluacion
       - file: notebooks/6_Validacion_Tuning
+      - file: notebooks/Propuesta_modelo_original
+        title: Propuesta Modelo original
+      - file: notebooks/Modelo_original
   - caption: Modelos pasados
     chapters:
       - file: notebooks/Modelos_Logisticos

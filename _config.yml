@@ -29,3 +29,10 @@ html:
   favicon: icon.png
   use_issues_button: true
   use_repository_button: true
+
+sphinx:
+  config:
+    language: es
+    exclude_patterns:
+      - README.md
+      - _build
