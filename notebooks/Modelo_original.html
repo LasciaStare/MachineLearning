@@ -1,0 +1,971 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>6. Análisis de Resultados y Conclusiones Finales &#8212; Readmission Diabetes Prediction</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="../_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=fa44fd50" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=eba8b062" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.8ecb98da25f57f5357bf6f572d296f466b2cfe2517ffebfabe82451661e28f02.css?v=6644e6bb" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script src="../_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../_static/copybutton.js?v=f281be69"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../_static/togglebutton.js?v=4a39c7ea"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="../_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'notebooks/Modelo_original';</script>
+    <link rel="icon" href="../_static/icon.png"/>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+        
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../Introduccion.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../_static/logo.png" class="logo__image only-light" alt="Readmission Diabetes Prediction - Home"/>
+    <script>document.write(`<img src="../_static/logo.png" class="logo__image only-dark" alt="Readmission Diabetes Prediction - Home"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../Introduccion.html">
+                    Predicción de Readmisión Hospitalaria en Pacientes Diabéticos
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Entregable 3</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="1_EDA.html"><strong>EDA</strong></a></li>
+<li class="toctree-l1"><a class="reference internal" href="1_5_Preprocesamiento.html"><strong>Preprocesamiento de Datos</strong></a></li>
+<li class="toctree-l1"><a class="reference internal" href="2_Benchmark.html">Benchmark</a></li>
+
+<li class="toctree-l1"><a class="reference internal" href="3_Balanceo.html">Técnicas de balanceo</a></li>
+<li class="toctree-l1"><a class="reference internal" href="4_Optimizacion.html">Optimización de Modelos de Machine Learning</a></li>
+<li class="toctree-l1"><a class="reference internal" href="5_Evaluacion.html">Evaluacion de Modelos de Machine Learning</a></li>
+<li class="toctree-l1"><a class="reference internal" href="6_Validacion_Tuning.html">Validacion Avanzada, Tuning e Interpretabilidad</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Modelos pasados</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="Modelos_Logisticos.html"><strong>Modelos de Clasificación: Logístico, Ridge y Lasso</strong></a></li>
+<li class="toctree-l1"><a class="reference internal" href="Modelo_Knn.html"><strong>Modelo Knn</strong></a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/executablebooks/jupyter-book" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/executablebooks/jupyter-book/issues/new?title=Issue%20on%20page%20%2Fnotebooks/Modelo_original.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../_sources/notebooks/Modelo_original.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>6. Análisis de Resultados y Conclusiones Finales</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#desempeno-del-modelo-original-stacking-ensemble">Desempeño del Modelo Original (Stacking Ensemble)</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#conclusion-general-y-recomendacion">Conclusión General y Recomendación</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">train_test_split</span>
+<span class="kn">from</span> <span class="nn">sklearn.preprocessing</span> <span class="kn">import</span> <span class="n">LabelEncoder</span><span class="p">,</span> <span class="n">StandardScaler</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">from</span> <span class="nn">sklearn.ensemble</span> <span class="kn">import</span> <span class="n">RandomForestClassifier</span>
+<span class="kn">from</span> <span class="nn">xgboost</span> <span class="kn">import</span> <span class="n">XGBClassifier</span>
+<span class="kn">from</span> <span class="nn">sklearn.metrics</span> <span class="kn">import</span> <span class="n">classification_report</span><span class="p">,</span> <span class="n">roc_auc_score</span><span class="p">,</span> <span class="n">roc_curve</span><span class="p">,</span> <span class="n">confusion_matrix</span><span class="p">,</span> <span class="n">ConfusionMatrixDisplay</span>
+<span class="kn">from</span> <span class="nn">sklearn.ensemble</span> <span class="kn">import</span> <span class="n">StackingClassifier</span>
+<span class="kn">from</span> <span class="nn">sklearn.linear_model</span> <span class="kn">import</span> <span class="n">LogisticRegression</span>
+<span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span>
+<span class="kn">from</span> <span class="nn">sklearn.metrics</span> <span class="kn">import</span> <span class="n">f1_score</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># 1. Carga de datos</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;../data/raw/diabetic_data.csv&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># ==========================================</span>
+<span class="c1"># 2. Limpieza Inicial y Manejo de Nulos</span>
+<span class="c1"># ==========================================</span>
+
+<span class="c1"># Reemplazar &#39;?&#39; con NaN para detectarlos correctamente</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;?&#39;</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span><span class="p">)</span>
+
+<span class="c1"># Eliminar columnas con demasiados nulos (basado en literatura común de este dataset)</span>
+<span class="c1"># &#39;weight&#39; tiene ~97% nulos, &#39;payer_code&#39; ~40%, &#39;medical_specialty&#39; ~47%</span>
+<span class="n">cols_to_drop</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;weight&#39;</span><span class="p">,</span> <span class="s1">&#39;payer_code&#39;</span><span class="p">,</span> <span class="s1">&#39;medical_specialty&#39;</span><span class="p">]</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">cols_to_drop</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+
+<span class="c1"># Eliminar registros con nulos en variables críticas (o imputar si prefieres)</span>
+<span class="c1"># Aquí optamos por eliminar filas con nulos en raza/genero/diagnóstico para mantener pureza</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">dropna</span><span class="p">(</span><span class="n">subset</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;race&#39;</span><span class="p">,</span> <span class="s1">&#39;gender&#39;</span><span class="p">,</span> <span class="s1">&#39;diag_1&#39;</span><span class="p">,</span> <span class="s1">&#39;diag_2&#39;</span><span class="p">,</span> <span class="s1">&#39;diag_3&#39;</span><span class="p">])</span>
+
+<span class="c1"># Eliminar identificadores que no aportan predicción</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">drop</span><span class="p">([</span><span class="s1">&#39;encounter_id&#39;</span><span class="p">,</span> <span class="s1">&#39;patient_nbr&#39;</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+
+<span class="c1"># Eliminar visitas que terminaron en fallecimiento o hospicio (no pueden ser readmitidos)</span>
+<span class="c1"># Discharge disposition ids: 11, 13, 14, 19, 20, 21 son relacionados a muerte o hospicio</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="o">~</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;discharge_disposition_id&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">isin</span><span class="p">([</span><span class="mi">11</span><span class="p">,</span> <span class="mi">13</span><span class="p">,</span> <span class="mi">14</span><span class="p">,</span> <span class="mi">19</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="mi">21</span><span class="p">])]</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># ==========================================</span>
+<span class="c1"># 3. Feature Engineering (Ingeniería de Características)</span>
+<span class="c1"># ==========================================</span>
+
+<span class="c1"># A) Tratamiento de la variable objetivo (Target)</span>
+<span class="c1"># Los papers suelen convertir esto a binario:</span>
+<span class="c1"># &lt;30 (Readmisión temprana) = 1</span>
+<span class="c1"># &gt;30 o NO (No readmisión temprana) = 0</span>
+<span class="n">df</span><span class="p">[</span><span class="s1">&#39;target&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;readmitted&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="mi">1</span> <span class="k">if</span> <span class="n">x</span> <span class="o">==</span> <span class="s1">&#39;&lt;30&#39;</span> <span class="k">else</span> <span class="mi">0</span><span class="p">)</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="s1">&#39;readmitted&#39;</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+
+<span class="c1"># B) Agrupación de Códigos de Diagnóstico (ICD-9)</span>
+<span class="c1"># Los códigos ICD-9 son demasiados (700+). Es CRÍTICO agruparlos como hacen los papers (Circulatorio, Diabetes, Respiratorio, etc.)</span>
+<span class="k">def</span> <span class="nf">map_diagnosis</span><span class="p">(</span><span class="n">code</span><span class="p">):</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">pd</span><span class="o">.</span><span class="n">isna</span><span class="p">(</span><span class="n">code</span><span class="p">):</span> <span class="k">return</span> <span class="s1">&#39;Other&#39;</span>
+        <span class="k">if</span> <span class="s1">&#39;V&#39;</span> <span class="ow">in</span> <span class="nb">str</span><span class="p">(</span><span class="n">code</span><span class="p">)</span> <span class="ow">or</span> <span class="s1">&#39;E&#39;</span> <span class="ow">in</span> <span class="nb">str</span><span class="p">(</span><span class="n">code</span><span class="p">):</span> <span class="k">return</span> <span class="s1">&#39;Other&#39;</span>
+        <span class="n">code</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">code</span><span class="p">)</span>
+        <span class="k">if</span> <span class="mi">250</span> <span class="o">&lt;=</span> <span class="n">code</span> <span class="o">&lt;</span> <span class="mi">251</span><span class="p">:</span> <span class="k">return</span> <span class="s1">&#39;Diabetes&#39;</span>
+        <span class="k">elif</span> <span class="mi">390</span> <span class="o">&lt;=</span> <span class="n">code</span> <span class="o">&lt;</span> <span class="mi">460</span><span class="p">:</span> <span class="k">return</span> <span class="s1">&#39;Circulatory&#39;</span>
+        <span class="k">elif</span> <span class="mi">460</span> <span class="o">&lt;=</span> <span class="n">code</span> <span class="o">&lt;</span> <span class="mi">520</span><span class="p">:</span> <span class="k">return</span> <span class="s1">&#39;Respiratory&#39;</span>
+        <span class="k">elif</span> <span class="mi">520</span> <span class="o">&lt;=</span> <span class="n">code</span> <span class="o">&lt;</span> <span class="mi">580</span><span class="p">:</span> <span class="k">return</span> <span class="s1">&#39;Digestive&#39;</span>
+        <span class="k">elif</span> <span class="mi">800</span> <span class="o">&lt;=</span> <span class="n">code</span> <span class="o">&lt;</span> <span class="mi">1000</span><span class="p">:</span> <span class="k">return</span> <span class="s1">&#39;Injury&#39;</span>
+        <span class="k">elif</span> <span class="mi">710</span> <span class="o">&lt;=</span> <span class="n">code</span> <span class="o">&lt;</span> <span class="mi">740</span><span class="p">:</span> <span class="k">return</span> <span class="s1">&#39;Musculoskeletal&#39;</span>
+        <span class="k">elif</span> <span class="mi">580</span> <span class="o">&lt;=</span> <span class="n">code</span> <span class="o">&lt;</span> <span class="mi">630</span><span class="p">:</span> <span class="k">return</span> <span class="s1">&#39;Genitourinary&#39;</span>
+        <span class="k">elif</span> <span class="mi">140</span> <span class="o">&lt;=</span> <span class="n">code</span> <span class="o">&lt;</span> <span class="mi">240</span><span class="p">:</span> <span class="k">return</span> <span class="s1">&#39;Neoplasms&#39;</span>
+        <span class="k">else</span><span class="p">:</span> <span class="k">return</span> <span class="s1">&#39;Other&#39;</span>
+    <span class="k">except</span><span class="p">:</span>
+        <span class="k">return</span> <span class="s1">&#39;Other&#39;</span>
+
+<span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;diag_1&#39;</span><span class="p">,</span> <span class="s1">&#39;diag_2&#39;</span><span class="p">,</span> <span class="s1">&#39;diag_3&#39;</span><span class="p">]:</span>
+    <span class="n">df</span><span class="p">[</span><span class="n">col</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">col</span><span class="p">]</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="n">map_diagnosis</span><span class="p">)</span>
+
+<span class="c1"># C) Codificación de variables de medicación</span>
+<span class="c1"># Los cambios en medicación son predictores fuertes (como vimos en Paper 3)</span>
+<span class="n">keys</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;metformin&#39;</span><span class="p">,</span> <span class="s1">&#39;repaglinide&#39;</span><span class="p">,</span> <span class="s1">&#39;nateglinide&#39;</span><span class="p">,</span> <span class="s1">&#39;chlorpropamide&#39;</span><span class="p">,</span> <span class="s1">&#39;glimepiride&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;acetohexamide&#39;</span><span class="p">,</span> <span class="s1">&#39;glipizide&#39;</span><span class="p">,</span> <span class="s1">&#39;glyburide&#39;</span><span class="p">,</span> <span class="s1">&#39;tolbutamide&#39;</span><span class="p">,</span> <span class="s1">&#39;pioglitazone&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;rosiglitazone&#39;</span><span class="p">,</span> <span class="s1">&#39;acarbose&#39;</span><span class="p">,</span> <span class="s1">&#39;miglitol&#39;</span><span class="p">,</span> <span class="s1">&#39;troglitazone&#39;</span><span class="p">,</span> <span class="s1">&#39;tolazamide&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;examide&#39;</span><span class="p">,</span> <span class="s1">&#39;citoglipton&#39;</span><span class="p">,</span> <span class="s1">&#39;insulin&#39;</span><span class="p">,</span> <span class="s1">&#39;glyburide-metformin&#39;</span><span class="p">,</span> <span class="s1">&#39;glipizide-metformin&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;glimepiride-pioglitazone&#39;</span><span class="p">,</span> <span class="s1">&#39;metformin-rosiglitazone&#39;</span><span class="p">,</span> <span class="s1">&#39;metformin-pioglitazone&#39;</span><span class="p">]</span>
+
+<span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="n">keys</span><span class="p">:</span>
+    <span class="n">df</span><span class="p">[</span><span class="n">col</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">col</span><span class="p">]</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;No&#39;</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;Steady&#39;</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;Up&#39;</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;Down&#39;</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+
+<span class="c1"># &#39;change&#39; y &#39;diabetesMed&#39; también a binario</span>
+<span class="n">df</span><span class="p">[</span><span class="s1">&#39;change&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;change&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;Ch&#39;</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;No&#39;</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+<span class="n">df</span><span class="p">[</span><span class="s1">&#39;diabetesMed&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;diabetesMed&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;Yes&#39;</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;No&#39;</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>C:\Users\locos\AppData\Local\Temp\ipykernel_10300\2794393224.py:43: FutureWarning: Downcasting behavior in `replace` is deprecated and will be removed in a future version. To retain the old behavior, explicitly call `result.infer_objects(copy=False)`. To opt-in to the future behavior, set `pd.set_option(&#39;future.no_silent_downcasting&#39;, True)`
+  df[col] = df[col].replace(&#39;No&#39;, 0).replace(&#39;Steady&#39;, 1).replace(&#39;Up&#39;, 1).replace(&#39;Down&#39;, 1)
+C:\Users\locos\AppData\Local\Temp\ipykernel_10300\2794393224.py:46: FutureWarning: Downcasting behavior in `replace` is deprecated and will be removed in a future version. To retain the old behavior, explicitly call `result.infer_objects(copy=False)`. To opt-in to the future behavior, set `pd.set_option(&#39;future.no_silent_downcasting&#39;, True)`
+  df[&#39;change&#39;] = df[&#39;change&#39;].replace(&#39;Ch&#39;, 1).replace(&#39;No&#39;, 0)
+C:\Users\locos\AppData\Local\Temp\ipykernel_10300\2794393224.py:47: FutureWarning: Downcasting behavior in `replace` is deprecated and will be removed in a future version. To retain the old behavior, explicitly call `result.infer_objects(copy=False)`. To opt-in to the future behavior, set `pd.set_option(&#39;future.no_silent_downcasting&#39;, True)`
+  df[&#39;diabetesMed&#39;] = df[&#39;diabetesMed&#39;].replace(&#39;Yes&#39;, 1).replace(&#39;No&#39;, 0)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># ==========================================</span>
+<span class="c1"># 4. Codificación Final (Encoding)</span>
+<span class="c1"># ==========================================</span>
+
+<span class="c1"># Variables categóricas restantes a One-Hot o Label Encoding</span>
+<span class="c1"># Para XGBoost y RF, LabelEncoding suele ser suficiente y menos pesado que OneHot para árboles</span>
+<span class="n">cat_cols</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;race&#39;</span><span class="p">,</span> <span class="s1">&#39;gender&#39;</span><span class="p">,</span> <span class="s1">&#39;age&#39;</span><span class="p">,</span> <span class="s1">&#39;admission_type_id&#39;</span><span class="p">,</span> <span class="s1">&#39;discharge_disposition_id&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;admission_source_id&#39;</span><span class="p">,</span> <span class="s1">&#39;diag_1&#39;</span><span class="p">,</span> <span class="s1">&#39;diag_2&#39;</span><span class="p">,</span> <span class="s1">&#39;diag_3&#39;</span><span class="p">,</span> <span class="s1">&#39;max_glu_serum&#39;</span><span class="p">,</span> <span class="s1">&#39;A1Cresult&#39;</span><span class="p">]</span>
+
+<span class="n">le</span> <span class="o">=</span> <span class="n">LabelEncoder</span><span class="p">()</span>
+<span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="n">cat_cols</span><span class="p">:</span>
+    <span class="n">df</span><span class="p">[</span><span class="n">col</span><span class="p">]</span> <span class="o">=</span> <span class="n">le</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="n">col</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">str</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># ==========================================</span>
+<span class="c1"># 5. División del Dataset</span>
+<span class="c1"># ==========================================</span>
+
+<span class="n">X</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="s1">&#39;target&#39;</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">y</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;target&#39;</span><span class="p">]</span>
+
+<span class="c1"># Split estratificado para mantener la proporción de readmitidos (que es baja, ~11-13%)</span>
+<span class="n">X_train</span><span class="p">,</span> <span class="n">X_test</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">y_test</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">test_size</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span> <span class="n">stratify</span><span class="o">=</span><span class="n">y</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Dimensiones de X_train: </span><span class="si">{</span><span class="n">X_train</span><span class="o">.</span><span class="n">shape</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Proporción de readmisión en Train: </span><span class="si">{</span><span class="n">y_train</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span><span class="si">:</span><span class="s2">.2%</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Dimensiones de X_train: (76538, 44)
+Proporción de readmisión en Train: 11.52%
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># 1. Configuración para el Desbalanceo de Clases</span>
+<span class="c1"># Calculamos el ratio para XGBoost (Negativos / Positivos)</span>
+<span class="n">ratio</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">y_train</span> <span class="o">==</span> <span class="mi">0</span><span class="p">))</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">y_train</span> <span class="o">==</span> <span class="mi">1</span><span class="p">)</span>
+
+<span class="c1"># 2. Definición de Modelos con Hiperparámetros de la Literatura</span>
+<span class="c1"># Random Forest: Usamos &#39;class_weight=&quot;balanced&quot;&#39; para dar más importancia a la clase minoritaria</span>
+<span class="n">rf_model</span> <span class="o">=</span> <span class="n">RandomForestClassifier</span><span class="p">(</span>
+    <span class="n">n_estimators</span><span class="o">=</span><span class="mi">200</span><span class="p">,</span>
+    <span class="n">max_depth</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span>
+    <span class="n">class_weight</span><span class="o">=</span><span class="s1">&#39;balanced&#39;</span><span class="p">,</span>
+    <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">,</span>
+    <span class="n">n_jobs</span><span class="o">=-</span><span class="mi">1</span>
+<span class="p">)</span>
+
+<span class="c1"># XGBoost: Usamos &#39;scale_pos_weight&#39; para el desbalanceo</span>
+<span class="n">xgb_model</span> <span class="o">=</span> <span class="n">XGBClassifier</span><span class="p">(</span>
+    <span class="n">n_estimators</span><span class="o">=</span><span class="mi">200</span><span class="p">,</span>
+    <span class="n">learning_rate</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span>
+    <span class="n">max_depth</span><span class="o">=</span><span class="mi">6</span><span class="p">,</span>
+    <span class="n">scale_pos_weight</span><span class="o">=</span><span class="n">ratio</span><span class="p">,</span>
+    <span class="n">use_label_encoder</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+    <span class="n">eval_metric</span><span class="o">=</span><span class="s1">&#39;logloss&#39;</span><span class="p">,</span>
+    <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">,</span>
+    <span class="n">n_jobs</span><span class="o">=-</span><span class="mi">1</span>
+<span class="p">)</span>
+
+<span class="c1"># 3. Entrenamiento</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Entrenando Random Forest...&quot;</span><span class="p">)</span>
+<span class="n">rf_model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Entrenando XGBoost...&quot;</span><span class="p">)</span>
+<span class="n">xgb_model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
+
+<span class="c1"># 4. Evaluación Rápida</span>
+<span class="k">def</span> <span class="nf">evaluar_modelo</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">X_test</span><span class="p">,</span> <span class="n">y_test</span><span class="p">,</span> <span class="n">nombre</span><span class="p">):</span>
+    <span class="n">preds</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_test</span><span class="p">)</span>
+    <span class="n">probs</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">predict_proba</span><span class="p">(</span><span class="n">X_test</span><span class="p">)[:,</span> <span class="mi">1</span><span class="p">]</span>
+    
+    <span class="n">auc</span> <span class="o">=</span> <span class="n">roc_auc_score</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">probs</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">--- Resultados para </span><span class="si">{</span><span class="n">nombre</span><span class="si">}</span><span class="s2"> ---&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;AUC-ROC: </span><span class="si">{</span><span class="n">auc</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="c1"># Nos enfocamos en el reporte de la clase 1 (Readmitidos)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">classification_report</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">preds</span><span class="p">))</span>
+    <span class="k">return</span> <span class="n">probs</span><span class="p">,</span> <span class="n">auc</span>
+
+<span class="c1"># Obtener probabilidades para graficar</span>
+<span class="n">rf_probs</span><span class="p">,</span> <span class="n">rf_auc</span> <span class="o">=</span> <span class="n">evaluar_modelo</span><span class="p">(</span><span class="n">rf_model</span><span class="p">,</span> <span class="n">X_test</span><span class="p">,</span> <span class="n">y_test</span><span class="p">,</span> <span class="s2">&quot;Random Forest&quot;</span><span class="p">)</span>
+<span class="n">xgb_probs</span><span class="p">,</span> <span class="n">xgb_auc</span> <span class="o">=</span> <span class="n">evaluar_modelo</span><span class="p">(</span><span class="n">xgb_model</span><span class="p">,</span> <span class="n">X_test</span><span class="p">,</span> <span class="n">y_test</span><span class="p">,</span> <span class="s2">&quot;XGBoost&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Entrenando Random Forest...
+Entrenando XGBoost...
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>c:\COSAS IVAN JR PC\Documentos\Machine_Learning\Trabajo_Final\.venv\Lib\site-packages\xgboost\training.py:199: UserWarning: [16:59:50] WARNING: C:\actions-runner\_work\xgboost\xgboost\src\learner.cc:790: 
+Parameters: { &quot;use_label_encoder&quot; } are not used.
+
+  bst.update(dtrain, iteration=i, fobj=obj)
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>--- Resultados para Random Forest ---
+AUC-ROC: 0.6303
+              precision    recall  f1-score   support
+
+           0       0.89      0.99      0.94     16930
+           1       0.28      0.03      0.05      2205
+
+    accuracy                           0.88     19135
+   macro avg       0.58      0.51      0.49     19135
+weighted avg       0.82      0.88      0.83     19135
+
+
+--- Resultados para XGBoost ---
+AUC-ROC: 0.6576
+              precision    recall  f1-score   support
+
+           0       0.92      0.70      0.79     16930
+           1       0.19      0.53      0.27      2205
+
+    accuracy                           0.68     19135
+   macro avg       0.55      0.61      0.53     19135
+weighted avg       0.83      0.68      0.73     19135
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># 5. Gráfico Comparativo: Curvas ROC</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
+
+<span class="c1"># Calcular curvas</span>
+<span class="n">rf_fpr</span><span class="p">,</span> <span class="n">rf_tpr</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">roc_curve</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">rf_probs</span><span class="p">)</span>
+<span class="n">xgb_fpr</span><span class="p">,</span> <span class="n">xgb_tpr</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">roc_curve</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">xgb_probs</span><span class="p">)</span>
+
+<span class="c1"># Plotear</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">rf_fpr</span><span class="p">,</span> <span class="n">rf_tpr</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;Random Forest (AUC = </span><span class="si">{</span><span class="n">rf_auc</span><span class="si">:</span><span class="s1">.2f</span><span class="si">}</span><span class="s1">)&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;green&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">xgb_fpr</span><span class="p">,</span> <span class="n">xgb_tpr</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;XGBoost (AUC = </span><span class="si">{</span><span class="n">xgb_auc</span><span class="si">:</span><span class="s1">.2f</span><span class="si">}</span><span class="s1">)&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;blue&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="s1">&#39;k--&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Azar (0.5)&#39;</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Tasa de Falsos Positivos (FPR)&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Tasa de Verdaderos Positivos (TPR - Recall)&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Comparación de Modelos Base: Curva ROC&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="n">alpha</span><span class="o">=</span><span class="mf">0.3</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/70607be7f003db30001dc5b559b4bd28964a196af14649ca2625c38c76b7417c.png" src="../_images/70607be7f003db30001dc5b559b4bd28964a196af14649ca2625c38c76b7417c.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># 1. Definición de la Arquitectura de Stacking</span>
+<span class="c1"># Nivel 0: Los modelos base que ya definimos (y que sabemos que funcionan bien)</span>
+<span class="n">estimators</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="p">(</span><span class="s1">&#39;rf&#39;</span><span class="p">,</span> <span class="n">rf_model</span><span class="p">),</span>
+    <span class="p">(</span><span class="s1">&#39;xgb&#39;</span><span class="p">,</span> <span class="n">xgb_model</span><span class="p">)</span>
+<span class="p">]</span>
+
+<span class="c1"># Nivel 1: Meta-Learner</span>
+<span class="c1"># Usamos Regresión Logística porque queremos interpretabilidad (ver los coeficientes)</span>
+<span class="c1"># y porque funciona muy bien para combinar probabilidades.</span>
+<span class="n">meta_learner</span> <span class="o">=</span> <span class="n">LogisticRegression</span><span class="p">(</span><span class="n">class_weight</span><span class="o">=</span><span class="s1">&#39;balanced&#39;</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
+
+<span class="c1"># Construcción del Stacking</span>
+<span class="n">stacking_model</span> <span class="o">=</span> <span class="n">StackingClassifier</span><span class="p">(</span>
+    <span class="n">estimators</span><span class="o">=</span><span class="n">estimators</span><span class="p">,</span>
+    <span class="n">final_estimator</span><span class="o">=</span><span class="n">meta_learner</span><span class="p">,</span>
+    <span class="n">cv</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span>  <span class="c1"># Validación cruzada interna de 5 pliegues para generar las predicciones de entrenamiento</span>
+    <span class="n">n_jobs</span><span class="o">=-</span><span class="mi">1</span><span class="p">,</span>
+    <span class="n">passthrough</span><span class="o">=</span><span class="kc">False</span> <span class="c1"># False = El meta-modelo solo ve las predicciones, no los datos originales</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># 2. Entrenamiento (Esto puede tardar un poco más porque entrena múltiples veces)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Entrenando Stacking Classifier (esto puede tomar unos minutos)...&quot;</span><span class="p">)</span>
+<span class="n">stacking_model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
+<span class="n">stack_probs</span> <span class="o">=</span> <span class="n">stacking_model</span><span class="o">.</span><span class="n">predict_proba</span><span class="p">(</span><span class="n">X_test</span><span class="p">)[:,</span> <span class="mi">1</span><span class="p">]</span>
+
+<span class="n">best_threshold</span> <span class="o">=</span> <span class="mf">0.5</span>
+<span class="n">best_f1</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="n">thresholds</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mf">0.1</span><span class="p">,</span> <span class="mf">0.9</span><span class="p">,</span> <span class="mf">0.05</span><span class="p">)</span> <span class="c1"># Probamos de 0.1 a 0.9</span>
+
+<span class="k">for</span> <span class="n">thresh</span> <span class="ow">in</span> <span class="n">thresholds</span><span class="p">:</span>
+    <span class="n">preds_thresh</span> <span class="o">=</span> <span class="p">(</span><span class="n">stack_probs</span> <span class="o">&gt;=</span> <span class="n">thresh</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span>
+    <span class="n">score</span> <span class="o">=</span> <span class="n">f1_score</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">preds_thresh</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">score</span> <span class="o">&gt;</span> <span class="n">best_f1</span><span class="p">:</span>
+        <span class="n">best_f1</span> <span class="o">=</span> <span class="n">score</span>
+        <span class="n">best_threshold</span> <span class="o">=</span> <span class="n">thresh</span>
+
+<span class="c1"># Generar predicciones finales usando el nuevo umbral</span>
+<span class="n">final_preds</span> <span class="o">=</span> <span class="p">(</span><span class="n">stack_probs</span> <span class="o">&gt;=</span> <span class="n">best_threshold</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Entrenando Stacking Classifier (esto puede tomar unos minutos)...
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.metrics</span> <span class="kn">import</span> <span class="n">roc_auc_score</span><span class="p">,</span> <span class="n">roc_curve</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+
+
+<span class="c1"># Calculamos el AUC del Stacking</span>
+<span class="n">stack_auc</span> <span class="o">=</span> <span class="n">roc_auc_score</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">final_preds</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;AUC-ROC del Stacking: </span><span class="si">{</span><span class="n">stack_auc</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="c1"># --- PASO 2: Graficar ---</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
+
+<span class="c1"># Dibujar Random Forest (Asumiendo que ya calculaste rf_fpr y rf_tpr antes)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">rf_fpr</span><span class="p">,</span> <span class="n">rf_tpr</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;Random Forest (AUC = </span><span class="si">{</span><span class="n">rf_auc</span><span class="si">:</span><span class="s1">.4f</span><span class="si">}</span><span class="s1">)&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;green&#39;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
+
+<span class="c1"># Dibujar XGBoost (Asumiendo que ya calculaste xgb_fpr y xgb_tpr antes)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">xgb_fpr</span><span class="p">,</span> <span class="n">xgb_tpr</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;XGBoost (AUC = </span><span class="si">{</span><span class="n">xgb_auc</span><span class="si">:</span><span class="s1">.4f</span><span class="si">}</span><span class="s1">)&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;blue&#39;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
+
+<span class="c1"># Dibujar Stacking (El nuevo)</span>
+<span class="n">stack_fpr</span><span class="p">,</span> <span class="n">stack_tpr</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">roc_curve</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">stack_probs</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">stack_fpr</span><span class="p">,</span> <span class="n">stack_tpr</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;Stacking Ensemble (AUC = </span><span class="si">{</span><span class="n">stack_auc</span><span class="si">:</span><span class="s1">.4f</span><span class="si">}</span><span class="s1">)&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;red&#39;</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+
+<span class="c1"># Línea base y etiquetas</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="s1">&#39;k--&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Tasa de Falsos Positivos (FPR)&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Tasa de Verdaderos Positivos (Recall)&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Comparación Final: Modelos Base vs. Modelo Propuesto&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="n">alpha</span><span class="o">=</span><span class="mf">0.3</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+
+<span class="c1"># --- PASO 3: Ver los Pesos (Interpretabilidad) ---</span>
+<span class="k">try</span><span class="p">:</span>
+    <span class="n">coeficientes</span> <span class="o">=</span> <span class="n">stacking_model</span><span class="o">.</span><span class="n">final_estimator_</span><span class="o">.</span><span class="n">coef_</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">--- Pesos asignados por el Meta-Learner ---&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Peso dado a Random Forest: </span><span class="si">{</span><span class="n">coeficientes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Peso dado a XGBoost:       </span><span class="si">{</span><span class="n">coeficientes</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="k">except</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;No se pudieron extraer los coeficientes (quizás el meta-modelo no es lineal).&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>AUC-ROC del Stacking: 0.6150
+</pre></div>
+</div>
+<img alt="../_images/4c088250a0a13485c4cc76ab2fb0dc1f00c6acd526e1f724f2c00ccd73641858.png" src="../_images/4c088250a0a13485c4cc76ab2fb0dc1f00c6acd526e1f724f2c00ccd73641858.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>--- Pesos asignados por el Meta-Learner ---
+Peso dado a Random Forest: 1.0547
+Peso dado a XGBoost:       2.9969
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># 2. Calcular la matriz</span>
+<span class="n">cm</span> <span class="o">=</span> <span class="n">confusion_matrix</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">final_preds</span><span class="p">)</span>
+
+<span class="c1"># 3. Visualización bonita con Seaborn</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">heatmap</span><span class="p">(</span><span class="n">cm</span><span class="p">,</span> <span class="n">annot</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">fmt</span><span class="o">=</span><span class="s1">&#39;d&#39;</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;Blues&#39;</span><span class="p">,</span> <span class="n">cbar</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+            <span class="n">xticklabels</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;No Readmitido (0)&#39;</span><span class="p">,</span> <span class="s1">&#39;Readmitido (1)&#39;</span><span class="p">],</span>
+            <span class="n">yticklabels</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;No Readmitido (0)&#39;</span><span class="p">,</span> <span class="s1">&#39;Readmitido (1)&#39;</span><span class="p">])</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Predicción del Modelo&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Realidad (Etiqueta Real)&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Matriz de Confusión: Stacking Ensemble&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+
+<span class="c1"># 4. Métricas derivadas rápidas para interpretar la matriz</span>
+<span class="n">tn</span><span class="p">,</span> <span class="n">fp</span><span class="p">,</span> <span class="n">fn</span><span class="p">,</span> <span class="n">tp</span> <span class="o">=</span> <span class="n">cm</span><span class="o">.</span><span class="n">ravel</span><span class="p">()</span>
+<span class="n">specificity</span> <span class="o">=</span> <span class="n">tn</span> <span class="o">/</span> <span class="p">(</span><span class="n">tn</span> <span class="o">+</span> <span class="n">fp</span><span class="p">)</span>
+<span class="n">sensitivity</span> <span class="o">=</span> <span class="n">tp</span> <span class="o">/</span> <span class="p">(</span><span class="n">tp</span> <span class="o">+</span> <span class="n">fn</span><span class="p">)</span> <span class="c1"># Recall</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;--- Análisis de Errores ---&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Verdaderos Negativos (Correctos sanos): </span><span class="si">{</span><span class="n">tn</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Falsos Positivos (Alarma falsa): </span><span class="si">{</span><span class="n">fp</span><span class="si">}</span><span class="s2">  &lt;-- Costo operativo (revisar a alguien que no volverá)&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Falsos Negativos (Error grave): </span><span class="si">{</span><span class="n">fn</span><span class="si">}</span><span class="s2">   &lt;-- Riesgo clínico (mandar a casa a alguien que volverá)&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Verdaderos Positivos (Acierto riesgo): </span><span class="si">{</span><span class="n">tp</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Sensibilidad (Recall): </span><span class="si">{</span><span class="n">sensitivity</span><span class="si">:</span><span class="s2">.2%</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Especificidad: </span><span class="si">{</span><span class="n">specificity</span><span class="si">:</span><span class="s2">.2%</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/03657c0bf63cf2b0bd2771d9da3df4948993d948b68864d04e0fda7256fb172f.png" src="../_images/03657c0bf63cf2b0bd2771d9da3df4948993d948b68864d04e0fda7256fb172f.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>--- Análisis de Errores ---
+Verdaderos Negativos (Correctos sanos): 12179
+Falsos Positivos (Alarma falsa): 4751  &lt;-- Costo operativo (revisar a alguien que no volverá)
+Falsos Negativos (Error grave): 1079   &lt;-- Riesgo clínico (mandar a casa a alguien que volverá)
+Verdaderos Positivos (Acierto riesgo): 1126
+
+Sensibilidad (Recall): 51.07%
+Especificidad: 71.94%
+</pre></div>
+</div>
+</div>
+</div>
+<section id="analisis-de-resultados-y-conclusiones-finales">
+<h1>6. Análisis de Resultados y Conclusiones Finales<a class="headerlink" href="#analisis-de-resultados-y-conclusiones-finales" title="Link to this heading">#</a></h1>
+<section id="desempeno-del-modelo-original-stacking-ensemble">
+<h2>Desempeño del Modelo Original (Stacking Ensemble)<a class="headerlink" href="#desempeno-del-modelo-original-stacking-ensemble" title="Link to this heading">#</a></h2>
+<p>Tras implementar correcciones de balanceo de clases y ajuste de umbral de decisión, hemos logrado transformar un modelo “perezoso” (que maximizaba la exactitud ignorando a los enfermos) en una herramienta de triaje clínico funcional.</p>
+<p><strong>1. Capacidad de Detección (Sensibilidad/Recall):</strong>
+El hallazgo más crítico es que nuestro modelo alcanzó una <strong>Sensibilidad del 51.07%</strong>.</p>
+<ul class="simple">
+<li><p><em>Significado Clínico:</em> De todos los pacientes que realmente iban a ser readmitidos, el modelo logró identificar correctamente a más de la mitad (<strong>1,126 pacientes</strong>).</p></li>
+<li><p><em>Comparación:</em> Esto representa una mejora operativa masiva frente a modelos base sin ajustar, que tendían a tener un Recall cercano a 0.</p></li>
+</ul>
+<p><strong>2. El “Costo” de la Detección (Especificidad y Falsos Positivos):</strong>
+Para lograr esta sensibilidad, el modelo sacrificó especificidad (bajando al 71.94%).</p>
+<ul class="simple">
+<li><p>Generamos <strong>4,751 Falsos Positivos</strong> (pacientes que el modelo marcó como riesgo, pero que no volvieron).</p></li>
+<li><p><em>Interpretación:</em> En un contexto hospitalario, esto es aceptable y preferible. Es mucho menos grave gastar recursos revisando a un paciente sano (Falso Positivo) que dar de alta erróneamente a un paciente que sufrirá una recaída grave (Falso Negativo).</p></li>
+</ul>
+<p><strong>3. Análisis de la Curva ROC y Pesos:</strong>
+Aunque el AUC global del Stacking (0.615) descendió ligeramente respecto al XGBoost puro (0.657), el Stacking demostró ser más útil en la práctica al permitirnos ajustar el punto de operación.</p>
+<ul class="simple">
+<li><p>El Meta-Learner asignó un peso de <strong>~3.0 a XGBoost</strong> frente a <strong>~1.0 de Random Forest</strong>, confirmando nuevamente que el Boosting es la arquitectura dominante para este tipo de datos tabulares complejos.</p></li>
+</ul>
+</section>
+<section id="conclusion-general-y-recomendacion">
+<h2>Conclusión General y Recomendación<a class="headerlink" href="#conclusion-general-y-recomendacion" title="Link to this heading">#</a></h2>
+<p>La arquitectura propuesta de <strong>Stacking Ensemble con Ajuste de Umbral</strong> ha demostrado ser una estrategia viable para el problema de readmisión en pacientes diabéticos.</p>
+<p>Hemos superado la barrera de la “exactitud vacía” y propuesto un modelo que, si bien genera alertas falsas, <strong>captura exitosamente al 51% de la población de alto riesgo</strong>.</p>
+<p><strong>Para futuros trabajos:</strong>
+Se recomienda enfocar los esfuerzos no en probar más algoritmos, sino en mejorar la calidad de los datos (Feature Engineering), por ejemplo: incorporando variables de determinantes sociales o procesando el texto libre de las notas clínicas con NLP, ya que los límites actuales parecen estar dados por la información disponible en el dataset y no por la capacidad de los modelos.</p>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./notebooks"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#desempeno-del-modelo-original-stacking-ensemble">Desempeño del Modelo Original (Stacking Ensemble)</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#conclusion-general-y-recomendacion">Conclusión General y Recomendación</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By José Menco, Camilo Vargas, Iván Ramirez
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2023.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>
