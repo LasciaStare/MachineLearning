@@ -5,7 +5,6 @@ title: Readmission Diabetes Prediction
 author: José Menco, Camilo Vargas, Iván Ramirez
 logo: logo.png
 
-
 execute:
   execute_notebooks: off
 
@@ -27,5 +26,6 @@ repository:
 # Add GitHub buttons to your book
 # See https://jupyterbook.org/customize/config.html#add-a-link-to-your-repository
 html:
+  favicon: icon.png
   use_issues_button: true
   use_repository_button: true
