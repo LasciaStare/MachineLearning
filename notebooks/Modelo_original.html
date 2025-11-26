@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>6. Análisis de Resultados y Conclusiones Finales &#8212; Readmission Diabetes Prediction</title>
+    <title>Modelo Original &#8212; Readmission Diabetes Prediction</title>
   
   
   
@@ -61,6 +61,8 @@
     <link rel="icon" href="../_static/icon.png"/>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Modelos de Clasificación: Logístico, Ridge y Lasso" href="Modelos_Logisticos.html" />
+    <link rel="prev" title="Validacion Avanzada, Tuning e Interpretabilidad" href="6_Validacion_Tuning.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   </head>
@@ -123,8 +125,6 @@
       
       
       
-        
-      
       <div class="bd-sidebar-primary bd-sidebar">
         
 
@@ -180,8 +180,8 @@
                 </a>
             </li>
         </ul>
-        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Entregable 3</span></p>
-<ul class="nav bd-sidenav">
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Entregable 4</span></p>
+<ul class="current nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="1_EDA.html"><strong>EDA</strong></a></li>
 <li class="toctree-l1"><a class="reference internal" href="1_5_Preprocesamiento.html"><strong>Preprocesamiento de Datos</strong></a></li>
 <li class="toctree-l1"><a class="reference internal" href="2_Benchmark.html">Benchmark</a></li>
@@ -190,6 +190,7 @@
 <li class="toctree-l1"><a class="reference internal" href="4_Optimizacion.html">Optimización de Modelos de Machine Learning</a></li>
 <li class="toctree-l1"><a class="reference internal" href="5_Evaluacion.html">Evaluacion de Modelos de Machine Learning</a></li>
 <li class="toctree-l1"><a class="reference internal" href="6_Validacion_Tuning.html">Validacion Avanzada, Tuning e Interpretabilidad</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Modelo Original</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Modelos pasados</span></p>
 <ul class="nav bd-sidenav">
@@ -380,7 +381,7 @@ document.write(`
               
 
 <div id="jb-print-docs-body" class="onlyprint">
-    <h1>6. Análisis de Resultados y Conclusiones Finales</h1>
+    <h1>Modelo Original</h1>
     <!-- Table of contents -->
     <div id="print-main-content">
         <div id="jb-print-toc">
@@ -390,8 +391,11 @@ document.write(`
             </div>
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#desempeno-del-modelo-original-stacking-ensemble">Desempeño del Modelo Original (Stacking Ensemble)</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#conclusion-general-y-recomendacion">Conclusión General y Recomendación</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#analisis-de-resultados-y-conclusiones-finales">6. Análisis de Resultados y Conclusiones Finales</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#desempeno-del-modelo-original-stacking-ensemble">Desempeño del Modelo Original (Stacking Ensemble)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#conclusion-general-y-recomendacion">Conclusión General y Recomendación</a></li>
+</ul>
+</li>
 </ul>
             </nav>
         </div>
@@ -403,7 +407,9 @@ document.write(`
 <div id="searchbox"></div>
                 <article class="bd-article">
                   
-  <div class="cell docutils container">
+  <section class="tex2jax_ignore mathjax_ignore" id="modelo-original">
+<h1>Modelo Original<a class="headerlink" href="#modelo-original" title="Link to this heading">#</a></h1>
+<div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
@@ -835,9 +841,9 @@ Especificidad: 71.94%
 </div>
 </div>
 <section id="analisis-de-resultados-y-conclusiones-finales">
-<h1>6. Análisis de Resultados y Conclusiones Finales<a class="headerlink" href="#analisis-de-resultados-y-conclusiones-finales" title="Link to this heading">#</a></h1>
+<h2>6. Análisis de Resultados y Conclusiones Finales<a class="headerlink" href="#analisis-de-resultados-y-conclusiones-finales" title="Link to this heading">#</a></h2>
 <section id="desempeno-del-modelo-original-stacking-ensemble">
-<h2>Desempeño del Modelo Original (Stacking Ensemble)<a class="headerlink" href="#desempeno-del-modelo-original-stacking-ensemble" title="Link to this heading">#</a></h2>
+<h3>Desempeño del Modelo Original (Stacking Ensemble)<a class="headerlink" href="#desempeno-del-modelo-original-stacking-ensemble" title="Link to this heading">#</a></h3>
 <p>Tras implementar correcciones de balanceo de clases y ajuste de umbral de decisión, hemos logrado transformar un modelo “perezoso” (que maximizaba la exactitud ignorando a los enfermos) en una herramienta de triaje clínico funcional.</p>
 <p><strong>1. Capacidad de Detección (Sensibilidad/Recall):</strong>
 El hallazgo más crítico es que nuestro modelo alcanzó una <strong>Sensibilidad del 51.07%</strong>.</p>
@@ -858,11 +864,12 @@ Aunque el AUC global del Stacking (0.615) descendió ligeramente respecto al XGB
 </ul>
 </section>
 <section id="conclusion-general-y-recomendacion">
-<h2>Conclusión General y Recomendación<a class="headerlink" href="#conclusion-general-y-recomendacion" title="Link to this heading">#</a></h2>
+<h3>Conclusión General y Recomendación<a class="headerlink" href="#conclusion-general-y-recomendacion" title="Link to this heading">#</a></h3>
 <p>La arquitectura propuesta de <strong>Stacking Ensemble con Ajuste de Umbral</strong> ha demostrado ser una estrategia viable para el problema de readmisión en pacientes diabéticos.</p>
 <p>Hemos superado la barrera de la “exactitud vacía” y propuesto un modelo que, si bien genera alertas falsas, <strong>captura exitosamente al 51% de la población de alto riesgo</strong>.</p>
 <p><strong>Para futuros trabajos:</strong>
 Se recomienda enfocar los esfuerzos no en probar más algoritmos, sino en mejorar la calidad de los datos (Feature Engineering), por ejemplo: incorporando variables de determinantes sociales o procesando el texto libre de las notas clínicas con NLP, ya que los límites actuales parecen estar dados por la información disponible en el dataset y no por la capacidad de los modelos.</p>
+</section>
 </section>
 </section>
 
@@ -896,6 +903,24 @@ Se recomienda enfocar los esfuerzos no en probar más algoritmos, sino en mejora
                 <footer class="prev-next-footer d-print-none">
                   
 <div class="prev-next-area">
+    <a class="left-prev"
+       href="6_Validacion_Tuning.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Validacion Avanzada, Tuning e Interpretabilidad</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="Modelos_Logisticos.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title"><strong>Modelos de Clasificación: Logístico, Ridge y Lasso</strong></p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
 </div>
                 </footer>
               
@@ -912,8 +937,11 @@ Se recomienda enfocar los esfuerzos no en probar más algoritmos, sino en mejora
   </div>
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#desempeno-del-modelo-original-stacking-ensemble">Desempeño del Modelo Original (Stacking Ensemble)</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#conclusion-general-y-recomendacion">Conclusión General y Recomendación</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#analisis-de-resultados-y-conclusiones-finales">6. Análisis de Resultados y Conclusiones Finales</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#desempeno-del-modelo-original-stacking-ensemble">Desempeño del Modelo Original (Stacking Ensemble)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#conclusion-general-y-recomendacion">Conclusión General y Recomendación</a></li>
+</ul>
+</li>
 </ul>
   </nav></div>
 

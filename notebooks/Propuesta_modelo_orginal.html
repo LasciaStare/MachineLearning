@@ -1,0 +1,661 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Predicción de Readmisión Hospitalaria en Pacientes Diabéticos: Revisión del Estado dela literatura y Propuesta de un Nuevo Enfoque &#8212; Readmission Diabetes Prediction</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="../_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=fa44fd50" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=eba8b062" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.8ecb98da25f57f5357bf6f572d296f466b2cfe2517ffebfabe82451661e28f02.css?v=6644e6bb" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script src="../_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../_static/copybutton.js?v=f281be69"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../_static/togglebutton.js?v=4a39c7ea"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="../_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'notebooks/Propuesta_modelo_orginal';</script>
+    <link rel="icon" href="../_static/icon.png"/>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+        
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../Introduccion.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../_static/logo.png" class="logo__image only-light" alt="Readmission Diabetes Prediction - Home"/>
+    <script>document.write(`<img src="../_static/logo.png" class="logo__image only-dark" alt="Readmission Diabetes Prediction - Home"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../Introduccion.html">
+                    Predicción de Readmisión Hospitalaria en Pacientes Diabéticos
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Entregable 4</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="1_EDA.html"><strong>EDA</strong></a></li>
+<li class="toctree-l1"><a class="reference internal" href="1_5_Preprocesamiento.html"><strong>Preprocesamiento de Datos</strong></a></li>
+<li class="toctree-l1"><a class="reference internal" href="2_Benchmark.html">Benchmark</a></li>
+
+<li class="toctree-l1"><a class="reference internal" href="3_Balanceo.html">Técnicas de balanceo</a></li>
+<li class="toctree-l1"><a class="reference internal" href="4_Optimizacion.html">Optimización de Modelos de Machine Learning</a></li>
+<li class="toctree-l1"><a class="reference internal" href="5_Evaluacion.html">Evaluacion de Modelos de Machine Learning</a></li>
+<li class="toctree-l1"><a class="reference internal" href="6_Validacion_Tuning.html">Validacion Avanzada, Tuning e Interpretabilidad</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Modelo_original.html">6. Análisis de Resultados y Conclusiones Finales</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Modelos pasados</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="Modelos_Logisticos.html"><strong>Modelos de Clasificación: Logístico, Ridge y Lasso</strong></a></li>
+<li class="toctree-l1"><a class="reference internal" href="Modelo_Knn.html"><strong>Modelo Knn</strong></a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/executablebooks/jupyter-book" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/executablebooks/jupyter-book/issues/new?title=Issue%20on%20page%20%2Fnotebooks/Propuesta_modelo_orginal.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../_sources/notebooks/Propuesta_modelo_orginal.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Predicción de Readmisión Hospitalaria en Pacientes Diabéticos: Revisión del Estado dela literatura y Propuesta de un Nuevo Enfoque</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#introduccion-y-contexto-clinico">1. Introducción y Contexto Clínico</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#definicion-del-problema">2. Definición del Problema</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#objetivos-del-proyecto">3. Objetivos del Proyecto</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#revision-de-la-literatura">4. Revisión de la Literatura</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#paper-1-determinants-and-predictors-of-early-re-admission-of-patients-with-hyperglycemic-crises">Paper 1: Determinants and predictors of early re-admission of patients with hyperglycemic crises</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#paper-2-comparison-of-machine-learning-models-for-predicting-30-day-readmission-rates">Paper 2: Comparison of machine learning models for predicting 30-day readmission rates</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#paper-3-implementation-of-machine-learning-algorithms-to-create-diabetic-patient-re-admission-profiles">Paper 3: Implementation of machine learning algorithms to create diabetic patient re-admission profiles</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#propuesta-de-valor-y-estrategia-de-modelado-stacking-ensemble">5. Propuesta de Valor y Estrategia de Modelado: Stacking Ensemble</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#identificacion-de-la-oportunidad">Identificación de la Oportunidad</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#nuestra-propuesta-arquitectura-stacking-classifier">Nuestra Propuesta: Arquitectura “Stacking Classifier”</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#beneficios-esperados">Beneficios Esperados</a></li>
+</ul>
+</li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="prediccion-de-readmision-hospitalaria-en-pacientes-diabeticos-revision-del-estado-dela-literatura-y-propuesta-de-un-nuevo-enfoque">
+<h1>Predicción de Readmisión Hospitalaria en Pacientes Diabéticos: Revisión del Estado dela literatura y Propuesta de un Nuevo Enfoque<a class="headerlink" href="#prediccion-de-readmision-hospitalaria-en-pacientes-diabeticos-revision-del-estado-dela-literatura-y-propuesta-de-un-nuevo-enfoque" title="Link to this heading">#</a></h1>
+<section id="introduccion-y-contexto-clinico">
+<h2>1. Introducción y Contexto Clínico<a class="headerlink" href="#introduccion-y-contexto-clinico" title="Link to this heading">#</a></h2>
+<p>La diabetes representa uno de los desafíos más significativos para los sistemas de salud modernos. A pesar de la existencia de evidencia de alta calidad que demuestra que las intervenciones preventivas y terapéuticas mejoran los resultados clínicos, una proporción alarmante de pacientes no recibe el cuidado adecuado.</p>
+<p>Esta brecha en la atención se atribuye parcialmente a una gestión arbitraria de la diabetes en entornos hospitalarios, donde el control glucémico a menudo no recibe la prioridad necesaria. La consecuencia directa es el aumento de las <strong>readmisiones hospitalarias tempranas</strong> (dentro de los 30 días posteriores al alta).</p>
+<p>El problema de la readmisión no es solo financiero —incrementando los costos operativos para hospitales y redes de salud— sino fundamentalmente humano, impactando la morbilidad y mortalidad de pacientes que enfrentan complicaciones severas.</p>
+</section>
+<section id="definicion-del-problema">
+<h2>2. Definición del Problema<a class="headerlink" href="#definicion-del-problema" title="Link to this heading">#</a></h2>
+<p>El objetivo central de este estudio se basa en un conjunto de datos históricos que abarca diez años (1999-2008) de atención clínica en 130 hospitales y redes de entrega integrada en EE.UU. Cada registro representa la estancia hospitalaria de un paciente diagnosticado con diabetes, incluyendo pruebas de laboratorio, medicamentos y estancias de hasta 14 días.</p>
+<p>La tarea analítica es <strong>determinar la probabilidad de readmisión temprana del paciente ( &lt; 30 días)</strong> basándonos en estas variables clínicas y administrativas.</p>
+</section>
+<section id="objetivos-del-proyecto">
+<h2>3. Objetivos del Proyecto<a class="headerlink" href="#objetivos-del-proyecto" title="Link to this heading">#</a></h2>
+<p>Este notebook tiene una estructura dual orientada a la innovación en el modelado predictivo:</p>
+<ol class="arabic simple">
+<li><p><strong>Revisión del Estado del Arte:</strong> Realizar una búsqueda y análisis de las distintas metodologías y algoritmos de Machine Learning (como XGBoost, SVM, entre otros) que han sido utilizados históricamente en la literatura para resolver este problema específico.</p></li>
+<li><p><strong>Detección de Brechas y Propuesta Original:</strong> Basándonos en el análisis anterior, identificaremos qué enfoques no han sido explorados o subutilizados.</p></li>
+<li><p><strong>Implementación de un Modelo Inédito:</strong> Propondremos e implementaremos una arquitectura de modelado o un enfoque algorítmico que <strong>no se haya utilizado previamente en la literatura consultada</strong>, con el fin de superar las métricas de desempeño actuales o aportar mayor interpretabilidad al fenómeno de la readmisión.</p></li>
+</ol>
+</section>
+<hr class="docutils" />
+<section id="revision-de-la-literatura">
+<h2>4. Revisión de la Literatura<a class="headerlink" href="#revision-de-la-literatura" title="Link to this heading">#</a></h2>
+<p>A continuación, se presentan los hallazgos de investigaciones previas que han abordado la problemática de la readmisión utilizando el mismo conjunto de datos o contextos clínicos similares.</p>
+<section id="paper-1-determinants-and-predictors-of-early-re-admission-of-patients-with-hyperglycemic-crises">
+<h3>Paper 1: Determinants and predictors of early re-admission of patients with hyperglycemic crises<a class="headerlink" href="#paper-1-determinants-and-predictors-of-early-re-admission-of-patients-with-hyperglycemic-crises" title="Link to this heading">#</a></h3>
+<p><strong>Resumen del Enfoque:</strong>
+Este estudio se centró en pacientes admitidos por crisis hiperglucémicas utilizando el dataset público de hospitales de EE.UU. (1999-2008). El objetivo principal fue superar las limitaciones de las técnicas estadísticas clásicas mediante el uso de Inteligencia Artificial para identificar pacientes en riesgo.</p>
+<p><strong>Metodología y Modelo:</strong>
+Los autores evaluaron inicialmente tres modelos de Machine Learning, seleccionando aquel que maximizara la capacidad de detectar los casos positivos (readmisión).</p>
+<ul class="simple">
+<li><p><strong>Modelo Seleccionado:</strong> Extreme Gradient Boosting (XGBoost).</p></li>
+<li><p><strong>Variables Importantes:</strong> El modelo identificó la edad, el número de medicamentos, las visitas previas a emergencias/hospitalización y los procedimientos no de laboratorio como los predictores más fuertes.</p></li>
+</ul>
+<p><strong>Resultados y Métricas Clave:</strong>
+El estudio reportó una prevalencia de readmisión del <strong>13.32%</strong>. El modelo XGBoost obtuvo los siguientes resultados de desempeño:</p>
+<ul class="simple">
+<li><p><strong>Recall (Sensibilidad) para la clase positiva:</strong> 79%</p></li>
+<li><p><strong>Área bajo la curva (AUC-ROC):</strong> 0.78</p></li>
+</ul>
+<p><strong>Conclusión Relevante para nuestro estudio:</strong>
+Un hallazgo crucial de este paper es la demostración de la superioridad del Machine Learning en el ámbito clínico frente a la estadística tradicional. Mientras que las pruebas estadísticas clásicas (como Chi-cuadrado) mostraron correlaciones débiles entre la readmisión y variables demográficas (raza, sexo, edad), el modelo de XGBoost logró capturar patrones complejos no lineales, validando la utilidad de estas herramientas para la toma de decisiones en la gestión de la diabetes.</p>
+</section>
+<section id="paper-2-comparison-of-machine-learning-models-for-predicting-30-day-readmission-rates">
+<h3>Paper 2: Comparison of machine learning models for predicting 30-day readmission rates<a class="headerlink" href="#paper-2-comparison-of-machine-learning-models-for-predicting-30-day-readmission-rates" title="Link to this heading">#</a></h3>
+<p><strong>Resumen del Enfoque:</strong>
+A diferencia de estudios que se centran en un único algoritmo, esta investigación realizó una comparativa exhaustiva entre <strong>11 métodos distintos</strong>, contrastando modelos de Machine Learning tradicional (como SVM, Decision Trees, RF) contra modelos de Deep Learning (específicamente LSTM - Long Short-Term Memory). El objetivo fue predecir la readmisión a 30 días utilizando el dataset “Diabetes 130-US Hospitals” (UCI Repository).</p>
+<p><strong>Factor Diferencial: Optimización “Grey Wolf” (GWO)</strong>
+El aspecto más innovador de este estudio fue la incorporación del <strong>Grey Wolf Optimizer (GWO)</strong> para la selección de características.</p>
+<ul class="simple">
+<li><p><em>¿Qué es GWO?</em>: Es un algoritmo de optimización basado en “inteligencia de enjambre” (swarm intelligence) que imita la jerarquía de liderazgo y los mecanismos de caza de los lobos grises en la naturaleza.</p></li>
+<li><p><em>Su uso:</em> Los autores utilizaron GWO para seleccionar de manera inteligente las variables más relevantes del dataset antes de entrenar los modelos, combinándolo con técnicas de balanceo de datos (SMOTE) para manejar la desproporción de clases.</p></li>
+</ul>
+<p><strong>Resultados y Métricas Clave:</strong>
+Contrario a la creencia popular de que el Deep Learning siempre es superior, este estudio encontró que los algoritmos de ensamblaje tradicionales, potenciados con GWO, ofrecieron mejor rendimiento:</p>
+<ul class="simple">
+<li><p><strong>Modelo Ganador:</strong> <strong>Random Forest (RF)</strong>. Emergió como el modelo más favorable, equilibrando mejor la precisión y el recall.</p>
+<ul>
+<li><p><strong>Accuracy:</strong> 0.88</p></li>
+<li><p><strong>F1-Score:</strong> 0.83</p></li>
+</ul>
+</li>
+<li><p><strong>Segundo Lugar:</strong> XGBoost mostró resultados muy competitivos y cercanos al RF (Accuracy: 0.88, F1: 0.84*).</p></li>
+<li><p><strong>Conclusión Comparativa:</strong> Los autores concluyen que los modelos RF y XGBoost con optimización GWO superaron al modelado predictivo de Deep Learning (LSTM) en escenarios de readmisión por diabetes.</p></li>
+</ul>
+<blockquote>
+<div><p><strong>Nota:</strong> Aunque XGBoost obtuvo un F1-Score marginalmente más alto en los reportes brutos, los autores determinaron que Random Forest fue el modelo más consistente y favorable en la evaluación global de métricas.</p>
+</div></blockquote>
+</section>
+<section id="paper-3-implementation-of-machine-learning-algorithms-to-create-diabetic-patient-re-admission-profiles">
+<h3>Paper 3: Implementation of machine learning algorithms to create diabetic patient re-admission profiles<a class="headerlink" href="#paper-3-implementation-of-machine-learning-algorithms-to-create-diabetic-patient-re-admission-profiles" title="Link to this heading">#</a></h3>
+<p><strong>Resumen del Enfoque:</strong>
+El objetivo distintivo de este estudio no fue únicamente la predicción binaria, sino el <strong>reconocimiento de patrones</strong> para construir “perfiles” de readmisión. Los autores buscaron combinaciones de factores que caracterizan o explican <em>quiénes</em> son los pacientes que regresan al hospital, moviéndose de la predicción pura a la descripción del fenómeno.</p>
+<p><strong>Novedad Algorítmica:</strong>
+Este estudio exploró un conjunto de clasificadores diferentes a los vistos en los papers anteriores (que se centraban en Boosting o Deep Learning), introduciendo algoritmos más interpretables o basados en estadística clásica y distancia:</p>
+<ul class="simple">
+<li><p><strong>Linear Discriminant Analysis (LDA)</strong></p></li>
+<li><p><strong>k-Nearest Neighbor (k-NN)</strong></p></li>
+<li><p><strong>Naive Bayes</strong></p></li>
+<li><p><strong>J48</strong> (Una implementación popular del algoritmo de árbol de decisión C4.5)</p></li>
+</ul>
+<p><strong>Construcción de Clases y Hallazgos:</strong>
+La metodología se centró en analizar las “clases” o reglas producidas por estos modelos para segmentar a la población. De un total de 100,000 casos (con una tasa de readmisión del 47%), los algoritmos permitieron perfilar al paciente típico de alto riesgo.</p>
+<ul class="simple">
+<li><p><strong>El Perfil de Riesgo:</strong> Los modelos indicaron que la readmisión es más probable en pacientes mujeres, caucásicos, o pacientes ambulatorios.</p></li>
+<li><p><strong>El Factor “Cuidado Insuficiente”:</strong> Un hallazgo crítico derivado de este perfilamiento es que la readmisión está fuertemente vinculada a la <strong>falta de rigor en el tratamiento inicial</strong>. Los pacientes que recibieron menos procedimientos de laboratorio, menos medicación, o que fueron dados de alta sin administración de insulina (a pesar de tener HbA1c positivo) mostraron mayor tendencia a regresar.</p></li>
+</ul>
+<p><strong>Conclusión Relevante:</strong>
+Este paper demuestra que los algoritmos de Machine Learning (como J48 o Naive Bayes) pueden actuar como herramientas de auditoría clínica, revelando que los pacientes que no reciben una evaluación vigorosa o mejoras claras antes del alta son los más vulnerables.</p>
+</section>
+</section>
+<hr class="docutils" />
+<section id="propuesta-de-valor-y-estrategia-de-modelado-stacking-ensemble">
+<h2>5. Propuesta de Valor y Estrategia de Modelado: Stacking Ensemble<a class="headerlink" href="#propuesta-de-valor-y-estrategia-de-modelado-stacking-ensemble" title="Link to this heading">#</a></h2>
+<section id="identificacion-de-la-oportunidad">
+<h3>Identificación de la Oportunidad<a class="headerlink" href="#identificacion-de-la-oportunidad" title="Link to this heading">#</a></h3>
+<p>Tras la revisión exhaustiva de la literatura, hemos identificado un patrón recurrente: los estudios previos tienden a enfocar el problema como una <strong>competencia</strong> entre algoritmos.</p>
+<ul class="simple">
+<li><p>El <strong>Paper 1</strong> demostró la potencia del <em>Gradient Boosting</em> (XGBoost).</p></li>
+<li><p>El <strong>Paper 2</strong> evidenció la robustez del <em>Random Forest</em> optimizado.</p></li>
+<li><p>El <strong>Paper 3</strong> resaltó cómo diferentes clasificadores capturan distintos perfiles de pacientes.</p></li>
+</ul>
+<p>Sin embargo, ninguno de estos estudios exploró la posibilidad de la <strong>cooperación algorítmica</strong>. Existe un vacío en la literatura consultada respecto al uso de arquitecturas de ensamblaje avanzado (Stacking) para este dataset específico.</p>
+</section>
+<section id="nuestra-propuesta-arquitectura-stacking-classifier">
+<h3>Nuestra Propuesta: Arquitectura “Stacking Classifier”<a class="headerlink" href="#nuestra-propuesta-arquitectura-stacking-classifier" title="Link to this heading">#</a></h3>
+<p>Para este proyecto, proponemos la implementación de un <strong>Stacking Ensemble Classifier</strong>. En lugar de seleccionar un único “mejor modelo”, construiremos una arquitectura en dos niveles:</p>
+<ol class="arabic simple">
+<li><p><strong>Nivel 0 (Base Learners):</strong> Entrenaremos modelos fuertes y diversos (heterogéneos) en paralelo. Específicamente, utilizaremos los campeones de los papers anteriores: <strong>XGBoost</strong> (por su manejo de sesgo) y <strong>Random Forest</strong> (por su manejo de varianza), sumando posiblemente un modelo lineal o basado en distancia para diversidad.</p></li>
+<li><p><strong>Nivel 1 (Meta-Learner):</strong> Las predicciones de los modelos base servirán como “nuevos datos” (inputs) para un meta-modelo final (generalmente una Regresión Logística o un modelo lineal simple), que aprenderá a ponderar qué modelo base tiene la razón en cada tipo de caso.</p></li>
+</ol>
+</section>
+<section id="beneficios-esperados">
+<h3>Beneficios Esperados<a class="headerlink" href="#beneficios-esperados" title="Link to this heading">#</a></h3>
+<p>La hipótesis central de esta propuesta es que el Stacking permitirá:</p>
+<ul class="simple">
+<li><p><strong>Reducir el error de generalización:</strong> Al combinar modelos con diferentes fundamentos matemáticos (Bagging vs. Boosting), el sistema será más robusto ante el ruido.</p></li>
+<li><p><strong>Superar el Techo de Desempeño:</strong> Esperamos obtener métricas (AUC-ROC y F1-Score) superiores a las reportadas individualmente en la literatura (superando el 0.78 AUC del Paper 1 y el 0.83 F1 del Paper 2).</p></li>
+<li><p><strong>Estabilidad:</strong> Un modelo apilado suele ser menos propenso a fluctuaciones drásticas cuando se enfrenta a datos nuevos, ofreciendo una solución más segura para un entorno clínico real.</p></li>
+</ul>
+</section>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./notebooks"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#introduccion-y-contexto-clinico">1. Introducción y Contexto Clínico</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#definicion-del-problema">2. Definición del Problema</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#objetivos-del-proyecto">3. Objetivos del Proyecto</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#revision-de-la-literatura">4. Revisión de la Literatura</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#paper-1-determinants-and-predictors-of-early-re-admission-of-patients-with-hyperglycemic-crises">Paper 1: Determinants and predictors of early re-admission of patients with hyperglycemic crises</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#paper-2-comparison-of-machine-learning-models-for-predicting-30-day-readmission-rates">Paper 2: Comparison of machine learning models for predicting 30-day readmission rates</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#paper-3-implementation-of-machine-learning-algorithms-to-create-diabetic-patient-re-admission-profiles">Paper 3: Implementation of machine learning algorithms to create diabetic patient re-admission profiles</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#propuesta-de-valor-y-estrategia-de-modelado-stacking-ensemble">5. Propuesta de Valor y Estrategia de Modelado: Stacking Ensemble</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#identificacion-de-la-oportunidad">Identificación de la Oportunidad</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#nuestra-propuesta-arquitectura-stacking-classifier">Nuestra Propuesta: Arquitectura “Stacking Classifier”</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#beneficios-esperados">Beneficios Esperados</a></li>
+</ul>
+</li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By José Menco, Camilo Vargas, Iván Ramirez
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2023.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>
